@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "darkkore",
+  "version": "${version}",
+  "name": "DarkKore",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MPL-2.0",
+  "icon": "assets/DarkKore/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "io.github.darkkronicle.darkkore.DarkKore"
+    ]
+  },
+  "mixins": [
+    "darkkore.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.4",
+    "fabric": "*",
+    "minecraft": "1.18.2"
+  }
+}
