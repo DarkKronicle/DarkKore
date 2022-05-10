@@ -61,7 +61,7 @@ public class TextComponent extends BasicComponent {
         }
     }
 
-    private void updateWidth() {
+    protected void updateWidth() {
         int maxWidth = 0;
         for (Text text : lines) {
             maxWidth = Math.max(maxWidth, MinecraftClient.getInstance().textRenderer.getWidth(text) + leftPadding + rightPadding);
@@ -69,7 +69,7 @@ public class TextComponent extends BasicComponent {
         width = maxWidth;
     }
 
-    private void updateHeight() {
+    protected void updateHeight() {
         height = topPadding + bottomPadding + lines.size() * (MinecraftClient.getInstance().textRenderer.fontHeight + linePadding);
     }
 

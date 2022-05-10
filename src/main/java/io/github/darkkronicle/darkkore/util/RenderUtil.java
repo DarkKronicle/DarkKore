@@ -2,9 +2,12 @@ package io.github.darkkronicle.darkkore.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.experimental.UtilityClass;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Matrix4f;
 
 @UtilityClass
@@ -37,11 +40,11 @@ public class RenderUtil {
         fill(matrices, x, y, x + width, y + height, color);
     }
 
-    public static void fill(MatrixStack matrices, int x1, int y1, int x2, int y2, int color) {
+    public void fill(MatrixStack matrices, int x1, int y1, int x2, int y2, int color) {
         fill(matrices.peek().getPositionMatrix(), x1, y1, x2, y2, color);
     }
 
-    public static void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color) {
+    public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color) {
         int i;
         if (x1 < x2) {
             i = x1;
@@ -74,7 +77,7 @@ public class RenderUtil {
     }
 
 
-    public static void fillGradient(Matrix4f matrix, BufferBuilder builder, int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
+    public void fillGradient(Matrix4f matrix, BufferBuilder builder, int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
         float a = (float)(colorStart >> 24 & 0xFF) / 255.0f;
         float r = (float)(colorStart >> 16 & 0xFF) / 255.0f;
         float g = (float)(colorStart >> 8 & 0xFF) / 255.0f;
@@ -101,6 +104,26 @@ public class RenderUtil {
         tessellator.draw();
         RenderSystem.disableBlend();
         RenderSystem.enableTexture();
+    }
+
+    public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y) {
+        drawItem(matrices, stack, x, y, false);
+    }
+
+    public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y, boolean showCount) {
+        drawItem(matrices, stack, x, y, showCount, 0);
+    }
+
+    public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y, boolean showCount, int zOffset) {
+        matrices.push();
+        ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+        itemRenderer.zOffset = 50 + zOffset;
+        itemRenderer.renderInGuiWithOverrides(stack, x, y);
+        if (showCount) {
+            itemRenderer.renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, stack, x, y, stack.getCount() > 1 ? String.valueOf(stack.getCount()) : "");
+        }
+        itemRenderer.zOffset = 0;
+        matrices.pop();
     }
 
 }
