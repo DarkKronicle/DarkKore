@@ -1,7 +1,9 @@
 package io.github.darkkronicle.darkkore.util;
 
 import lombok.experimental.UtilityClass;
+import net.minecraft.client.MinecraftClient;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,6 +14,10 @@ import java.util.stream.Stream;
 
 @UtilityClass
 public class FileUtil {
+
+    public File getConfigDirectory() {
+        return new File(MinecraftClient.getInstance().runDirectory, "config");
+    }
 
     // https://mkyong.com/java/how-to-find-files-with-certain-extension-only/
     public List<Path> getFilesWithExtension(Path directory, String extension) throws IOException {

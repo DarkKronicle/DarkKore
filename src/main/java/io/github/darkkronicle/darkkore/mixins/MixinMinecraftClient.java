@@ -15,8 +15,8 @@ public class MixinMinecraftClient {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void init(RunArgs args, CallbackInfo ci) {
-        InitializationHandler.getInstance().load();
         ConfigurationManager.getInstance().load();
+        InitializationHandler.getInstance().load();
     }
 
     @Inject(method = "close", at = @At("HEAD"))

@@ -27,6 +27,9 @@ public class BasicOption<T> implements Option<T> {
 
     @Override
     public T getValue() {
+        if (value == null) {
+            return defaultValue;
+        }
         return value;
     }
 
