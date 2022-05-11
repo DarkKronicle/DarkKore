@@ -98,10 +98,18 @@ public class MultiComponent extends BasicComponent {
     }
 
     public void updateWidth() {
-
+        int maxX = 0;
+        for (Component component : components) {
+            maxX = Math.max(maxX, component.getBoundingBox().width());
+        }
+        width = maxX;
     }
 
     public void updateHeight() {
-
+        int maxY = 0;
+        for (Component component : components) {
+            maxY = Math.max(maxY, component.getBoundingBox().height());
+        }
+        height = maxY;
     }
 }

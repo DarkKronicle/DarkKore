@@ -7,10 +7,17 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
 public class DarkKore implements ClientModInitializer {
+
+    public final static String MOD_ID = "darkkore";
+
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
     @Override
     public void onInitializeClient() {
         KeyBinding keyBinding =

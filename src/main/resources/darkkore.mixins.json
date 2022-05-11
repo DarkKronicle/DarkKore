@@ -1,11 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "io.github.darkkronicle.darkkore.mixin",
+  "package": "io.github.darkkronicle.darkkore.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
   "client": [
+    "MixinMinecraftClient",
+    "MixinClientPlayNetworkHandler"
   ],
   "injectors": {
     "defaultRequire": 1
