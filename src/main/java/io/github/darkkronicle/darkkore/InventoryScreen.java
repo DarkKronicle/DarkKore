@@ -4,7 +4,6 @@ import io.github.darkkronicle.darkkore.gui.ComponentScreen;
 import io.github.darkkronicle.darkkore.gui.components.*;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.Dimensions;
-import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.RenderUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
@@ -12,7 +11,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.registry.Registry;
 
-public class TestScreen extends ComponentScreen {
+public class InventoryScreen extends ComponentScreen {
 
     private ItemStack selectedStack = null;
 

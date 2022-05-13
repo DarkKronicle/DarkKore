@@ -18,7 +18,6 @@ public class ListComponent extends MultiComponent {
     @Getter @Setter private int componentXPad = 2;
     @Getter @Setter private int componentYPad = 2;
 
-    @Getter private Component hoveredComponent = null;
 
     public ListComponent(int width, int height, boolean vertical) {
         super(width, height);
@@ -67,21 +66,6 @@ public class ListComponent extends MultiComponent {
         height = renderY + maxHeight + topPad + bottomPad;
     }
 
-    @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
-        if (hoveredComponent != null) {
-            return hoveredComponent.mouseClicked(x, y, mouseX, mouseY);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean mouseScrolled(int x, int y, int mouseX, int mouseY, double amount) {
-        if (hoveredComponent != null) {
-            return hoveredComponent.mouseScrolled(x, y, mouseX, mouseY, amount);
-        }
-        return false;
-    }
 
     @Override
     public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {

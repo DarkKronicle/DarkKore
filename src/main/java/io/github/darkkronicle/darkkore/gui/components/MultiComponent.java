@@ -17,6 +17,8 @@ public class MultiComponent extends BasicComponent {
     @Setter protected int width;
     @Setter protected int height;
 
+    @Getter protected Component hoveredComponent = null;
+
     @Getter
     protected List<Component> components = new ArrayList<>();
 
@@ -33,8 +35,12 @@ public class MultiComponent extends BasicComponent {
 
     @Override
     public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        hoveredComponent = null;
         for (Component component : components) {
             component.render(matrices, renderBounds, x, y, mouseX, mouseY);
+            if (component.isHovered()) {
+                hoveredComponent = component;
+            }
         }
     }
 
@@ -90,6 +96,22 @@ public class MultiComponent extends BasicComponent {
         if (autoUpdateHeight) {
             updateHeight();
         }
+    }
+
+    @Override
+    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+        if (hoveredComponent != null) {
+            return hoveredComponent.mouseClicked(x, y, mouseX, mouseY);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(int x, int y, int mouseX, int mouseY, double amount) {
+        if (hoveredComponent != null) {
+            return hoveredComponent.mouseScrolled(x, y, mouseX, mouseY, amount);
+        }
+        return false;
     }
 
     @Override

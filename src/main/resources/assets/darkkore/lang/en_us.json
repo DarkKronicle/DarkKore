@@ -1,4 +1,7 @@
 {
   "darkkore.component.toggle.true": "Yes",
-  "darkkore.component.toggle.false": "No"
+  "darkkore.component.toggle.false": "No",
+
+  "darkkore.option.debug": "Debug Mode",
+  "darkkore.option.cool": "Are you like super duper cool?"
 }

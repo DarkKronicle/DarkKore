@@ -24,11 +24,19 @@ public class ButtonComponent extends TextComponent {
         this.hover = hover;
         this.onClick = onClick;
         setBackgroundColor(background);
+        center = true;
     }
 
     public ButtonComponent(int width, int height, Text text, Color background, Color hover, Consumer<ButtonComponent> onClick) {
         super(width, height, text);
         setBackgroundColor(background);
+        this.background = background;
+        this.hover = hover;
+        this.onClick = onClick;
+        bottomPadding = 0;
+        leftPadding = 4;
+        rightPadding = 4;
+        center = true;
     }
 
     @Override

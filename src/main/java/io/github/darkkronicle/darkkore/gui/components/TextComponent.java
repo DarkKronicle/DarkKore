@@ -14,24 +14,26 @@ import java.util.List;
 
 public class TextComponent extends BasicComponent {
 
-    @Getter private List<Text> lines;
+    @Getter protected List<Text> lines;
 
-    @Getter @Setter private boolean updateBounds;
+    @Getter @Setter protected boolean updateBounds;
 
-    @Getter @Setter private int width;
+    @Getter @Setter protected int width;
 
-    @Getter @Setter private int height;
+    @Getter @Setter protected int height;
 
-    @Getter @Setter private boolean autoUpdateWidth = false;
+    @Getter @Setter protected boolean autoUpdateWidth = false;
 
-    @Getter @Setter private boolean autoUpdateHeight = false;
+    @Getter @Setter protected boolean autoUpdateHeight = false;
+
+    @Getter @Setter protected boolean center = false;
 
 
-    @Getter @Setter private int leftPadding = 2;
-    @Getter @Setter private int rightPadding = 2;
-    @Getter @Setter private int topPadding = 2;
-    @Getter @Setter private int bottomPadding = 2;
-    @Getter @Setter private int linePadding = 2;
+    @Getter @Setter protected int leftPadding = 2;
+    @Getter @Setter protected int rightPadding = 2;
+    @Getter @Setter protected int topPadding = 2;
+    @Getter @Setter protected int bottomPadding = 2;
+    @Getter @Setter protected int linePadding = 2;
 
 
     public TextComponent(Text text) {
@@ -77,7 +79,12 @@ public class TextComponent extends BasicComponent {
     public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         int renderY = y + topPadding;
         for (Text line : lines) {
-            MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, line, x + leftPadding, renderY + topPadding, -1);
+            if (center) {
+                int width = MinecraftClient.getInstance().textRenderer.getWidth(line);
+                MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, line, x + leftPadding + (int) ((this.width - rightPadding) / 2) - (int) (width / 2), renderY + topPadding, -1);
+            } else {
+                MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, line, x + leftPadding, renderY + topPadding, -1);
+            }
             renderY += MinecraftClient.getInstance().textRenderer.fontHeight + linePadding;
         }
     }

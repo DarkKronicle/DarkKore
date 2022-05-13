@@ -16,6 +16,8 @@ public class DarkKoreConfig extends ModConfig {
 
     public final BooleanOption debug = new BooleanOption("debug", "darkkore.option.debug", "darkkore.option.info.debug", false);
 
+    public final BooleanOption cool = new BooleanOption("cool", "darkkore.option.cool", "darkkore.option.info.cool", false);
+
     public static DarkKoreConfig getInstance() {
         return INSTANCE;
     }
@@ -32,7 +34,7 @@ public class DarkKoreConfig extends ModConfig {
 
     @Override
     public List<Option<?>> getOptions() {
-        return List.of(debug);
+        return List.of(debug, cool);
     }
 
     @Override
