@@ -1,6 +1,8 @@
 package io.github.darkkronicle.darkkore;
 
-import io.github.darkkronicle.darkkore.config.DarkKoreConfig;
+import io.github.darkkronicle.darkkore.config.options.ListOption;
+import io.github.darkkronicle.darkkore.gui.config.ListOptionComponent;
+import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
 import io.github.darkkronicle.darkkore.config.options.BooleanOption;
 import io.github.darkkronicle.darkkore.gui.ConfigScreen;
 import io.github.darkkronicle.darkkore.gui.OptionComponentHolder;
@@ -31,13 +33,20 @@ public class InitHandler implements Initializer {
                             MinecraftClient.getInstance().setScreen(new ConfigScreen(DarkKoreConfig.getInstance().getOptions()));
                         }
                     });
-            OptionComponentHolder.getInstance().addConverter((option, width) -> {
-                if (option instanceof BooleanOption) {
-                    return Optional.of(new BooleanOptionComponent((BooleanOption) option, width));
-                }
-                return Optional.empty();
-            });
+
         }
+        OptionComponentHolder.getInstance().addConverter((option, width) -> {
+            if (option instanceof BooleanOption) {
+                return Optional.of(new BooleanOptionComponent((BooleanOption) option, width));
+            }
+            return Optional.empty();
+        });
+        OptionComponentHolder.getInstance().addConverter((option, width) -> {
+            if (option instanceof ListOption<?>) {
+                return Optional.of(new ListOptionComponent<>((ListOption<?>) option, width));
+            }
+            return Optional.empty();
+        });
     }
 
 }

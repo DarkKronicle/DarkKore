@@ -77,7 +77,7 @@ public class ToggleComponent extends ButtonComponent {
         return getName(value);
     }
 
-    private Text getFullText() {
+    public Text getFullText() {
         // Super calls this but we want to dynamically do this
         FluidText text;
         if (display == null) {

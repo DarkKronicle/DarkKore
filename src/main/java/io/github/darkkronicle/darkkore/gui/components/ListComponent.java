@@ -18,6 +18,8 @@ public class ListComponent extends MultiComponent {
     @Getter @Setter private int componentXPad = 2;
     @Getter @Setter private int componentYPad = 2;
 
+    @Getter @Setter private boolean renderPost = true;
+
 
     public ListComponent(int width, int height, boolean vertical) {
         super(width, height);
@@ -91,4 +93,32 @@ public class ListComponent extends MultiComponent {
         }
     }
 
+    @Override
+    public boolean shouldPostRender() {
+        return renderPost;
+    }
+
+    @Override
+    public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        int offsetRenderX = leftPad;
+        int renderY = y + topPad;
+        int maxHeight = 0;
+        hoveredComponent = null;
+        for (Component component : components) {
+            Rectangle bounds = component.getBoundingBox();
+            if (bounds.width() + offsetRenderX + rightPad > width || vertical) {
+                offsetRenderX = leftPad;
+                renderY += maxHeight + componentYPad;
+                maxHeight = 0;
+            }
+            if (component.shouldPostRender() && (renderBounds == null || new PositionedRectangle(x + offsetRenderX, renderY, bounds.width(), bounds.height()).intersects(renderBounds))) {
+                component.postRender(matrices, renderBounds, x + offsetRenderX, renderY, mouseX, mouseY);
+            }
+            offsetRenderX += bounds.width() + componentXPad;
+            maxHeight = Math.max(maxHeight, bounds.height());
+            if (component.isHovered()) {
+                hoveredComponent = component;
+            }
+        }
+    }
 }

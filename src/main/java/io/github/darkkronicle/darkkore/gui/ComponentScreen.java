@@ -1,5 +1,6 @@
 package io.github.darkkronicle.darkkore.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.util.RenderUtil;
 import lombok.Getter;
@@ -26,6 +27,11 @@ public abstract class ComponentScreen extends Screen {
     public void renderComponents(MatrixStack matrices, int mouseX, int mouseY) {
         for (Component component : components) {
             component.render(matrices, null, 0, 0, mouseX, mouseY);
+        }
+        for (Component component : components) {
+            if (component.shouldPostRender()) {
+                component.postRender(matrices, null, 0, 0, mouseX, mouseY);
+            }
         }
     }
 

@@ -9,10 +9,10 @@ public class BasicOption<T> implements Option<T> {
 
     @Getter
     protected final String key;
-    @Getter
+
     protected final String displayNameKey;
-    @Getter
     protected final String hoverNameKey;
+
     @Getter
     protected final T defaultValue;
 
@@ -57,4 +57,13 @@ public class BasicOption<T> implements Option<T> {
         value = option.get();
     }
 
+    @Override
+    public String getNameKey() {
+        return displayNameKey;
+    }
+
+    @Override
+    public String getInfoKey() {
+        return hoverNameKey;
+    }
 }

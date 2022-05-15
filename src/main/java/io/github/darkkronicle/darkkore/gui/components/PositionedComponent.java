@@ -66,4 +66,17 @@ public class PositionedComponent extends BasicComponent {
         component.render(matrices, renderBounds, x, y, mouseX, mouseY);
     }
 
+    @Override
+    public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        if (component.shouldPostRender()) {
+            component.postRender(matrices, renderBounds, x + this.x, y + this.y, mouseX, mouseY);
+        }
+    }
+
+    @Override
+    public boolean shouldPostRender() {
+        return true;
+    }
+
+
 }

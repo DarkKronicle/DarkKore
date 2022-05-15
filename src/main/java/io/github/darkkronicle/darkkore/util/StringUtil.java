@@ -7,7 +7,7 @@ import net.minecraft.client.resource.language.I18n;
 public class StringUtil {
 
     public String translate(String key) {
-        return I18n.translate(key);
+        return I18n.translate(key).replaceAll("&", "§");
     }
 
 }

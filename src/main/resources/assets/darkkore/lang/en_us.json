@@ -3,5 +3,8 @@
   "darkkore.component.toggle.false": "No",
 
   "darkkore.option.debug": "Debug Mode",
-  "darkkore.option.cool": "Are you like super duper cool?"
+  "darkkore.option.cool": "Are you like super duper cool?",
+
+  "darkkore.option.info.debug": "Enables some random settings that is used for testing/gathering information.",
+  "darkkore.option.info.cool": "Do "
 }

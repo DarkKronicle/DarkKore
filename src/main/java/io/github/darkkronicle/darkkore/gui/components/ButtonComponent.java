@@ -1,6 +1,7 @@
 package io.github.darkkronicle.darkkore.gui.components;
 
 import io.github.darkkronicle.darkkore.util.Color;
+import io.github.darkkronicle.darkkore.util.SoundUtil;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.text.Text;
@@ -17,6 +18,9 @@ public class ButtonComponent extends TextComponent {
 
     @Getter @Setter
     private Consumer<ButtonComponent> onClick;
+
+    @Getter @Setter
+    private boolean disabled = false;
 
     public ButtonComponent(Text text, Color background, Color hover, Consumer<ButtonComponent> onClick) {
         super(text);
@@ -41,13 +45,23 @@ public class ButtonComponent extends TextComponent {
 
     @Override
     public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+        if (disabled) {
+            return true;
+        }
+        playInterfaceSound();
         onClick.accept(this);
         return true;
     }
 
+    protected void playInterfaceSound() {
+        SoundUtil.playInterfaceSound();
+    }
+
     @Override
     public void onHoveredImpl(int x, int y, int mouseX, int mouseY) {
-        setBackgroundColor(hover);
+        if (!disabled) {
+            setBackgroundColor(hover);
+        }
     }
 
     @Override

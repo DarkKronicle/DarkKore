@@ -21,6 +21,9 @@ public abstract class BasicComponent implements Component {
     @Getter @Setter private Consumer<BasicComponent> onHoveredConsumer = null;
     @Getter @Setter private Consumer<BasicComponent> onHoveredStoppedConsumer = null;
 
+
+    @Getter @Setter protected int zOffset = 0;
+
     @Getter private boolean hovered = false;
     private boolean previouslyHovered = false;
 
@@ -35,6 +38,10 @@ public abstract class BasicComponent implements Component {
 
     @Override
     public void render(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        matrices.push();
+        if (zOffset != 0) {
+            matrices.translate(0, 0, zOffset);
+        }
         if (backgroundColor != null) {
             Rectangle bounds = getBoundingBox();
             RenderUtil.drawRectangle(matrices, x, y, bounds.width(), bounds.height(), backgroundColor.color());
@@ -58,6 +65,7 @@ public abstract class BasicComponent implements Component {
             previouslyHovered = false;
         }
         renderComponent(matrices, renderBounds, x, y, mouseX, mouseY);
+        matrices.pop();
     }
 
     public abstract void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY);

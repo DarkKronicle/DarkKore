@@ -85,6 +85,19 @@ public class ScrollComponent extends BasicComponent {
     }
 
     @Override
+    public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        if (component.shouldPostRender()) {
+            component.postRender(matrices, renderBounds, vertical ? x : x - scrollVal, vertical ? y - scrollVal : y, mouseX, mouseY);
+        }
+    }
+
+    @Override
+    public boolean shouldPostRender() {
+        return true;
+    }
+
+
+    @Override
     public Rectangle getBoundingBox() {
         return new Rectangle(width, height);
     }

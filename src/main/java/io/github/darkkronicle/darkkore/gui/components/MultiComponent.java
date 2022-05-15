@@ -134,4 +134,18 @@ public class MultiComponent extends BasicComponent {
         }
         height = maxY;
     }
+
+    @Override
+    public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        for (Component component : components) {
+            if (component.shouldPostRender()) {
+                component.postRender(matrices, renderBounds, x, y, mouseX, mouseY);
+            }
+        }
+    }
+
+    @Override
+    public boolean shouldPostRender() {
+        return true;
+    }
 }

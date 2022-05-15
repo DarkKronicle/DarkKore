@@ -8,6 +8,13 @@ public interface Component {
 
     void render(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY);
 
+    default void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {}
+
+    default boolean shouldPostRender() {
+        return false;
+    }
+
+
     Rectangle getBoundingBox();
 
     default boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
