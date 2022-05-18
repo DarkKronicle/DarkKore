@@ -21,19 +21,19 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
     }
 
     public CycleComponent(T entry, int width, int height, Color background, Color hover, Consumer<T> onClick) {
-        super(width, height, new FluidText(StringUtil.translate(entry.getDisplayKey())), background, hover, null);
+        super(width, height, StringUtil.translateToText(entry.getDisplayKey()), background, hover, null);
         this.entry = entry;
         setOnClick(button -> onClick.accept(getEntry()));
         if (autoUpdateWidth) {
             updateWidth();
         } else {
-            setLines(new FluidText(StringUtil.translate(entry.getDisplayKey())));
+            setLines(StringUtil.translateToText(entry.getDisplayKey()));
         }
     }
 
     public void setEntry(T entry) {
         this.entry = entry;
-        setLines(new FluidText(StringUtil.translate(entry.getDisplayKey())));
+        setLines(StringUtil.translateToText(entry.getDisplayKey()));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
     protected void updateWidth() {
         int maxWidth = 0;
         for (T option : entry.getAll()) {
-            setLines(new FluidText(StringUtil.translate(option.getDisplayKey())));
+            setLines(StringUtil.translateToText(option.getDisplayKey()));
             for (Text text : getLines()) {
                 maxWidth = Math.max(maxWidth, MinecraftClient.getInstance().textRenderer.getWidth(text) + getLeftPadding() + getRightPadding());
             }

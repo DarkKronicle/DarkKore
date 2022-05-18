@@ -23,6 +23,7 @@ public class DarkKore implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ConfigurationManager.getInstance().add(DarkKoreConfig.getInstance());
-        InitializationHandler.getInstance().registerInitializer(MOD_ID, -5, new InitHandler());
+        // This should be called first
+        InitializationHandler.getInstance().registerInitializer(MOD_ID, -50, new InitHandler());
     }
 }

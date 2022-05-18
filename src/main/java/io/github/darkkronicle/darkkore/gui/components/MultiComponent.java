@@ -8,6 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 public class MultiComponent extends BasicComponent {
@@ -25,6 +26,7 @@ public class MultiComponent extends BasicComponent {
     public MultiComponent(int width, int height) {
         this.width = width;
         this.height = height;
+        this.selectable = true;
         if (width < 0) {
             autoUpdateWidth = true;
         }
@@ -100,10 +102,16 @@ public class MultiComponent extends BasicComponent {
 
     @Override
     public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
-        if (hoveredComponent != null) {
-            return hoveredComponent.mouseClicked(x, y, mouseX, mouseY);
+        super.mouseClicked(x, y, mouseX, mouseY);
+        boolean success = false;
+        for (Component component : components) {
+            if (hoveredComponent != null && hoveredComponent.equals(component)) {
+                success = hoveredComponent.mouseClicked(x, y, mouseX, mouseY) || success;
+            } else {
+                component.mouseClickedOutside(x, y, mouseX, mouseY);
+            }
         }
-        return false;
+        return success;
     }
 
     @Override
@@ -148,4 +156,32 @@ public class MultiComponent extends BasicComponent {
     public boolean shouldPostRender() {
         return true;
     }
+
+    @Override
+    public void mouseClickedOutside(int x, int y, int mouseX, int mouseY) {
+        for (Component component : components) {
+            component.mouseClickedOutside(x, y, mouseX, mouseY);
+        }
+    }
+
+    @Override
+    public boolean charTyped(char key, int modifiers) {
+        for (Component component : components) {
+            if (component.isSelected()) {
+                return component.charTyped(key, modifiers);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        for (Component component : components) {
+            if (component.isSelected()) {
+                return component.keyPressed(keyCode, scanCode, modifiers);
+            }
+        }
+        return false;
+    }
+
 }

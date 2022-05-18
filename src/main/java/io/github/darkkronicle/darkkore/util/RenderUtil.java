@@ -3,20 +3,28 @@ package io.github.darkkronicle.darkkore.util;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Matrix4f;
 
+/**
+ * Various methods to help make rendering easier
+ */
 @UtilityClass
 public class RenderUtil {
 
+    /**
+     * Fills an outline with x/y width/height values
+     */
     public void drawOutline(MatrixStack matrices, int x, int y, int width, int height, int color) {
         fillOutline(matrices, x, y, x + width, y + height, color);
     }
 
+    /**
+     * Draws an outline with raw x/y values
+     */
     public void fillOutline(MatrixStack matrices, int x, int y, int x2, int y2, int color) {
         // Top line
         fill(matrices, x, y, x2, y + 1, color);
@@ -28,18 +36,30 @@ public class RenderUtil {
         fill(matrices, x, y2 - 1, x2, y2, color);
     }
 
+    /**
+     * Draws a vertical line
+     */
     public void drawVerticalLine(MatrixStack matrices, int x, int y, int height, int color) {
         drawRectangle(matrices, x, y, 1, height, color);
     }
 
+    /**
+     * Draws a horizontal line
+     */
     public void drawHorizontalLine(MatrixStack matrices, int x, int y, int width, int color) {
         drawRectangle(matrices, x, y, width, 1, color);
     }
 
+    /**
+     * Fills in a rectangle with a color. x/y width/height
+     */
     public void drawRectangle(MatrixStack matrices, int x, int y, int width, int height, int color) {
         fill(matrices, x, y, x + width, y + height, color);
     }
 
+    /**
+     * Fills in a rectangle with a color. Uses raw x/y values. x/y
+     */
     public void fill(MatrixStack matrices, int x1, int y1, int x2, int y2, int color) {
         fill(matrices.peek().getPositionMatrix(), x1, y1, x2, y2, color);
     }
@@ -106,14 +126,34 @@ public class RenderUtil {
         RenderSystem.enableTexture();
     }
 
+    /**
+     * Draws an item with the count not showing
+     */
     public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y) {
         drawItem(matrices, stack, x, y, false);
     }
 
+    /**
+     * Draws an item
+     * @param matrices Matrices
+     * @param stack {@link ItemStack} to render
+     * @param x x
+     * @param y y
+     * @param showCount Whether item count should show
+     */
     public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y, boolean showCount) {
         drawItem(matrices, stack, x, y, showCount, 0);
     }
 
+    /**
+     * Draws an item with a specified z-offset
+     * @param matrices Matrices
+     * @param stack {@link ItemStack} to render
+     * @param x x
+     * @param y y
+     * @param showCount Whether item count should show
+     * @param zOffset The Z value that should be used. It adds 50 to whatever.
+     */
     public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y, boolean showCount, int zOffset) {
         matrices.push();
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();

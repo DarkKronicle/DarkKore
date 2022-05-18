@@ -5,6 +5,7 @@ import io.github.darkkronicle.darkkore.gui.components.*;
 import io.github.darkkronicle.darkkore.util.*;
 import lombok.Getter;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 
 public abstract class OptionComponent<N, T extends Option<N>> extends MultiComponent {
 
@@ -45,7 +46,9 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
     }
 
     protected void createHover() {
-        TextComponent text = new TextComponent(width - 2, -1, new FluidText(StringUtil.translate(option.getInfoKey())));
+        FluidText fluid = new FluidText(StringUtil.translateToText(option.getInfoKey()));
+        fluid.append("\n").append(getConfigTypeInfo());
+        TextComponent text = new TextComponent(width - 2, -1, fluid);
         text.setLeftPadding(4);
         text.setRightPadding(4);
         text.setBackgroundColor(new Color(20, 20, 20, 255));
@@ -54,8 +57,11 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
         hoverComponent = text;
     }
 
+    public abstract Text getConfigTypeInfo();
+
+
     public void addComponents(Dimensions bounds) {
-        TextComponent nameComp = new TextComponent(bounds.getWidth() - 160, -1, new FluidText(StringUtil.translate(option.getNameKey())));
+        TextComponent nameComp = new TextComponent(bounds.getWidth() - 160, -1, StringUtil.translateToText(option.getNameKey()));
         addComponent(
                 new PositionedComponent(
                         nameComp,

@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.config.options;
+package io.github.darkkronicle.darkkore.gui.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.darkkronicle.darkkore.DarkKore;
@@ -40,5 +40,6 @@ public class IconButtonComponent extends ButtonComponent {
         RenderSystem.setShaderColor(shaderColor.red() / 255f, shaderColor.green() / 255f, shaderColor.blue() / 255f, shaderColor.alpha() / 255f);
         RenderSystem.setShaderTexture(0, icon);
         DrawableHelper.drawTexture(matrices, x + leftPadding, y + topPadding, width - (leftPadding + rightPadding), height - (topPadding - rightPadding), 0, 0, iconWidth, iconHeight, iconWidth, iconHeight);
+        RenderSystem.setShaderColor(1, 1, 1,1);
     }
 }

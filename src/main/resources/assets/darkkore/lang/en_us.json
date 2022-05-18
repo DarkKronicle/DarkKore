@@ -1,10 +1,22 @@
 {
   "darkkore.component.toggle.true": "Yes",
   "darkkore.component.toggle.false": "No",
+  "darkkore.optiontype.info.boolean": "Click the button to toggle between on/off",
+  "darkkore.optiontype.info.list": "Click the button to cycle between options",
+  "darkkore.optiontype.info.string": "Type any text in here",
 
   "darkkore.option.debug": "Debug Mode",
-  "darkkore.option.cool": "Are you like super duper cool?",
-
   "darkkore.option.info.debug": "Enables some random settings that is used for testing/gathering information.",
-  "darkkore.option.info.cool": "Do "
+  "darkkore.option.cool": "Are you like super duper cool?",
+  "darkkore.option.info.cool": "Only select this if you are &l&overy cool&r. Bad things will happen if you lie!\n&kSecret message&r",
+  "darkkore.option.soundtype": "UI Sound Type",
+  "darkkore.option.info.soundtype": "How UI buttons sound in DarkKore menus (aka this one)",
+  "darkkore.option.sound.normal": "Normal",
+  "darkkore.option.sound.chime": "Chime",
+  "darkkore.option.sound.bit": "8-Bit",
+  "darkkore.option.sound.vibraphone": "Vibraphone",
+  "darkkore.option.sound.info.normal": "Sounds like default Minecraft",
+  "darkkore.option.sound.info.chime": "Chime instrument",
+  "darkkore.option.sound.info.bit": "8-Bit instrument",
+  "darkkore.option.sound.info.vibraphone": "Vibraphone instrument"
 }

@@ -5,7 +5,6 @@ import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.util.math.MatrixStack;
-import org.w3c.dom.css.Rect;
 
 public class PositionedComponent extends BasicComponent {
 
@@ -30,14 +29,21 @@ public class PositionedComponent extends BasicComponent {
         this.useComponentWidth = width < 0;
         this.useComponentHeight = height < 0;
         this.component = component;
+        this.selectable = true;
     }
 
     @Override
     public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+        super.mouseClicked(x, y, mouseX, mouseY);
         if (isHovered()) {
             return component.mouseClicked(x + this.x, y + this.y, mouseX, mouseY);
         }
         return false;
+    }
+
+    @Override
+    public void mouseClickedOutside(int x, int y, int mouseX, int mouseY) {
+        component.mouseClickedOutside(x, y, mouseX, mouseY);
     }
 
     @Override
@@ -47,7 +53,6 @@ public class PositionedComponent extends BasicComponent {
         }
         return false;
     }
-
 
     @Override
     public Rectangle getBoundingBox() {
@@ -78,5 +83,19 @@ public class PositionedComponent extends BasicComponent {
         return true;
     }
 
+    @Override
+    public boolean charTyped(char key, int modifiers) {
+        if (component.isSelected()) {
+            return component.charTyped(key, modifiers);
+        }
+        return false;
+    }
 
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (component.isSelected()) {
+            return component.keyPressed(keyCode, scanCode, modifiers);
+        }
+        return false;
+    }
 }

@@ -29,20 +29,30 @@ public class ScrollComponent extends BasicComponent {
         this.height = height;
         this.component = component;
         this.vertical = vertical;
+        this.selectable = true;
     }
 
     @Override
     public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         updateScroll();
         renderBounds = new PositionedRectangle(x, y, width, height);
-        ScissorUtil.applyScissor(renderBounds);
+        ScissorsStack.getInstance().push(renderBounds);
+        ScissorsStack.getInstance().applyStack();
         component.render(matrices, renderBounds, vertical ? x : x - scrollVal, vertical ? y - scrollVal : y, mouseX, mouseY);
-        ScissorUtil.resetScissor();
+        ScissorsStack.getInstance().pop();
+        ScissorsStack.getInstance().applyStack();
     }
 
     @Override
     public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+        super.mouseClicked(x, y, mouseX, mouseY);
         return component.mouseClicked(vertical ? x : x - scrollVal, vertical ? y - scrollVal : y, mouseX, mouseY);
+    }
+
+    @Override
+    public void mouseClickedOutside(int x, int y, int mouseX, int mouseY) {
+        super.mouseClickedOutside(x, y, mouseX, mouseY);
+        component.mouseClickedOutside(x, y, mouseX, mouseY);
     }
 
     @Override
@@ -80,7 +90,7 @@ public class ScrollComponent extends BasicComponent {
 
     public void scroll(double amount) {
         scrollStart = scrollVal;
-        scrollEnd = amount * 3 + scrollStart;
+        scrollEnd = amount * 3 + scrollEnd;
         lastScroll = Util.getMeasuringTimeMs();
     }
 
@@ -96,10 +106,24 @@ public class ScrollComponent extends BasicComponent {
         return true;
     }
 
-
     @Override
     public Rectangle getBoundingBox() {
         return new Rectangle(width, height);
     }
 
+    @Override
+    public boolean charTyped(char key, int modifiers) {
+        if (component.isSelected()) {
+            return component.charTyped(key, modifiers);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (component.isSelected()) {
+            return component.keyPressed(keyCode, scanCode, modifiers);
+        }
+        return false;
+    }
 }

@@ -1,7 +1,9 @@
 package io.github.darkkronicle.darkkore;
 
 import io.github.darkkronicle.darkkore.config.options.ListOption;
+import io.github.darkkronicle.darkkore.config.options.StringOption;
 import io.github.darkkronicle.darkkore.gui.config.ListOptionComponent;
+import io.github.darkkronicle.darkkore.gui.config.StringOptionComponent;
 import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
 import io.github.darkkronicle.darkkore.config.options.BooleanOption;
 import io.github.darkkronicle.darkkore.gui.ConfigScreen;
@@ -33,15 +35,33 @@ public class InitHandler implements Initializer {
                             MinecraftClient.getInstance().setScreen(new ConfigScreen(DarkKoreConfig.getInstance().getOptions()));
                         }
                     });
+            KeyBinding otherbinding =
+                    new KeyBinding(
+                            "refinedcreativeinventory.key.inventory",
+                            InputUtil.Type.KEYSYM,
+                            GLFW.GLFW_KEY_G,
+                            "category.keys");
+            ClientTickEvents.START_CLIENT_TICK.register(
+                    s -> {
+                        if (otherbinding.wasPressed()) {
+                            MinecraftClient.getInstance().setScreen(new InventoryScreen());
+                        }
+                    });
 
         }
-        OptionComponentHolder.getInstance().addConverter((option, width) -> {
+        OptionComponentHolder.getInstance().addWithOrder(100, (option, width) -> {
             if (option instanceof BooleanOption) {
                 return Optional.of(new BooleanOptionComponent((BooleanOption) option, width));
             }
             return Optional.empty();
         });
-        OptionComponentHolder.getInstance().addConverter((option, width) -> {
+        OptionComponentHolder.getInstance().addWithOrder(100, (option, width) -> {
+            if (option instanceof StringOption) {
+                return Optional.of(new StringOptionComponent((StringOption) option, width));
+            }
+            return Optional.empty();
+        });
+        OptionComponentHolder.getInstance().addWithOrder(100, (option, width) -> {
             if (option instanceof ListOption<?>) {
                 return Optional.of(new ListOptionComponent<>((ListOption<?>) option, width));
             }

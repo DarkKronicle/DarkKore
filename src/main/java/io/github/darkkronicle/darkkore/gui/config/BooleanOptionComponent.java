@@ -4,6 +4,9 @@ import io.github.darkkronicle.darkkore.config.options.BooleanOption;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.gui.components.ToggleComponent;
 import io.github.darkkronicle.darkkore.util.Color;
+import io.github.darkkronicle.darkkore.util.FluidText;
+import io.github.darkkronicle.darkkore.util.StringUtil;
+import net.minecraft.text.Text;
 
 public class BooleanOptionComponent extends OptionComponent<Boolean, BooleanOption> {
 
@@ -11,6 +14,11 @@ public class BooleanOptionComponent extends OptionComponent<Boolean, BooleanOpti
 
     public BooleanOptionComponent(BooleanOption option, int width) {
         super(option, width, 20);
+    }
+
+    @Override
+    public Text getConfigTypeInfo() {
+        return new FluidText("§7§o" + StringUtil.translate("darkkore.optiontype.info.boolean"));
     }
 
     @Override

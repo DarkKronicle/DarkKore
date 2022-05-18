@@ -1,6 +1,5 @@
 package io.github.darkkronicle.darkkore.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.util.RenderUtil;
 import lombok.Getter;
@@ -51,12 +50,15 @@ public abstract class ComponentScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        boolean success = false;
         for (Component component : components) {
             if (component.isHovered()) {
-                return component.mouseClicked(0, 0, (int) mouseX, (int) mouseY);
+                success = component.mouseClicked(0, 0, (int) mouseX, (int) mouseY) || success;
+            } else {
+                component.mouseClickedOutside(0, 0, (int) mouseX, (int) mouseY);
             }
         }
-        return false;
+        return success;
     }
 
     @Override
@@ -67,5 +69,29 @@ public abstract class ComponentScreen extends Screen {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        for (Component component : components) {
+            if (component.isSelected()) {
+                if (component.keyPressed(keyCode, scanCode, modifiers)) {
+                    return true;
+                }
+            }
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean charTyped(char chr, int modifiers) {
+        for (Component component : components) {
+            if (component.isSelected()) {
+                if (component.charTyped(chr, modifiers)) {
+                    return true;
+                }
+            }
+        }
+        return super.charTyped(chr, modifiers);
     }
 }

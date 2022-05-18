@@ -6,10 +6,21 @@ import net.minecraft.block.enums.Instrument;
 
 import java.util.List;
 
+/**
+ * Sound type used for button UI sounds
+ */
 public enum SoundType implements OptionListEntry<SoundType> {
+
+    /** Normal sounds (just button clicks) */
     NORMAL("normal", null),
+
+    /** Chime sounds */
     CHIME("chime", Instrument.CHIME),
+
+    /** Bit sounds */
     BIT("bit", Instrument.BIT),
+
+    /** Vibraphone sounds */
     VIBRAPHONE("vibraphone", Instrument.IRON_XYLOPHONE)
     ;
 

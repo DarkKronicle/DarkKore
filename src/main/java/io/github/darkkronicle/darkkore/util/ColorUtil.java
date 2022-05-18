@@ -12,7 +12,6 @@ public class ColorUtil {
 
     // Probably my best hope for color...
     // https://github.com/parzivail/StarWarsMod/blob/master/src/main/java/com/parzivail/util/ui/GLPalette.java
-    // I don't like color ints :(
     // intToColor and colorToInt from parzivail https://github.com/parzivail (slightly modified to
     // account for Alpha)
 
@@ -49,7 +48,15 @@ public class ColorUtil {
         return color.withAlpha((int) Math.floor((alpha * percent)));
     }
 
+    /**
+     * Grabs the color from a {@link Formatting} formatting.
+     * @param formatting The formatting to grab the color from
+     * @return The color from formatting as a {@link Color} object, null if there is none
+     */
     public Color colorFromFormatting(Formatting formatting) {
+        if (!formatting.isColor()) {
+            return null;
+        }
         return new Color(formatting.getColorValue());
     }
 }

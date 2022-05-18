@@ -6,6 +6,9 @@ import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
 
+/**
+ * A color utility class that allows for easy mutability of RGBA colors
+ */
 @Value
 @Accessors(fluent = true)
 public class Color {
@@ -35,6 +38,38 @@ public class Color {
         this.alpha = completeColor.alpha();
     }
 
+    /**
+     * Get the red value as a float
+     * @return Red value 0-1
+     */
+    public float floatRed() {
+        return ((float) red) / 255;
+    }
+
+    /**
+     * Get the green value as a float
+     * @return Green value 0-1
+     */
+    public float floatGreen() {
+        return ((float) green) / 255;
+    }
+
+    /**
+     * Get the blue value as a float
+     * @return Blue value 0-1
+     */
+    public float floatBlue() {
+        return ((float) blue) / 255;
+    }
+
+    /**
+     * Get the alpha value as a float
+     * @return Alpha value 0-1
+     */
+    public float floatAlpha() {
+        return ((float) alpha) / 255;
+    }
+
     public Color(int red, int green, int blue, int alpha) {
         if (red > 255) {
             red = 255;
@@ -56,7 +91,7 @@ public class Color {
     }
 
     /**
-     * Generated for use of Lombok's @With
+     * Generated for use of Lombok's @With. The color attribute will not be used with this
      */
     public Color(int red, int green, int blue, int alpha, int color) {
         this.red = red;
@@ -66,6 +101,10 @@ public class Color {
         this.color = ColorUtil.colorToInt4f(this);
     }
 
+    /**
+     * Creates a string that has the hex representation of a color #AARRGGBB
+     * @return Hex representation of the color
+     */
     public String getString() {
         return String.format("#%08X", color);
     }

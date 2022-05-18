@@ -13,7 +13,7 @@ import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Unit;
 
-/** Class to format text without losing data */
+/** Class to format text without losing data. It adds all color and colors with §#RRGGBB are converted to RGB color. */
 @Environment(EnvType.CLIENT)
 public class StyleFormatter {
 

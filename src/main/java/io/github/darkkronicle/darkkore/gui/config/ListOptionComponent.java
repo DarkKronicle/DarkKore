@@ -8,6 +8,7 @@ import io.github.darkkronicle.darkkore.gui.components.TextComponent;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
+import net.minecraft.text.Text;
 
 public class ListOptionComponent<T extends OptionListEntry<T>> extends OptionComponent<T, ListOption<T>> {
 
@@ -15,6 +16,11 @@ public class ListOptionComponent<T extends OptionListEntry<T>> extends OptionCom
 
     public ListOptionComponent(ListOption<T> option, int width) {
         super(option, width, 20);
+    }
+
+    @Override
+    public Text getConfigTypeInfo() {
+        return new FluidText("§7§o" + StringUtil.translate("darkkore.optiontype.info.list"));
     }
 
     @Override
@@ -43,7 +49,9 @@ public class ListOptionComponent<T extends OptionListEntry<T>> extends OptionCom
         for (T entry : option.getValue().getAll()) {
             builder.append("\n  §d").append(StringUtil.translate(entry.getDisplayKey())).append("§7 - §r").append(StringUtil.translate(entry.getInfoKey()));
         }
-        TextComponent text = new TextComponent(width - 2, -1, new FluidText(builder.toString()));
+        FluidText fluid = new FluidText(builder.toString());
+        fluid.append("\n").append(getConfigTypeInfo());
+        TextComponent text = new TextComponent(width - 2, -1, fluid);
         text.setLeftPadding(4);
         text.setRightPadding(4);
         text.setBackgroundColor(new Color(20, 20, 20, 255));

@@ -27,6 +27,10 @@ public abstract class BasicComponent implements Component {
     @Getter private boolean hovered = false;
     private boolean previouslyHovered = false;
 
+    protected boolean selectable = false;
+    private boolean previouslySelected = false;
+    private boolean selected = false;
+
     public BasicComponent() {
         this(null, null);
     }
@@ -34,6 +38,32 @@ public abstract class BasicComponent implements Component {
     public BasicComponent(Color backgroundColor, Color outlineColor) {
         this.backgroundColor = backgroundColor;
         this.outlineColor = outlineColor;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Override
+    public void mouseClickedOutside(int x, int y, int mouseX, int mouseY) {
+        selected = false;
+        if (previouslySelected) {
+            previouslySelected = false;
+            onSelectedImpl(false);
+        }
+    }
+
+    @Override
+    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+        if (selectable) {
+            selected = true;
+            if (!previouslySelected) {
+                previouslySelected = true;
+                onSelectedImpl(true);
+            }
+        }
+        return false;
     }
 
     @Override
@@ -79,6 +109,10 @@ public abstract class BasicComponent implements Component {
     }
 
     public void onHoveredImpl(int x, int y, int mouseX, int mouseY) {
+
+    }
+
+    public void onSelectedImpl(boolean selected) {
 
     }
 

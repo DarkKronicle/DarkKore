@@ -12,13 +12,27 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Utility class to work with files
+ */
 @UtilityClass
 public class FileUtil {
 
+    /**
+     * Gets the configuration directory of Minecraft
+     * @return Configuration directory
+     */
     public File getConfigDirectory() {
         return new File(MinecraftClient.getInstance().runDirectory, "config");
     }
 
+    /**
+     * Get files with a specified extension
+     * @param directory Directory to check
+     * @param extension Extension to check. Used in a `endsWith` call
+     * @return A {@link List} that contains files within a directory with the same name
+     * @throws IOException If something goes wrong
+     */
     // https://mkyong.com/java/how-to-find-files-with-certain-extension-only/
     public List<Path> getFilesWithExtension(Path directory, String extension) throws IOException {
         if (!directory.toFile().isDirectory()) {
@@ -36,6 +50,12 @@ public class FileUtil {
         return paths;
     }
 
+    /**
+     * Get files with a specified extension
+     * @param directory Directory to check
+     * @param extension Extension to check. Used in a `endsWith` call
+     * @return An {@link Optional} empty if something went wrong, or contains the files
+     */
     public Optional<List<Path>> getFilesWithExtensionCaught(Path directory, String extension) {
         try {
             return Optional.of(getFilesWithExtension(directory, extension));
