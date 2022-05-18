@@ -67,10 +67,10 @@ public class ToggleComponent extends ButtonComponent {
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
+    public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         this.value = !value;
         setLines(getFullText());
-        return super.mouseClicked(x, y, mouseX, mouseY, button);
+        return super.mouseClickedImpl(x, y, mouseX, mouseY, button);
     }
 
     public String getName() {

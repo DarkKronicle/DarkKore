@@ -55,7 +55,7 @@ public abstract class ComponentScreen extends Screen {
             if (component.isHovered()) {
                 success = component.mouseClicked(0, 0, (int) mouseX, (int) mouseY, button) || success;
             } else {
-                component.mouseClickedOutside(0, 0, (int) mouseX, (int) mouseY);
+                component.mouseClickedOutside(0, 0, (int) mouseX, (int) mouseY, button);
             }
         }
         return success;

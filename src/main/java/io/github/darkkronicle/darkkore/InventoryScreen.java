@@ -45,7 +45,7 @@ public class InventoryScreen extends ComponentScreen {
             final int j = i;
             ItemComponent item = new InventoryItemComponent(client.player.getInventory(), i) {
                 @Override
-                public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
+                public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
                     if (selectedStack != null) {
                         client.player.getInventory().setStack(j, selectedStack);
                         client.interactionManager.clickCreativeStack(selectedStack, 36 + j);
@@ -91,7 +91,7 @@ public class InventoryScreen extends ComponentScreen {
             if (item.getGroup() != null && item.getGroup().equals(group)) {
                 BasicComponent component = new ItemComponent(item) {
                     @Override
-                    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
+                    public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
                         selectedStack = this.getStack();
                         return true;
                     }

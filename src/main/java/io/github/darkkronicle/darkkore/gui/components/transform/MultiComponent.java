@@ -12,18 +12,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * A {@link Component} designed to handle multiple components at once and properly delegate everything towards
+ * its children.
+ */
 public class MultiComponent extends BasicComponent {
 
+    /** Whether the width should update with each new component added */
     private boolean autoUpdateWidth;
-    private boolean autoUpdateHeight;
-    @Setter protected int width;
-    @Setter protected int height;
 
+    /** Whether the height should update with each new component added */
+    private boolean autoUpdateHeight;
+
+    /** The width of the full component. This should encapsulate everything (that should be accessible) */
+    @Getter @Setter protected int width;
+
+    /** The height of the full component. This should encapsulate everything (that should be accessible) */
+    @Getter @Setter protected int height;
+
+    /** The current child component that is hovered */
     @Getter protected Component hoveredComponent = null;
 
-    @Getter
-    protected List<Component> components = new ArrayList<>();
+    /** All the children this class holds */
+    @Getter protected List<Component> components = new ArrayList<>();
 
+    /**
+     * Constructs a {@link MultiComponent} with specified width and height. If width/height are below 0
+     * their respective {@link #autoUpdateWidth}/{@link #autoUpdateHeight} are set to true.
+     * @param width Width (if below 0 width is auto updated)
+     * @param height Height (if below 1 height is auto updated)
+     */
     public MultiComponent(int width, int height) {
         this.width = width;
         this.height = height;
@@ -36,6 +54,7 @@ public class MultiComponent extends BasicComponent {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         hoveredComponent = null;
@@ -47,6 +66,10 @@ public class MultiComponent extends BasicComponent {
         }
     }
 
+    /**
+     * Apply something to each child
+     * @param componentConsumer {@link Consumer} to accept children
+     */
     public void forEach(Consumer<Component> componentConsumer) {
         components.forEach(componentConsumer);
     }
@@ -61,6 +84,11 @@ public class MultiComponent extends BasicComponent {
         }
     }
 
+    /**
+     * Add a {@link Component} at a specific index
+     * @param index Index to add into (normal list rules)
+     * @param component {@link Component} component to insert
+     */
     public void addComponent(int index, Component component) {
         components.add(index, component);
         if (autoUpdateWidth) {
@@ -71,6 +99,11 @@ public class MultiComponent extends BasicComponent {
         }
     }
 
+    /**
+     * Sets a {@link Component} at a certain index
+     * @param index Index to set into (normal list rules)
+     * @param component {@link Component} to override
+     */
     public void setComponent(int index, Component component) {
         components.set(index, component);
         if (autoUpdateWidth) {
@@ -81,6 +114,19 @@ public class MultiComponent extends BasicComponent {
         }
     }
 
+    /**
+     * Retrieves a {@link Component} at a specific index
+     * @param index Index of the component
+     * @return The component
+     */
+    public Component getComponent(int index) {
+        return components.get(index);
+    }
+
+    /**
+     * Removes a {@link Component} at a specific index
+     * @param index Index to remove at
+     */
     public void removeComponent(int index) {
         components.remove(index);
         if (autoUpdateWidth) {
@@ -91,6 +137,9 @@ public class MultiComponent extends BasicComponent {
         }
     }
 
+    /**
+     * Removes all {@link Component}s
+     */
     public void clear() {
         components.clear();
         if (autoUpdateWidth) {
@@ -101,20 +150,21 @@ public class MultiComponent extends BasicComponent {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
-        super.mouseClicked(x, y, mouseX, mouseY, button);
+    public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         boolean success = false;
         for (Component component : components) {
             if (hoveredComponent != null && hoveredComponent.equals(component)) {
                 success = hoveredComponent.mouseClicked(x, y, mouseX, mouseY, button) || success;
             } else {
-                component.mouseClickedOutside(x, y, mouseX, mouseY);
+                component.mouseClickedOutside(x, y, mouseX, mouseY, button);
             }
         }
         return success;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean mouseScrolled(int x, int y, int mouseX, int mouseY, double amount) {
         if (hoveredComponent != null) {
@@ -123,11 +173,15 @@ public class MultiComponent extends BasicComponent {
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Rectangle getBoundingBox() {
         return new Rectangle(width, height);
     }
 
+    /**
+     * Update the width of the component. This factors in child components.
+     */
     public void updateWidth() {
         int maxX = 0;
         for (Component component : components) {
@@ -136,6 +190,9 @@ public class MultiComponent extends BasicComponent {
         width = maxX;
     }
 
+    /**
+     * Update the width of the component. This factors in child components.
+     */
     public void updateHeight() {
         int maxY = 0;
         for (Component component : components) {
@@ -159,9 +216,9 @@ public class MultiComponent extends BasicComponent {
     }
 
     @Override
-    public void mouseClickedOutside(int x, int y, int mouseX, int mouseY) {
+    public void mouseClickedOutsideImpl(int x, int y, int mouseX, int mouseY, int button) {
         for (Component component : components) {
-            component.mouseClickedOutside(x, y, mouseX, mouseY);
+            component.mouseClickedOutside(x, y, mouseX, mouseY, button);
         }
     }
 

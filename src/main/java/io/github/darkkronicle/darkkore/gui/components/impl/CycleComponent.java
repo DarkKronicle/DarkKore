@@ -37,9 +37,9 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
+    public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         setEntry(entry.next(true));
-        return super.mouseClicked(x, y, mouseX, mouseY, button);
+        return super.mouseClickedImpl(x, y, mouseX, mouseY, button);
     }
 
     @Override

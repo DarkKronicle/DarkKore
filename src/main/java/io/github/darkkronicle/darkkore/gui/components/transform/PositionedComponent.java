@@ -13,6 +13,7 @@ public class PositionedComponent extends OffsetComponent {
         this.y = y;
     }
 
+
     @Override
     public int getXOffset() {
         return x;

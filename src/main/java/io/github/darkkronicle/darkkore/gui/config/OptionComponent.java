@@ -29,15 +29,13 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
     }
 
     @Override
-    public void onHovered(int x, int y, int mouseX, int mouseY) {
-        setBackgroundColor(new Color(100, 100, 100, 100));
-        super.onHovered(x, y, mouseX, mouseY);
-    }
-
-    @Override
-    public void onHoveredStopped(int x, int y, int mouseX, int mouseY) {
-        setBackgroundColor(null);
-        super.onHoveredStopped(x, y, mouseX, mouseY);
+    public void onHovered(int x, int y, int mouseX, int mouseY, boolean hovered) {
+        if (hovered) {
+            setBackgroundColor(new Color(100, 100, 100, 100));
+        } else {
+            setBackgroundColor(null);
+        }
+        super.onHovered(x, y, mouseX, mouseY, hovered);
     }
 
     @Override

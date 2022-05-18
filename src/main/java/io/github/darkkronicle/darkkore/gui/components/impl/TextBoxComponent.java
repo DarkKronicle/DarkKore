@@ -75,14 +75,12 @@ public class TextBoxComponent extends BasicComponent {
     }
 
     @Override
-    public void mouseClickedOutside(int x, int y, int mouseX, int mouseY) {
-        super.mouseClickedOutside(x, y, mouseX, mouseY);
+    public void mouseClickedOutsideImpl(int x, int y, int mouseX, int mouseY, int button) {
         textField.setTextFieldFocused(false);
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
-        super.mouseClicked(x, y, mouseX, mouseY, button);
+    public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         textField.setTextFieldFocused(true);
         textField.mouseClicked(mouseX, mouseY, 0);
         return true;

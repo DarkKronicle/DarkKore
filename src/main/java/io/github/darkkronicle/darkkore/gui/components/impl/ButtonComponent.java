@@ -44,7 +44,7 @@ public class ButtonComponent extends TextComponent {
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
+    public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         if (disabled) {
             return true;
         }
@@ -58,15 +58,15 @@ public class ButtonComponent extends TextComponent {
     }
 
     @Override
-    public void onHoveredImpl(int x, int y, int mouseX, int mouseY) {
+    public void onHoveredImpl(int x, int y, int mouseX, int mouseY, boolean hovered) {
         if (!disabled) {
-            setBackgroundColor(hover);
+            if (hovered) {
+                setBackgroundColor(hover);
+            }
         }
-    }
-
-    @Override
-    public void onHoveredStoppedImpl(int x, int y, int mouseX, int mouseY) {
-        setBackgroundColor(background);
+        if (!hovered) {
+            setBackgroundColor(background);
+        }
     }
 
     @Override
