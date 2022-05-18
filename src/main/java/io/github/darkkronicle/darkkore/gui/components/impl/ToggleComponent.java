@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.gui.components;
+package io.github.darkkronicle.darkkore.gui.components.impl;
 
 import io.github.darkkronicle.darkkore.util.*;
 import lombok.Getter;
@@ -67,10 +67,10 @@ public class ToggleComponent extends ButtonComponent {
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
         this.value = !value;
         setLines(getFullText());
-        return super.mouseClicked(x, y, mouseX, mouseY);
+        return super.mouseClicked(x, y, mouseX, mouseY, button);
     }
 
     public String getName() {

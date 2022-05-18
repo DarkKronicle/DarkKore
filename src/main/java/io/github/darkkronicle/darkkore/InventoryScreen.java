@@ -2,6 +2,12 @@ package io.github.darkkronicle.darkkore;
 
 import io.github.darkkronicle.darkkore.gui.ComponentScreen;
 import io.github.darkkronicle.darkkore.gui.components.*;
+import io.github.darkkronicle.darkkore.gui.components.impl.InventoryItemComponent;
+import io.github.darkkronicle.darkkore.gui.components.impl.ItemComponent;
+import io.github.darkkronicle.darkkore.gui.components.impl.TextComponent;
+import io.github.darkkronicle.darkkore.gui.components.transform.ListComponent;
+import io.github.darkkronicle.darkkore.gui.components.transform.PositionedComponent;
+import io.github.darkkronicle.darkkore.gui.components.transform.ScrollComponent;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.Dimensions;
 import io.github.darkkronicle.darkkore.util.RenderUtil;
@@ -39,7 +45,7 @@ public class InventoryScreen extends ComponentScreen {
             final int j = i;
             ItemComponent item = new InventoryItemComponent(client.player.getInventory(), i) {
                 @Override
-                public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+                public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
                     if (selectedStack != null) {
                         client.player.getInventory().setStack(j, selectedStack);
                         client.interactionManager.clickCreativeStack(selectedStack, 36 + j);
@@ -85,7 +91,7 @@ public class InventoryScreen extends ComponentScreen {
             if (item.getGroup() != null && item.getGroup().equals(group)) {
                 BasicComponent component = new ItemComponent(item) {
                     @Override
-                    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+                    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
                         selectedStack = this.getStack();
                         return true;
                     }

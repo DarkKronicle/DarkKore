@@ -55,7 +55,7 @@ public abstract class BasicComponent implements Component {
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
         if (selectable) {
             selected = true;
             if (!previouslySelected) {

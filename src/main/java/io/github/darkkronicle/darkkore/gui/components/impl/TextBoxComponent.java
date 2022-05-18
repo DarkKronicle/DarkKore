@@ -1,5 +1,6 @@
-package io.github.darkkronicle.darkkore.gui.components;
+package io.github.darkkronicle.darkkore.gui.components.impl;
 
+import io.github.darkkronicle.darkkore.gui.components.BasicComponent;
 import io.github.darkkronicle.darkkore.gui.elements.TextBox;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
@@ -8,7 +9,6 @@ import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.function.Consumer;
@@ -81,8 +81,8 @@ public class TextBoxComponent extends BasicComponent {
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
-        super.mouseClicked(x, y, mouseX, mouseY);
+    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
+        super.mouseClicked(x, y, mouseX, mouseY, button);
         textField.setTextFieldFocused(true);
         textField.mouseClicked(mouseX, mouseY, 0);
         return true;

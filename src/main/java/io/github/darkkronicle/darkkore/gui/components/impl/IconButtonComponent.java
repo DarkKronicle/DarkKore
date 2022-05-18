@@ -1,8 +1,7 @@
-package io.github.darkkronicle.darkkore.gui.components;
+package io.github.darkkronicle.darkkore.gui.components.impl;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import io.github.darkkronicle.darkkore.DarkKore;
-import io.github.darkkronicle.darkkore.gui.components.ButtonComponent;
+import io.github.darkkronicle.darkkore.gui.components.impl.ButtonComponent;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;

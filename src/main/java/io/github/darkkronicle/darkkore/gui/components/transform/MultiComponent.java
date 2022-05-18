@@ -1,5 +1,7 @@
-package io.github.darkkronicle.darkkore.gui.components;
+package io.github.darkkronicle.darkkore.gui.components.transform;
 
+import io.github.darkkronicle.darkkore.gui.components.BasicComponent;
+import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
@@ -8,7 +10,6 @@ import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 public class MultiComponent extends BasicComponent {
@@ -101,12 +102,12 @@ public class MultiComponent extends BasicComponent {
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
-        super.mouseClicked(x, y, mouseX, mouseY);
+    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
+        super.mouseClicked(x, y, mouseX, mouseY, button);
         boolean success = false;
         for (Component component : components) {
             if (hoveredComponent != null && hoveredComponent.equals(component)) {
-                success = hoveredComponent.mouseClicked(x, y, mouseX, mouseY) || success;
+                success = hoveredComponent.mouseClicked(x, y, mouseX, mouseY, button) || success;
             } else {
                 component.mouseClickedOutside(x, y, mouseX, mouseY);
             }

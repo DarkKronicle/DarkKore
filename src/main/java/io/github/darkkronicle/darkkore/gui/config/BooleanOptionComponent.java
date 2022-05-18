@@ -2,7 +2,7 @@ package io.github.darkkronicle.darkkore.gui.config;
 
 import io.github.darkkronicle.darkkore.config.options.BooleanOption;
 import io.github.darkkronicle.darkkore.gui.components.Component;
-import io.github.darkkronicle.darkkore.gui.components.ToggleComponent;
+import io.github.darkkronicle.darkkore.gui.components.impl.ToggleComponent;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;

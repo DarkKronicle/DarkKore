@@ -2,6 +2,9 @@ package io.github.darkkronicle.darkkore.gui.config;
 
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.gui.components.*;
+import io.github.darkkronicle.darkkore.gui.components.impl.TextComponent;
+import io.github.darkkronicle.darkkore.gui.components.transform.MultiComponent;
+import io.github.darkkronicle.darkkore.gui.components.transform.PositionedComponent;
 import io.github.darkkronicle.darkkore.util.*;
 import lombok.Getter;
 import net.minecraft.client.util.math.MatrixStack;

@@ -1,9 +1,9 @@
 package io.github.darkkronicle.darkkore.gui;
 
 import io.github.darkkronicle.darkkore.config.options.Option;
-import io.github.darkkronicle.darkkore.gui.components.ListComponent;
-import io.github.darkkronicle.darkkore.gui.components.PositionedComponent;
-import io.github.darkkronicle.darkkore.gui.components.ScrollComponent;
+import io.github.darkkronicle.darkkore.gui.components.transform.ListComponent;
+import io.github.darkkronicle.darkkore.gui.components.transform.PositionedComponent;
+import io.github.darkkronicle.darkkore.gui.components.transform.ScrollComponent;
 import io.github.darkkronicle.darkkore.gui.config.OptionComponent;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.Dimensions;

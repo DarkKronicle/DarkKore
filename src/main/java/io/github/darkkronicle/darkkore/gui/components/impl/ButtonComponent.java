@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.gui.components;
+package io.github.darkkronicle.darkkore.gui.components.impl;
 
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.SoundUtil;
@@ -44,7 +44,7 @@ public class ButtonComponent extends TextComponent {
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
         if (disabled) {
             return true;
         }

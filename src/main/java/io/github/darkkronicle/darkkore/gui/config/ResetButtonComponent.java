@@ -1,8 +1,8 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
 import io.github.darkkronicle.darkkore.DarkKore;
-import io.github.darkkronicle.darkkore.gui.components.IconButtonComponent;
-import io.github.darkkronicle.darkkore.gui.components.ButtonComponent;
+import io.github.darkkronicle.darkkore.gui.components.impl.IconButtonComponent;
+import io.github.darkkronicle.darkkore.gui.components.impl.ButtonComponent;
 import io.github.darkkronicle.darkkore.util.Color;
 import net.minecraft.util.Identifier;
 

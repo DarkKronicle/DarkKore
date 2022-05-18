@@ -16,7 +16,7 @@ public interface Component {
 
     Rectangle getBoundingBox();
 
-    default boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+    default boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
         return false;
     }
 

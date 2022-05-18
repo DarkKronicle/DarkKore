@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.gui.components;
+package io.github.darkkronicle.darkkore.gui.components.impl;
 
 import lombok.Getter;
 import lombok.Setter;

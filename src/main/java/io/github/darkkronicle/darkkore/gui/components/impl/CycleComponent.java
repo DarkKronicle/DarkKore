@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.gui.components;
+package io.github.darkkronicle.darkkore.gui.components.impl;
 
 import io.github.darkkronicle.darkkore.config.options.OptionListEntry;
 import io.github.darkkronicle.darkkore.util.Color;
@@ -37,9 +37,9 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
+    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
         setEntry(entry.next(true));
-        return super.mouseClicked(x, y, mouseX, mouseY);
+        return super.mouseClicked(x, y, mouseX, mouseY, button);
     }
 
     @Override

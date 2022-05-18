@@ -1,29 +1,29 @@
-package io.github.darkkronicle.darkkore.gui.components;
+package io.github.darkkronicle.darkkore.gui.components.transform;
 
+import io.github.darkkronicle.darkkore.gui.components.BasicComponent;
+import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.util.math.MatrixStack;
 
-public class PositionedComponent extends BasicComponent {
+public abstract class WrapperComponent extends BasicComponent {
 
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    protected int width;
+    protected int height;
 
     @Getter
-    private Component component;
+    protected Component component;
 
-    @Setter @Getter
-    private boolean useComponentWidth;
-    @Setter @Getter
-    private boolean useComponentHeight;
+    @Setter
+    @Getter
+    protected boolean useComponentWidth;
+    @Setter
+    @Getter
+    protected boolean useComponentHeight;
 
-    public PositionedComponent(Component component, int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
+    public WrapperComponent(Component component, int width, int height) {
         this.width = width;
         this.height = height;
         this.useComponentWidth = width < 0;
@@ -33,23 +33,24 @@ public class PositionedComponent extends BasicComponent {
     }
 
     @Override
-    public boolean mouseClicked(int x, int y, int mouseX, int mouseY) {
-        super.mouseClicked(x, y, mouseX, mouseY);
+    public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
+        super.mouseClicked(x, y, mouseX, mouseY, button);
         if (isHovered()) {
-            return component.mouseClicked(x + this.x, y + this.y, mouseX, mouseY);
+            return component.mouseClicked(x, y, mouseX, mouseY, button);
         }
         return false;
     }
 
     @Override
     public void mouseClickedOutside(int x, int y, int mouseX, int mouseY) {
+        super.mouseClickedOutside(x, y, mouseX, mouseY);
         component.mouseClickedOutside(x, y, mouseX, mouseY);
     }
 
     @Override
     public boolean mouseScrolled(int x, int y, int mouseX, int mouseY, double amount) {
         if (isHovered()) {
-            return component.mouseScrolled(x + this.x, y + this.y, mouseX, mouseY, amount);
+            return component.mouseScrolled(x, y, mouseX, mouseY, amount);
         }
         return false;
     }
@@ -61,12 +62,6 @@ public class PositionedComponent extends BasicComponent {
     }
 
     @Override
-    public void render(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
-        Rectangle bound = getBoundingBox();
-        super.render(matrices, new PositionedRectangle(x + this.x, y + this.y, bound.width(), bound.height()), x + this.x, y + this.y, mouseX, mouseY);
-    }
-
-    @Override
     public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         component.render(matrices, renderBounds, x, y, mouseX, mouseY);
     }
@@ -74,7 +69,7 @@ public class PositionedComponent extends BasicComponent {
     @Override
     public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         if (component.shouldPostRender()) {
-            component.postRender(matrices, renderBounds, x + this.x, y + this.y, mouseX, mouseY);
+            component.postRender(matrices, renderBounds, x, y, mouseX, mouseY);
         }
     }
 
@@ -98,4 +93,5 @@ public class PositionedComponent extends BasicComponent {
         }
         return false;
     }
+
 }

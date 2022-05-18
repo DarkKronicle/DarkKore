@@ -2,7 +2,7 @@ package io.github.darkkronicle.darkkore.gui.config;
 
 import io.github.darkkronicle.darkkore.config.options.StringOption;
 import io.github.darkkronicle.darkkore.gui.components.Component;
-import io.github.darkkronicle.darkkore.gui.components.TextBoxComponent;
+import io.github.darkkronicle.darkkore.gui.components.impl.TextBoxComponent;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;

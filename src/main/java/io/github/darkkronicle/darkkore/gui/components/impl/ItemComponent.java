@@ -1,5 +1,6 @@
-package io.github.darkkronicle.darkkore.gui.components;
+package io.github.darkkronicle.darkkore.gui.components.impl;
 
+import io.github.darkkronicle.darkkore.gui.components.BasicComponent;
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import io.github.darkkronicle.darkkore.util.RenderUtil;
