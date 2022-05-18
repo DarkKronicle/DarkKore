@@ -11,15 +11,35 @@ import net.minecraft.text.Text;
 
 import java.util.function.Consumer;
 
+/**
+ * A {@link ButtonComponent} that cycles between an {@link OptionListEntry}s options
+ * @param <T> {@link OptionListEntry} to use
+ */
 public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponent {
 
-    @Getter
-    private T entry;
+    /** The current selected {@link T} */
+    @Getter protected T entry;
 
+    /**
+     * Creates a {@link CycleComponent}
+     * @param entry {@link T} current entry
+     * @param background {@link Color} for the background
+     * @param hover {@link Color} for on hover
+     * @param onClick {@link Consumer} for when the current selection changes
+     */
     public CycleComponent(T entry, Color background, Color hover, Consumer<T> onClick) {
         this(entry, -1, -1, background, hover, onClick);
     }
 
+    /**
+     * Creates a {@link CycleComponent} with a specified width and height. If width/height are less than 0 it will automatically set them
+     * @param entry {@link T} current entry
+     * @param width Width
+     * @param height Height
+     * @param background {@link Color} for the background
+     * @param hover {@link Color} for on hover
+     * @param onClick {@link Consumer} for when the current selection changes
+     */
     public CycleComponent(T entry, int width, int height, Color background, Color hover, Consumer<T> onClick) {
         super(width, height, StringUtil.translateToText(entry.getDisplayKey()), background, hover, null);
         this.entry = entry;
@@ -31,17 +51,23 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
         }
     }
 
+    /**
+     * Sets the entry that this button holds
+     * @param entry {@link T} new entry value
+     */
     public void setEntry(T entry) {
         this.entry = entry;
         setLines(StringUtil.translateToText(entry.getDisplayKey()));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         setEntry(entry.next(true));
         return super.mouseClickedImpl(x, y, mouseX, mouseY, button);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setLines(Text text) {
         text = StyleFormatter.formatText(new FluidText(text));
@@ -51,6 +77,7 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void updateWidth() {
         int maxWidth = 0;

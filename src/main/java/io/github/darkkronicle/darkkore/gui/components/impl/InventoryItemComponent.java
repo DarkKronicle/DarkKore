@@ -5,11 +5,16 @@ import lombok.Setter;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 
+/**
+ * An {@link ItemComponent} that is bound to a {@link Inventory}
+ */
 public class InventoryItemComponent extends ItemComponent {
 
-    @Getter @Setter private Inventory inventory;
+    /** Inventory to get item from */
+    @Getter @Setter protected Inventory inventory;
 
-    @Getter @Setter private int index;
+    /** Slot in the inventory to get from */
+    @Getter @Setter protected int index;
 
     public InventoryItemComponent(Inventory inventory, int index) {
         super();
@@ -17,6 +22,10 @@ public class InventoryItemComponent extends ItemComponent {
         this.index = index;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>This makes sure to get it from the inventory
+     */
     @Override
     public ItemStack getStack() {
         return inventory.getStack(index);
