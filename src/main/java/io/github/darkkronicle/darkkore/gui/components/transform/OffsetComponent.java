@@ -36,10 +36,22 @@ public abstract class OffsetComponent extends WrapperComponent {
     /** {@inheritDoc} */
     @Override
     public void render(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        int offX = this.getXOffset();
+        int offY = this.getYOffset();
+        super.render(matrices, getRenderBounds(x, y), x + offX, y + offY, mouseX, mouseY);
+    }
+
+    /**
+     * Get the boundaries for rendering. This is its own method since some cases may want to change this
+     * @param x X value for rendering
+     * @param y Y value for rendering
+     * @return A {@link PositionedRectangle} with necessary data
+     */
+    protected PositionedRectangle getRenderBounds(int x, int y) {
         Rectangle bound = getBoundingBox();
         int offX = this.getXOffset();
         int offY = this.getYOffset();
-        super.render(matrices, new PositionedRectangle(x + offX, y + offY, bound.width(), bound.height()), x + offX, y + offY, mouseX, mouseY);
+        return new PositionedRectangle(x + offX, y + offY, bound.width(), bound.height());
     }
 
     /** {@inheritDoc} */
