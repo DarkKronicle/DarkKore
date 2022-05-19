@@ -59,7 +59,7 @@ public class ScrollComponent extends OffsetComponent {
     @Override
     public void render(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         // We have to override this to scissor properly
-        renderBounds = new PositionedRectangle(x, y, width, height);
+        renderBounds = new PositionedRectangle(x + getXOffset(), y + getYOffset(), width, height);
         updateScroll();
         // This makes it so we don't get weird overlays
         ScissorsStack.getInstance().push(renderBounds);
