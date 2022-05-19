@@ -10,6 +10,9 @@ import net.minecraft.text.LiteralText;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A {@link Screen} to handle rendering components and different elements
+ */
 public abstract class ComponentScreen extends Screen {
 
     @Getter

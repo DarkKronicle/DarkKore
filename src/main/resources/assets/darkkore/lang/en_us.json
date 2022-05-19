@@ -4,6 +4,10 @@
   "darkkore.optiontype.info.boolean": "Click the button to toggle between on/off",
   "darkkore.optiontype.info.list": "Click the button to cycle between options",
   "darkkore.optiontype.info.string": "Type any text in here",
+  "darkkore.optiontype.info.double": "Type any number with or without decimals in here",
+  "darkkore.optiontype.info.doublerange": "Type any number with or without decimals in here from %s to %s",
+  "darkkore.optiontype.info.integer": "Type any whole number in here",
+  "darkkore.optiontype.info.integerrange": "Type any whole number in here from %s to %s",
 
   "darkkore.option.debug": "Debug Mode",
   "darkkore.option.info.debug": "Enables some random settings that is used for testing/gathering information.",

@@ -8,25 +8,33 @@ import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
 import net.minecraft.text.Text;
 
-public class StringOptionComponent extends OptionComponent<String, StringOption> {
+public class StringOptionComponent extends TextOptionComponent<String, StringOption> {
 
     private TextBoxComponent textBox;
 
     public StringOptionComponent(StringOption option, int width) {
-        super(option, width, 20);
+        super(option, width);
         selectable = true;
+    }
+
+    @Override
+    public boolean isValid(String string) {
+        return true;
+    }
+
+    @Override
+    public String getStringValue() {
+        return option.getValue();
+    }
+
+    @Override
+    public void setValueFromString(String string) {
+        option.setValue(string);
     }
 
     @Override
     public Text getConfigTypeInfo() {
         return new FluidText("§7§o" + StringUtil.translate("darkkore.optiontype.info.string"));
-    }
-
-    @Override
-    public void setValue(String newValue) {
-        option.setValue(newValue);
-        textBox.setText(option.getValue());
-        onUpdate();
     }
 
     protected void onChanged(String string) {

@@ -1,10 +1,8 @@
 package io.github.darkkronicle.darkkore.settings;
 
 import io.github.darkkronicle.darkkore.config.ModConfig;
-import io.github.darkkronicle.darkkore.config.options.BooleanOption;
-import io.github.darkkronicle.darkkore.config.options.ListOption;
-import io.github.darkkronicle.darkkore.config.options.Option;
-import io.github.darkkronicle.darkkore.config.options.StringOption;
+import io.github.darkkronicle.darkkore.config.options.*;
+import io.github.darkkronicle.darkkore.gui.config.DoubleOptionComponent;
 import io.github.darkkronicle.darkkore.util.FileUtil;
 
 import java.io.File;
@@ -24,6 +22,10 @@ public class DarkKoreConfig extends ModConfig {
 
     public final StringOption stringOption = new StringOption("stringOption", "darkkore.option.stringoption", "darkkore.option.info.stringoption", "No!");
 
+    public final IntegerOption integerOption = new IntegerOption("integerOption", "darkkore.option.integeroption", "darkkore.option.info.integeroption", 5);
+
+    public final DoubleOption doubleOption = new DoubleOption("doubleOption", "darkkore.option.doubleoption", "darkkore.option.info.integeroption", 5.5, 0, 10);
+
     public static DarkKoreConfig getInstance() {
         return INSTANCE;
     }
@@ -40,7 +42,7 @@ public class DarkKoreConfig extends ModConfig {
 
     @Override
     public List<Option<?>> getOptions() {
-        return List.of(debug, cool, soundType, stringOption);
+        return List.of(debug, cool, soundType, stringOption, integerOption, doubleOption);
     }
 
     @Override

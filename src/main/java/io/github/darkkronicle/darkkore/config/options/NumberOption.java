@@ -1,11 +1,12 @@
 package io.github.darkkronicle.darkkore.config.options;
 
 import com.electronwill.nightconfig.core.Config;
+import lombok.Getter;
 
 public class NumberOption<N extends Number & Comparable<N>> extends BasicOption<N> {
 
-    private N min = null;
-    private N max = null;
+    @Getter private N min = null;
+    @Getter private N max = null;
 
     public NumberOption(String key, String displayName, String hoverName, N defaultValue) {
         super(key, displayName, hoverName, defaultValue);
