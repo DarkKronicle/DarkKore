@@ -1,5 +1,6 @@
 package io.github.darkkronicle.darkkore.util;
 
+import io.github.darkkronicle.darkkore.util.text.StyleFormatter;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.Text;

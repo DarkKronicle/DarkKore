@@ -1,10 +1,12 @@
-package io.github.darkkronicle.darkkore.util;
+package io.github.darkkronicle.darkkore.util.text;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import io.github.darkkronicle.darkkore.util.Color;
+import io.github.darkkronicle.darkkore.util.FluidText;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;

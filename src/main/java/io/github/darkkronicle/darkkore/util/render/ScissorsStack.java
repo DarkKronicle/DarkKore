@@ -1,6 +1,7 @@
-package io.github.darkkronicle.darkkore.util;
+package io.github.darkkronicle.darkkore.util.render;
 
 import com.google.common.collect.Lists;
+import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import org.lwjgl.opengl.GL11;

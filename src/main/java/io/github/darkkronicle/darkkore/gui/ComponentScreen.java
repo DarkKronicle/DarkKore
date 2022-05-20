@@ -1,7 +1,7 @@
 package io.github.darkkronicle.darkkore.gui;
 
 import io.github.darkkronicle.darkkore.gui.components.Component;
-import io.github.darkkronicle.darkkore.util.RenderUtil;
+import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import lombok.Getter;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;

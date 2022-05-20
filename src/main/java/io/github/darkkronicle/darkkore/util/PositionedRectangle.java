@@ -42,6 +42,16 @@ public class PositionedRectangle {
     }
 
     /**
+     * Checks to see if a point is within this rectangle
+     * @param otherX X value
+     * @param otherY Y value
+     * @return If the point is within this rectangle
+     */
+    public boolean isPointIn(int otherX, int otherY) {
+        return otherX >= x && otherX <= x + width && otherY >= y && otherY <= y + height;
+    }
+
+    /**
      * Check to see if two {@link PositionedRectangle} intersect each other at any point
      */
     public static boolean intersects(PositionedRectangle one, PositionedRectangle two) {

@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.util;
+package io.github.darkkronicle.darkkore.util.search;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

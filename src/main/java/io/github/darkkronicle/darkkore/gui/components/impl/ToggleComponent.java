@@ -1,6 +1,8 @@
 package io.github.darkkronicle.darkkore.gui.components.impl;
 
 import io.github.darkkronicle.darkkore.util.*;
+import io.github.darkkronicle.darkkore.util.search.StringMatch;
+import io.github.darkkronicle.darkkore.util.text.StyleFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.MinecraftClient;

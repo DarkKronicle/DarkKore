@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.util;
+package io.github.darkkronicle.darkkore.util.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.experimental.UtilityClass;

@@ -2,6 +2,7 @@ package io.github.darkkronicle.darkkore.gui.components.transform;
 
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.util.*;
+import io.github.darkkronicle.darkkore.util.render.ScissorsStack;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.util.math.MatrixStack;
@@ -68,6 +69,12 @@ public class ScrollComponent extends OffsetComponent {
         // Allow for nested scissoring
         ScissorsStack.getInstance().pop();
         ScissorsStack.getInstance().applyStack();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean checkIfHovered(PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        return renderBounds.isPointIn(mouseX, mouseY);
     }
 
     /**

@@ -3,7 +3,7 @@ package io.github.darkkronicle.darkkore.gui.components;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
-import io.github.darkkronicle.darkkore.util.RenderUtil;
+import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -174,8 +174,7 @@ public abstract class BasicComponent implements Component {
             Rectangle bounds = getBoundingBox();
             RenderUtil.drawOutline(matrices, x, y, bounds.width(), bounds.height(), outlineColor.color());
         }
-        Rectangle bounds = getBoundingBox();
-        if (mouseX >= x && mouseX <= x + bounds.width() && mouseY >= y && mouseY <= y + bounds.height()) {
+        if (checkIfHovered(renderBounds, x, y, mouseX, mouseY)) {
             hovered = true;
             if (!previouslyHovered) {
                 onHovered(x, y, mouseX, mouseY, true);
@@ -202,6 +201,19 @@ public abstract class BasicComponent implements Component {
      * @param mouseY The y value of the mouse
      */
     public abstract void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY);
+
+    /**
+     * Checks to see if the current component is hovered by the mouse given values
+     * @param x X to render
+     * @param y Y to render
+     * @param mouseX Mouse position
+     * @param mouseY Mouse position
+     * @return True if it is hovered
+     */
+    public boolean checkIfHovered(PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        Rectangle bounds = getBoundingBox();
+        return new PositionedRectangle(x, y, bounds.width(), bounds.height()).isPointIn(mouseX, mouseY);
+    }
 
     /**
      * An implementation of {@link Component#onHovered(int, int, int, int, boolean)}. This one handles {@link #onHoveredConsumer} and then

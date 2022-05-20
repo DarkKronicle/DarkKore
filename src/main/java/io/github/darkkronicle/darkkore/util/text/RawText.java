@@ -1,8 +1,10 @@
-package io.github.darkkronicle.darkkore.util;
+package io.github.darkkronicle.darkkore.util.text;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import io.github.darkkronicle.darkkore.util.Color;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

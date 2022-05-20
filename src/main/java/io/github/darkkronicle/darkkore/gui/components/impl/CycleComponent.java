@@ -4,7 +4,7 @@ import io.github.darkkronicle.darkkore.config.options.OptionListEntry;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
-import io.github.darkkronicle.darkkore.util.StyleFormatter;
+import io.github.darkkronicle.darkkore.util.text.StyleFormatter;
 import lombok.Getter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;

@@ -1,7 +1,5 @@
 package io.github.darkkronicle.darkkore.util;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -11,6 +9,9 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.BiFunction;
 
+import io.github.darkkronicle.darkkore.util.search.SearchUtil;
+import io.github.darkkronicle.darkkore.util.search.StringMatch;
+import io.github.darkkronicle.darkkore.util.text.RawText;
 import lombok.Getter;
 import lombok.Setter;
 import net.fabricmc.api.EnvType;
@@ -19,7 +20,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
 
 /**
  * A helper class that can take a Text, break it up, and put it back together. This breaks up the
@@ -96,7 +96,7 @@ public class FluidText implements MutableText {
 
     /**
      * Takes the FluidText that is stored inside of this class, and puts it into a plain string.
-     * Used mainly for debugging and {@link SearchUtils}
+     * Used mainly for debugging and {@link SearchUtil}
      *
      * @return Plain string of just the raw text of held {@link RawText}
      */
