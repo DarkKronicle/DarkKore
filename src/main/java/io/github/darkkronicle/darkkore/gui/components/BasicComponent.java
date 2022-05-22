@@ -53,8 +53,11 @@ public abstract class BasicComponent implements Component {
     /** If this component was selected last mouse click */
     private boolean previouslySelected = false;
 
-    /** If currently selected */
-    private boolean selected = false;
+    /**
+     * If currently selected.
+     * <p>Setting this manually could cause some problems if other components aren't deselected first.
+     */
+    @Setter protected boolean selected = false;
 
     /**
      * Constructs a {@link BasicComponent} with no background or outline color
