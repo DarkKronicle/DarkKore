@@ -143,4 +143,10 @@ public class TextBoxComponent extends BasicComponent {
         return new Rectangle(width, height);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void setSelected(boolean value) {
+        super.setSelected(value);
+        textField.setTextFieldFocused(value);
+    }
 }

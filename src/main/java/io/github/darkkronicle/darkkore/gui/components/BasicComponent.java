@@ -57,7 +57,7 @@ public abstract class BasicComponent implements Component {
      * If currently selected.
      * <p>Setting this manually could cause some problems if other components aren't deselected first.
      */
-    @Setter protected boolean selected = false;
+    protected boolean selected = false;
 
     /**
      * Constructs a {@link BasicComponent} with no background or outline color
@@ -94,10 +94,7 @@ public abstract class BasicComponent implements Component {
     @Override
     public void mouseClickedOutside(int x, int y, int mouseX, int mouseY, int button) {
         selected = false;
-        if (previouslySelected) {
-            previouslySelected = false;
-            onSelectedImpl(false);
-        }
+        setSelected(selected);
         mouseClickedOutsideImpl(x, y, mouseX, mouseY, button);
     }
 
@@ -124,16 +121,25 @@ public abstract class BasicComponent implements Component {
     @Override
     public boolean mouseClicked(int x, int y, int mouseX, int mouseY, int button) {
         if (selectable) {
-            selected = true;
-            if (!previouslySelected) {
-                previouslySelected = true;
-                onSelectedImpl(true);
-            }
+            setSelected(true);
         }
         if (onClickedConsumer != null) {
             onClickedConsumer.accept(this);
         }
         return mouseClickedImpl(x, y, mouseX, mouseY, button);
+    }
+
+    /**
+     * Sets if this component is selected
+     * <p>This can break stuff if other stuff isn't unselected first, so be careful
+     * @param value Selected
+     */
+    public void setSelected(boolean value) {
+        selected = value;
+        if (previouslySelected != value) {
+            previouslySelected = value;
+            onSelectedImpl(!value);
+        }
     }
 
     /**
