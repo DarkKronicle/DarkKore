@@ -33,6 +33,8 @@ public abstract class BasicComponent implements Component {
     /** A {@link Consumer} of this when stopped hovered */
     @Getter @Setter private Consumer<BasicComponent> onHoveredStoppedConsumer = null;
 
+    @Getter @Setter private Consumer<BasicComponent> onClickedConsumer = null;
+
     /** A z offset to apply right before rendering */
     @Getter @Setter protected int zOffset = 0;
 
@@ -124,6 +126,9 @@ public abstract class BasicComponent implements Component {
                 previouslySelected = true;
                 onSelectedImpl(true);
             }
+        }
+        if (onClickedConsumer != null) {
+            onClickedConsumer.accept(this);
         }
         return mouseClickedImpl(x, y, mouseX, mouseY, button);
     }
