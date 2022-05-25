@@ -1,6 +1,7 @@
 package io.github.darkkronicle.darkkore.config.options;
 
 import com.electronwill.nightconfig.core.Config;
+import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
 import lombok.Getter;
 
 public class NumberOption<N extends Number & Comparable<N>> extends BasicOption<N> {
@@ -28,13 +29,13 @@ public class NumberOption<N extends Number & Comparable<N>> extends BasicOption<
     }
 
     @Override
-    public void load(Config config) {
+    public void load(ConfigObject config) {
         super.load(config);
         correctValue();
     }
 
     @Override
-    public void save(Config config) {
+    public void save(ConfigObject config) {
         correctValue();
         super.save(config);
     }

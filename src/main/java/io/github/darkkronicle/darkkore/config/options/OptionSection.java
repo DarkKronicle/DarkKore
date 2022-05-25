@@ -1,9 +1,8 @@
 package io.github.darkkronicle.darkkore.config.options;
 
 import com.electronwill.nightconfig.core.Config;
-import io.github.darkkronicle.darkkore.config.options.BasicOption;
-import io.github.darkkronicle.darkkore.config.options.Option;
-import io.github.darkkronicle.darkkore.config.options.OptionHolder;
+import io.github.darkkronicle.darkkore.config.ConfigHolder;
+import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +32,12 @@ public class OptionSection extends BasicOption<List<Option<?>>> implements Optio
     }
 
     @Override
-    public void save(Config config) {
-        Optional<Config> sub = config.getOptional(key);
-        Config conf;
+    public void save(ConfigObject config) {
+        Optional<ConfigObject> sub = config.get(key);
+        ConfigObject conf;
         if (sub.isEmpty()) {
-            conf = config.createSubConfig();
-            config.add(key, conf);
+            conf = config.createNew();
+            config.set(key, conf);
         } else {
             conf = sub.get();
         }
@@ -48,7 +47,13 @@ public class OptionSection extends BasicOption<List<Option<?>>> implements Optio
     }
 
     @Override
-    public void load(Config config) {
-
+    public void load(ConfigObject config) {
+        ConfigObject nest = config.get(key);
+        if (nest == null) {
+            return;
+        }
+        for (Option<?> option : getOptions()) {
+            option.load(nest);
+        }
     }
 }

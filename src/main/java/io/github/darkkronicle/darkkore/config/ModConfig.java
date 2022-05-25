@@ -2,6 +2,8 @@ package io.github.darkkronicle.darkkore.config;
 
 import com.electronwill.nightconfig.core.file.FileConfig;
 import io.github.darkkronicle.darkkore.DarkKore;
+import io.github.darkkronicle.darkkore.config.impl.FileObject;
+import io.github.darkkronicle.darkkore.config.impl.NightFileObject;
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.config.options.OptionHolder;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import java.util.List;
 public abstract class ModConfig implements OptionHolder, ConfigHolder {
 
     @Getter
-    protected FileConfig config;
+    protected FileObject config;
 
     public abstract File getFile();
 
@@ -25,14 +27,14 @@ public abstract class ModConfig implements OptionHolder, ConfigHolder {
                 DarkKore.LOGGER.error("Couldn't initialize config!", e);
             }
         }
-        config = FileConfig.of(getFile());
+        config = new NightFileObject(FileConfig.of(getFile()));
     }
 
     public void save() {
         setupFileConfig();
         config.load();
         for (Option<?> entry : getOptions()) {
-            entry.save(config);
+            entry.save(config.getConfig());
         }
         config.save();
         config.close();
@@ -41,7 +43,7 @@ public abstract class ModConfig implements OptionHolder, ConfigHolder {
     public void rawLoad() {
         config.load();
         for (Option<?> entry : getOptions()) {
-            entry.load(config);
+            entry.load(config.getConfig());
         }
     }
 

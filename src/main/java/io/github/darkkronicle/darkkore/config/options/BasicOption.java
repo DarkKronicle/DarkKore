@@ -1,6 +1,6 @@
 package io.github.darkkronicle.darkkore.config.options;
 
-import com.electronwill.nightconfig.core.Config;
+import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
 import lombok.Getter;
 
 import java.util.Optional;
@@ -39,12 +39,12 @@ public class BasicOption<T> implements Option<T> {
     }
 
     @Override
-    public void save(Config config) {
+    public void save(ConfigObject config) {
         config.set(key, value);
     }
 
     @Override
-    public void load(Config config) {
+    public void load(ConfigObject config) {
         if (!config.contains(key)) {
             value = defaultValue;
             return;

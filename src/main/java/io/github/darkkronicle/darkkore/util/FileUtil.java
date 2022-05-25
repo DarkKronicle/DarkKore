@@ -2,9 +2,10 @@ package io.github.darkkronicle.darkkore.util;
 
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.MinecraftClient;
+import org.apache.commons.io.IOUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -61,6 +62,18 @@ public class FileUtil {
             return Optional.of(getFilesWithExtension(directory, extension));
         } catch (IOException e) {
             return Optional.empty();
+        }
+    }
+
+    public void write(String data, File file) throws IOException {
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
+            writer.write(data);
+        }
+    }
+
+    public String read(File file) throws IOException {
+        try (FileInputStream reader = new FileInputStream(file)) {
+            return IOUtils.toString(reader, StandardCharsets.UTF_8);
         }
     }
 
