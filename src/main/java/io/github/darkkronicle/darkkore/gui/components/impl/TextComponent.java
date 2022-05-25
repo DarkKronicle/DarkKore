@@ -109,7 +109,7 @@ public class TextComponent extends BasicComponent {
      * Updates the height to the amount of lines
      */
     protected void updateHeight() {
-        height = topPadding + bottomPadding + lines.size() * (MinecraftClient.getInstance().textRenderer.fontHeight + linePadding);
+        height = topPadding + bottomPadding + lines.size() * (MinecraftClient.getInstance().textRenderer.fontHeight) + ((lines.size() - 1) * linePadding);
     }
 
     /** {@inheritDoc} */

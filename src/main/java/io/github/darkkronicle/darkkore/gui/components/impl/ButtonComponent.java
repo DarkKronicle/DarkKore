@@ -58,7 +58,6 @@ public class ButtonComponent extends TextComponent {
         this.background = background;
         this.hover = hover;
         this.onClick = onClick;
-        bottomPadding = 0;
         leftPadding = 4;
         rightPadding = 4;
         center = true;
