@@ -3,6 +3,7 @@ package io.github.darkkronicle.darkkore.gui;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
@@ -17,6 +18,8 @@ public abstract class ComponentScreen extends Screen {
 
     @Getter
     private List<Component> components = new ArrayList<>();
+
+    @Getter @Setter private Screen parent;
 
     protected ComponentScreen() {
         super(new LiteralText(""));
@@ -96,5 +99,10 @@ public abstract class ComponentScreen extends Screen {
             }
         }
         return super.charTyped(chr, modifiers);
+    }
+
+    @Override
+    public void close() {
+        client.setScreen(parent);
     }
 }

@@ -138,7 +138,7 @@ public abstract class BasicComponent implements Component {
         selected = value;
         if (previouslySelected != value) {
             previouslySelected = value;
-            onSelectedImpl(!value);
+            onSelectedImpl(value);
         }
     }
 
