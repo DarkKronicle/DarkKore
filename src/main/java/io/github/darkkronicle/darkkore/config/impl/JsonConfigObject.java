@@ -127,12 +127,12 @@ public class JsonConfigObject implements ConfigObject {
         if (!contains(key)) {
             return Optional.empty();
         }
-        return Optional.of((T) object.get(key));
+        return Optional.of((T) getAs(object.get(key)));
     }
 
     @Override
     public <T> T get(String key) {
-        return (T) object.get(key);
+        return (T) getAs(object.get(key));
     }
 
     @Override

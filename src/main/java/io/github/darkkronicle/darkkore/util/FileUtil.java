@@ -5,9 +5,12 @@ import net.minecraft.client.MinecraftClient;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,6 +67,28 @@ public class FileUtil {
             return Optional.empty();
         }
     }
+
+    /**
+     * Gets a resource from src/resources. Works in an emulated environment.
+     *
+     * @param path Path from the resources to get
+     * @return Stream of the resource
+     * @throws URISyntaxException If the resource doesn't exist
+     * @throws IOException Can't be opened
+     */
+    public static InputStream getResource(String path) throws URISyntaxException, IOException {
+        URI uri = Thread.currentThread().getContextClassLoader().getResource(path).toURI();
+        if (uri.getScheme().contains("jar")) {
+            // Not IDE
+            // jar.toString() begins with file:
+            // Trim it out
+            return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+        } else {
+            // IDE
+            return new FileInputStream(Paths.get(uri).toFile());
+        }
+    }
+
 
     public void write(String data, File file) throws IOException {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
