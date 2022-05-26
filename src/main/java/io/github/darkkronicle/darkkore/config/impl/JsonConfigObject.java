@@ -24,6 +24,7 @@ public class JsonConfigObject implements ConfigObject {
         if (element == null) {
             throw new IllegalArgumentException("Not a correct type for JSON!");
         }
+        object.add(key, element);
     }
 
     public JsonElement getElement(Object value) {
@@ -80,7 +81,7 @@ public class JsonConfigObject implements ConfigObject {
         for (T v : value) {
             array.add(getElement(v));
         }
-        set(key, array);
+        object.add(key, array);
     }
 
     @Override
