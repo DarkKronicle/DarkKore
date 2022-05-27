@@ -43,11 +43,6 @@ public class StringOptionComponent extends TextOptionComponent<String, StringOpt
         return new FluidText("§7§o" + StringUtil.translate("darkkore.optiontype.info.string"));
     }
 
-    protected void onChanged(String string) {
-        option.setValue(string);
-        onUpdate();
-    }
-
     @Override
     public Component getMainComponent() {
         textBox = new TextBoxComponent(option.getValue(),150, 14, this::onChanged);
