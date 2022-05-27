@@ -19,6 +19,9 @@ public class StringOptionComponent extends TextOptionComponent<String, StringOpt
 
     @Override
     public boolean isValid(String string) {
+        if (option.getCheck() != null) {
+            return option.getCheck().test(string);
+        }
         return true;
     }
 
@@ -34,6 +37,9 @@ public class StringOptionComponent extends TextOptionComponent<String, StringOpt
 
     @Override
     public Text getConfigTypeInfo() {
+        if (option.getTypeKey() != null) {
+            return new FluidText("§7§o" + StringUtil.translate(option.getTypeKey()));
+        }
         return new FluidText("§7§o" + StringUtil.translate("darkkore.optiontype.info.string"));
     }
 
