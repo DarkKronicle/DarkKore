@@ -7,6 +7,7 @@ import io.github.darkkronicle.darkkore.gui.components.transform.MultiComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.PositionedComponent;
 import io.github.darkkronicle.darkkore.util.*;
 import lombok.Getter;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
@@ -21,8 +22,8 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
     @Getter
     protected Component hoverComponent = null;
 
-    public OptionComponent(T option, int width, int height) {
-        super(width, height);
+    public OptionComponent(Screen parent, T option, int width, int height) {
+        super(parent, width, height);
         this.option = option;
         addComponents(new Dimensions(getBoundingBox()));
         createHover();
@@ -49,7 +50,7 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
     protected void createHover() {
         FluidText fluid = new FluidText(StringUtil.translateToText(option.getInfoKey()));
         fluid.append("\n").append(getConfigTypeInfo());
-        TextComponent text = new TextComponent(width - 2, -1, fluid);
+        TextComponent text = new TextComponent(parent, width - 2, -1, fluid);
         text.setLeftPadding(4);
         text.setRightPadding(4);
         text.setBackgroundColor(new Color(20, 20, 20, 255));
@@ -62,10 +63,10 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
 
 
     public void addComponents(Dimensions bounds) {
-        TextComponent nameComp = new TextComponent(bounds.getWidth() - 160, -1, StringUtil.translateToText(option.getNameKey()));
+        TextComponent nameComp = new TextComponent(parent, bounds.getWidth() - 160, -1, StringUtil.translateToText(option.getNameKey()));
         addComponent(
                 new PositionedComponent(
-                        nameComp,
+                        parent, nameComp,
                         4,
                         3,
                         nameComp.getBoundingBox().width(),
@@ -76,14 +77,14 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
         Component comp = getMainComponent();
         addComponent(
                 new PositionedComponent(
-                        comp,
+                        parent, comp,
                         bounds.getWidth() - comp.getBoundingBox().width() - 20,
                         3,
                         comp.getBoundingBox().width(),
                         comp.getBoundingBox().height()
                 )
         );
-        reset =  new ResetButtonComponent(14,
+        reset =  new ResetButtonComponent(parent, 14,
                 new Color(100, 100, 100, 150),
                 new Color(150, 150, 150, 150),
                 button -> {
@@ -94,7 +95,7 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
         );
         addComponent(
                 new PositionedComponent(
-                        reset,
+                        parent, reset,
                         bounds.getWidth() - 16,
                         3,
                         14,

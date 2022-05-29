@@ -7,6 +7,7 @@ import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,18 +61,26 @@ public abstract class BasicComponent implements Component {
     protected boolean selected = false;
 
     /**
-     * Constructs a {@link BasicComponent} with no background or outline color
+     * The parent screen that this object is part of
      */
-    public BasicComponent() {
-        this(null, null);
+    @Getter protected Screen parent;
+
+    /**
+     * Constructs a {@link BasicComponent} with no background or outline color
+     * @param parent Screen this object is part of
+     */
+    public BasicComponent(Screen parent) {
+        this(parent, null, null);
     }
 
     /**
      * Constructs a {@link BasicComponent} with a background and outline {@link Color}
+     * @param parent Screen this object is part of
      * @param backgroundColor Color to render the background. If null no background.
      * @param outlineColor Color to render the outline. If null no outline.
      */
-    public BasicComponent(@Nullable Color backgroundColor, @Nullable  Color outlineColor) {
+    public BasicComponent(Screen parent, @Nullable Color backgroundColor, @Nullable Color outlineColor) {
+        this.parent = parent;
         this.backgroundColor = backgroundColor;
         this.outlineColor = outlineColor;
     }

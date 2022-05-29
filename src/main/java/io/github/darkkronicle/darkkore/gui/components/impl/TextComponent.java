@@ -8,6 +8,7 @@ import io.github.darkkronicle.darkkore.util.text.StyleFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
@@ -52,20 +53,23 @@ public class TextComponent extends BasicComponent {
 
     /**
      * Creates a new object and sets the width and height automatically.
+     * @param parent
      * @param text {@link Text} to display. Supports new lines.
      */
-    public TextComponent(Text text) {
-        this(-1, -1, text);
+    public TextComponent(Screen parent, Text text) {
+        this(parent, -1, -1, text);
     }
 
     /**
      * Creates a new object with a specified width and height. If width/height are less than 0
      * then {@link #autoUpdateWidth}/{@link #autoUpdateHeight} are set.
+     * @param parent
      * @param width Width of the object. Can be less than 0.
      * @param height Height of the object. Can be less than 0.
      * @param text {@link Text} to display. Supports new lines.
      */
-    public TextComponent(int width, int height, Text text) {
+    public TextComponent(Screen parent, int width, int height, Text text) {
+        super(parent);
         this.width = width;
         this.height = height;
         if (width < 0) {

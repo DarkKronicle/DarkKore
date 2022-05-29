@@ -6,8 +6,9 @@
   "mixins": [
   ],
   "client": [
+    "MixinClientPlayNetworkHandler",
     "MixinMinecraftClient",
-    "MixinClientPlayNetworkHandler"
+    "MixinKeyboard"
   ],
   "injectors": {
     "defaultRequire": 1

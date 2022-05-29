@@ -9,6 +9,7 @@ import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,12 +42,14 @@ public class TextBoxComponent extends BasicComponent {
 
     /**
      * Creates a new text box component
+     * @param parent
      * @param message The starting message in the text box.
      * @param width Width of the box
      * @param height Height of the box
      * @param changedListener {@link Consumer} for when the text is changed
      */
-    public TextBoxComponent(@Nullable  String message, int width, int height, Consumer<String> changedListener) {
+    public TextBoxComponent(Screen parent, @Nullable String message, int width, int height, Consumer<String> changedListener) {
+        super(parent);
         this.width = width;
         this.height = height;
         textField = new TextBox(MinecraftClient.getInstance().textRenderer, 0, 0, width - leftPadding - rightPadding, height - topPadding - bottomPadding, new FluidText());

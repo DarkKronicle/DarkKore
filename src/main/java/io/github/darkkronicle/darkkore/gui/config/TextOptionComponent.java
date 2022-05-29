@@ -4,6 +4,7 @@ import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.gui.components.impl.TextBoxComponent;
 import io.github.darkkronicle.darkkore.util.Color;
+import net.minecraft.client.gui.screen.Screen;
 
 public abstract class TextOptionComponent<N, T extends Option<N>> extends OptionComponent<N, T> {
 
@@ -11,8 +12,8 @@ public abstract class TextOptionComponent<N, T extends Option<N>> extends Option
 
     protected boolean failure = false;
 
-    public TextOptionComponent(T option, int width) {
-        super(option, width, 20);
+    public TextOptionComponent(Screen parent, T option, int width) {
+        super(parent, option, width, 20);
     }
 
     public abstract boolean isValid(String string);
@@ -48,7 +49,7 @@ public abstract class TextOptionComponent<N, T extends Option<N>> extends Option
 
     @Override
     public Component getMainComponent() {
-        textBox = new TextBoxComponent(getStringValue(),150, 14, this::onChanged);
+        textBox = new TextBoxComponent(parent, getStringValue(),150, 14, this::onChanged);
         textBox.setBackgroundColor(new Color(50, 50, 50, 150));
         return textBox;
     }

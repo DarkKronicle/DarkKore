@@ -4,6 +4,7 @@ import io.github.darkkronicle.darkkore.DarkKore;
 import io.github.darkkronicle.darkkore.gui.components.impl.IconButtonComponent;
 import io.github.darkkronicle.darkkore.gui.components.impl.ButtonComponent;
 import io.github.darkkronicle.darkkore.util.Color;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Consumer;
@@ -12,8 +13,8 @@ public class ResetButtonComponent extends IconButtonComponent {
 
     private static final Identifier ADD_ICON = new Identifier(DarkKore.MOD_ID, "textures/gui/icons/refresh.png");
 
-    public ResetButtonComponent(int size, Color background, Color hover, Consumer<ButtonComponent> onClick) {
-        super(null, size, size, 48, 48, background, hover, onClick);
+    public ResetButtonComponent(Screen parent, int size, Color background, Color hover, Consumer<ButtonComponent> onClick) {
+        super(parent, null, size, size, 48, 48, background, hover, onClick);
         topPadding = 0;
         bottomPadding = 0;
         leftPadding = 0;

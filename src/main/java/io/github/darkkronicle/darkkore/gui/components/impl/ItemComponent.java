@@ -6,6 +6,7 @@ import io.github.darkkronicle.darkkore.util.Rectangle;
 import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,25 +20,29 @@ public class ItemComponent extends BasicComponent {
 
     /**
      * Creates an item component with an {@link Item} instead of {@link ItemStack}
+     * @param parent
      * @param item Item to use
      */
-    public ItemComponent(Item item) {
-        this(new ItemStack(item));
+    public ItemComponent(Screen parent, Item item) {
+        this(parent, new ItemStack(item));
     }
 
     /**
      * Creates an item component with an {@link ItemStack}
+     * @param parent
      * @param stack Stack to use
      */
-    public ItemComponent(ItemStack stack) {
+    public ItemComponent(Screen parent, ItemStack stack) {
+        super(parent);
         this.stack = stack;
     }
 
     /**
      * Creates an item component without a stack. This just renders the stack portion as blank.
+     * @param parent
      */
-    public ItemComponent() {
-        this((ItemStack) null);
+    public ItemComponent(Screen parent) {
+        this(parent, (ItemStack) null);
     }
 
     /** {@inheritDoc} */

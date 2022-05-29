@@ -4,6 +4,7 @@ import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.SoundUtil;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 import java.util.function.Consumer;
@@ -29,13 +30,14 @@ public class ButtonComponent extends TextComponent {
 
     /**
      * Creates a new button with automatic width/height
+     * @param parent
      * @param text {@link Text} to display
      * @param background {@link Color} for the background
      * @param hover {@link Color} for hovering
      * @param onClick {@link Consumer} to trigger on click
      */
-    public ButtonComponent(Text text, Color background, Color hover, Consumer<ButtonComponent> onClick) {
-        super(text);
+    public ButtonComponent(Screen parent, Text text, Color background, Color hover, Consumer<ButtonComponent> onClick) {
+        super(parent, text);
         this.background = background;
         this.hover = hover;
         this.onClick = onClick;
@@ -45,6 +47,7 @@ public class ButtonComponent extends TextComponent {
 
     /**
      * Creates a new button with automatic width/height
+     * @param parent
      * @param width Width of the button. If less than 0 it automatically is set.
      * @param height Height of the button. If less than 0 it automatically is set.
      * @param text {@link Text} to display
@@ -52,8 +55,8 @@ public class ButtonComponent extends TextComponent {
      * @param hover {@link Color} for hovering
      * @param onClick {@link Consumer} to trigger on click
      */
-    public ButtonComponent(int width, int height, Text text, Color background, Color hover, Consumer<ButtonComponent> onClick) {
-        super(width, height, text);
+    public ButtonComponent(Screen parent, int width, int height, Text text, Color background, Color hover, Consumer<ButtonComponent> onClick) {
+        super(parent, width, height, text);
         setBackgroundColor(background);
         this.background = background;
         this.hover = hover;
@@ -70,7 +73,9 @@ public class ButtonComponent extends TextComponent {
             return true;
         }
         playInterfaceSound();
-        onClick.accept(this);
+        if (onClick != null) {
+            onClick.accept(this);
+        }
         return true;
     }
 

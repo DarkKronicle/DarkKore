@@ -3,9 +3,14 @@ package io.github.darkkronicle.darkkore.settings;
 import io.github.darkkronicle.darkkore.config.ModConfig;
 import io.github.darkkronicle.darkkore.config.options.*;
 import io.github.darkkronicle.darkkore.gui.config.DoubleOptionComponent;
+import io.github.darkkronicle.darkkore.hotkeys.HotkeySettings;
+import io.github.darkkronicle.darkkore.hotkeys.HotkeySettingsOption;
+import io.github.darkkronicle.darkkore.profiles.PlayerContextCheck;
 import io.github.darkkronicle.darkkore.util.FileUtil;
+import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DarkKoreConfig extends ModConfig {
@@ -26,6 +31,9 @@ public class DarkKoreConfig extends ModConfig {
 
     public final DoubleOption doubleOption = new DoubleOption("doubleOption", "darkkore.option.doubleoption", "darkkore.option.info.integeroption", 5.5, 0, 10);
 
+    public final HotkeySettingsOption openGui = new HotkeySettingsOption("openGui", "darkkore.option.opengui", "darkkore.option.info.optengui",
+            new HotkeySettings(false, false, true, new ArrayList<>(List.of(GLFW.GLFW_KEY_J)), PlayerContextCheck.getDefault()));
+
     public static DarkKoreConfig getInstance() {
         return INSTANCE;
     }
@@ -42,7 +50,7 @@ public class DarkKoreConfig extends ModConfig {
 
     @Override
     public List<Option<?>> getOptions() {
-        return List.of(debug, cool, soundType, stringOption, integerOption, doubleOption);
+        return List.of(debug, cool, soundType, stringOption, integerOption, doubleOption, openGui);
     }
 
     @Override

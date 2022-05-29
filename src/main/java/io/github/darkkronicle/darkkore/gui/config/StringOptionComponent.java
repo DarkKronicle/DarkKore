@@ -6,14 +6,15 @@ import io.github.darkkronicle.darkkore.gui.components.impl.TextBoxComponent;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 public class StringOptionComponent extends TextOptionComponent<String, StringOption> {
 
     private TextBoxComponent textBox;
 
-    public StringOptionComponent(StringOption option, int width) {
-        super(option, width);
+    public StringOptionComponent(Screen parent, StringOption option, int width) {
+        super(parent, option, width);
         selectable = true;
     }
 
@@ -45,7 +46,7 @@ public class StringOptionComponent extends TextOptionComponent<String, StringOpt
 
     @Override
     public Component getMainComponent() {
-        textBox = new TextBoxComponent(option.getValue(),150, 14, this::onChanged);
+        textBox = new TextBoxComponent(parent, option.getValue(),150, 14, this::onChanged);
         textBox.setBackgroundColor(new Color(50, 50, 50, 150));
         return textBox;
     }

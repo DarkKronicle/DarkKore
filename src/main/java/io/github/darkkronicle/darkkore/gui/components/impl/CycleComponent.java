@@ -7,6 +7,7 @@ import io.github.darkkronicle.darkkore.util.StringUtil;
 import io.github.darkkronicle.darkkore.util.text.StyleFormatter;
 import lombok.Getter;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 import java.util.function.Consumer;
@@ -22,17 +23,19 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
 
     /**
      * Creates a {@link CycleComponent}
+     * @param parent
      * @param entry {@link T} current entry
      * @param background {@link Color} for the background
      * @param hover {@link Color} for on hover
      * @param onClick {@link Consumer} for when the current selection changes
      */
-    public CycleComponent(T entry, Color background, Color hover, Consumer<T> onClick) {
-        this(entry, -1, -1, background, hover, onClick);
+    public CycleComponent(Screen parent, T entry, Color background, Color hover, Consumer<T> onClick) {
+        this(parent, entry, -1, -1, background, hover, onClick);
     }
 
     /**
      * Creates a {@link CycleComponent} with a specified width and height. If width/height are less than 0 it will automatically set them
+     * @param parent
      * @param entry {@link T} current entry
      * @param width Width
      * @param height Height
@@ -40,8 +43,8 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
      * @param hover {@link Color} for on hover
      * @param onClick {@link Consumer} for when the current selection changes
      */
-    public CycleComponent(T entry, int width, int height, Color background, Color hover, Consumer<T> onClick) {
-        super(width, height, StringUtil.translateToText(entry.getDisplayKey()), background, hover, null);
+    public CycleComponent(Screen parent, T entry, int width, int height, Color background, Color hover, Consumer<T> onClick) {
+        super(parent, width, height, StringUtil.translateToText(entry.getDisplayKey()), background, hover, null);
         this.entry = entry;
         setOnClick(button -> onClick.accept(getEntry()));
         if (autoUpdateWidth) {

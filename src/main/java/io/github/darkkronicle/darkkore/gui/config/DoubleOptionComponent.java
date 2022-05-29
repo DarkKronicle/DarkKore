@@ -1,15 +1,15 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
 import io.github.darkkronicle.darkkore.config.options.DoubleOption;
-import io.github.darkkronicle.darkkore.config.options.IntegerOption;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 public class DoubleOptionComponent extends TextOptionComponent<Double, DoubleOption> {
 
-    public DoubleOptionComponent(DoubleOption option, int width) {
-        super(option, width);
+    public DoubleOptionComponent(Screen parent, DoubleOption option, int width) {
+        super(parent, option, width);
     }
 
     @Override

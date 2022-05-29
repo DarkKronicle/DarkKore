@@ -3,6 +3,7 @@ package io.github.darkkronicle.darkkore.gui.components.transform;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -13,8 +14,8 @@ import net.minecraft.client.util.math.MatrixStack;
  */
 public abstract class OffsetComponent extends WrapperComponent {
 
-    public OffsetComponent(Component component, int width, int height) {
-        super(component, width, height);
+    public OffsetComponent(Screen parent, Component component, int width, int height) {
+        super(parent, component, width, height);
     }
 
     /**

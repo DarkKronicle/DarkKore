@@ -7,6 +7,7 @@ import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -22,12 +23,12 @@ public class IconButtonComponent extends ButtonComponent {
 
     @Setter @Getter private Color shaderColor = new Color(255, 255, 255, 255);
 
-    public IconButtonComponent(Identifier icon, int iconSize, Color background, Color hover, Consumer<ButtonComponent> onClick) {
-        this(icon, iconSize + 4, iconSize + 4, iconSize, iconSize, background, hover, onClick);
+    public IconButtonComponent(Screen parent, Identifier icon, int iconSize, Color background, Color hover, Consumer<ButtonComponent> onClick) {
+        this(parent, icon, iconSize + 4, iconSize + 4, iconSize, iconSize, background, hover, onClick);
     }
 
-    public IconButtonComponent(Identifier icon, int width, int height, int iconWidth, int iconHeight, Color background, Color hover, Consumer<ButtonComponent> onClick) {
-        super(width, height, new FluidText(), background, hover, onClick);
+    public IconButtonComponent(Screen parent, Identifier icon, int width, int height, int iconWidth, int iconHeight, Color background, Color hover, Consumer<ButtonComponent> onClick) {
+        super(parent, width, height, new FluidText(), background, hover, onClick);
         this.icon = icon;
         this.iconWidth = iconWidth;
         this.iconHeight = iconHeight;

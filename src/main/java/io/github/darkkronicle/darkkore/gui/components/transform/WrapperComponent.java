@@ -6,6 +6,7 @@ import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -33,11 +34,13 @@ public abstract class WrapperComponent extends BasicComponent {
     /**
      * Creates a {@link WrapperComponent} with specified width height. If width/height are less than 0,
      * then {@link #useComponentWidth}/{@link #useComponentHeight} are set respectively.
+     * @param parent
      * @param component The {@link Component} to wrap
      * @param width Width to use. If less than 0 the width of the {@link #component} is used
      * @param height Height to use. If less than 0 the height of the {@link #component} is used
      */
-    public WrapperComponent(Component component, int width, int height) {
+    public WrapperComponent(Screen parent, Component component, int width, int height) {
+        super(parent);
         this.width = width;
         this.height = height;
         this.useComponentWidth = width < 0;
@@ -113,6 +116,12 @@ public abstract class WrapperComponent extends BasicComponent {
             return component.keyPressed(keyCode, scanCode, modifiers);
         }
         return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void onDestroy() {
+        component.onDestroy();
     }
 
 }

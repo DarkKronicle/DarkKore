@@ -3,12 +3,13 @@ package io.github.darkkronicle.darkkore.gui.config;
 import io.github.darkkronicle.darkkore.config.options.IntegerOption;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 public class IntegerOptionComponent extends TextOptionComponent<Integer, IntegerOption> {
 
-    public IntegerOptionComponent(IntegerOption option, int width) {
-        super(option, width);
+    public IntegerOptionComponent(Screen parent, IntegerOption option, int width) {
+        super(parent, option, width);
     }
 
     @Override

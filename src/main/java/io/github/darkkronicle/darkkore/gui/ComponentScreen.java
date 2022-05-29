@@ -102,6 +102,13 @@ public abstract class ComponentScreen extends Screen {
     }
 
     @Override
+    public void removed() {
+        for (Component comp : components) {
+            comp.onDestroy();
+        }
+    }
+
+    @Override
     public void close() {
         client.setScreen(parent);
     }

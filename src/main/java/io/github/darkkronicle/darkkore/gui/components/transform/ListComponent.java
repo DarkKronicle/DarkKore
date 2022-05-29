@@ -5,6 +5,7 @@ import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -47,11 +48,12 @@ public class ListComponent extends MultiComponent {
      * <p> If vertical is set to false and width is auto update, no new lines will be added. If vertical is true and height is not auto update,
      * only the first few elements will render. It is recommended to have height be auto update.
      * @param width Width
+     * @param parent
      * @param height Height
      * @param vertical Vertical
      */
-    public ListComponent(int width, int height, boolean vertical) {
-        super(width, height);
+    public ListComponent(int width, Screen parent, int height, boolean vertical) {
+        super(parent, width, height);
         this.vertical = vertical;
     }
 

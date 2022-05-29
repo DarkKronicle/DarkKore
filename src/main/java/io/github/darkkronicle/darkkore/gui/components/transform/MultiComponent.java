@@ -6,6 +6,7 @@ import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
@@ -39,10 +40,12 @@ public class MultiComponent extends BasicComponent {
     /**
      * Constructs a {@link MultiComponent} with specified width and height. If width/height are below 0
      * their respective {@link #autoUpdateWidth}/{@link #autoUpdateHeight} are set to true.
+     * @param parent
      * @param width Width (if below 0 width is auto updated)
      * @param height Height (if below 1 height is auto updated)
      */
-    public MultiComponent(int width, int height) {
+    public MultiComponent(Screen parent, int width, int height) {
+        super(parent);
         this.width = width;
         this.height = height;
         this.selectable = true;
@@ -240,6 +243,14 @@ public class MultiComponent extends BasicComponent {
             }
         }
         return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void onDestroy() {
+        for (Component component : components) {
+            component.onDestroy();
+        }
     }
 
 }

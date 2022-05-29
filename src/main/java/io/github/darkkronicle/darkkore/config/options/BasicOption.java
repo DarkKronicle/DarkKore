@@ -28,33 +28,37 @@ public class BasicOption<T> implements Option<T> {
     @Override
     public T getValue() {
         if (value == null) {
-            return defaultValue;
+            return getDefaultValue();
         }
         return value;
     }
 
     @Override
     public void setValue(T value) {
-        this.value = value;
+        if (value == null) {
+            this.value = getDefaultValue();
+        } else {
+            this.value = value;
+        }
     }
 
     @Override
     public void save(ConfigObject config) {
-        config.set(key, value);
+        config.set(key, getValue());
     }
 
     @Override
     public void load(ConfigObject config) {
         if (!config.contains(key)) {
-            value = defaultValue;
+            setValue(getDefaultValue());
             return;
         }
         Optional<T> option = config.getOptional(key);
         if (option.isEmpty()) {
-            value = defaultValue;
+            setValue(defaultValue);
             return;
         }
-        value = option.get();
+        setValue(option.get());
     }
 
     @Override

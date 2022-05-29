@@ -6,6 +6,7 @@ import io.github.darkkronicle.darkkore.util.text.StyleFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 import java.util.Map;
@@ -23,17 +24,19 @@ public class ToggleComponent extends ButtonComponent {
 
     /**
      * Creates a new toggle button with automatic width/height and display text as yes/no
+     * @param parent
      * @param value Current value of the button
      * @param background {@link Color} of the background
      * @param hover {@link Color} for hover
      * @param onClick {@link Consumer} that takes a boolean for on click
      */
-    public ToggleComponent(boolean value, Color background, Color hover, Consumer<Boolean> onClick) {
-        this(value, -1, -1, background, hover, onClick);
+    public ToggleComponent(Screen parent, boolean value, Color background, Color hover, Consumer<Boolean> onClick) {
+        this(parent, value, -1, -1, background, hover, onClick);
     }
 
     /**
      * Creates a new toggle button with display text as yes/no
+     * @param parent
      * @param value Current value of the button
      * @param width Width of the button. If less than 0 it is automatically set.
      * @param height Height of the button. If less than 0 it is automatically set.
@@ -41,14 +44,15 @@ public class ToggleComponent extends ButtonComponent {
      * @param hover {@link Color} for hover
      * @param onClick {@link Consumer} that takes a boolean for on click
      */
-    public ToggleComponent(boolean value, int width, int height, Color background, Color hover, Consumer<Boolean> onClick) {
-        this(new FluidText("%s"), value, width, height, background, hover, onClick);
+    public ToggleComponent(Screen parent, boolean value, int width, int height, Color background, Color hover, Consumer<Boolean> onClick) {
+        this(parent, new FluidText("%s"), value, width, height, background, hover, onClick);
     }
 
     /**
      * Creates a new toggle button with automatic width/height and specified display text.
      *
      * <p>The display text should be a text object with %s somewhere in it. That will be replaced with yes/no
+     * @param parent
      * @param display The display value for text. Will replace %s with yes/no
      * @param value Current value of the button
      * @param width Width of the button. If less than 0 it is automatically set.
@@ -57,8 +61,8 @@ public class ToggleComponent extends ButtonComponent {
      * @param hover {@link Color} for hover
      * @param onClick {@link Consumer} that takes a boolean for on click
      */
-    public ToggleComponent(Text display, boolean value, int width, int height, Color background, Color hover, Consumer<Boolean> onClick) {
-        super(width, height, new FluidText("Blank"), background, hover, null);
+    public ToggleComponent(Screen parent, Text display, boolean value, int width, int height, Color background, Color hover, Consumer<Boolean> onClick) {
+        super(parent, width, height, new FluidText("Blank"), background, hover, null);
         this.value = value;
         setOnClick(button -> onClick.accept(getValue()));
         this.display = display;

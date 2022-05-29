@@ -2,6 +2,7 @@ package io.github.darkkronicle.darkkore.gui.components.impl;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 
@@ -16,8 +17,8 @@ public class InventoryItemComponent extends ItemComponent {
     /** Slot in the inventory to get from */
     @Getter @Setter protected int index;
 
-    public InventoryItemComponent(Inventory inventory, int index) {
-        super();
+    public InventoryItemComponent(Screen parent, Inventory inventory, int index) {
+        super(parent);
         this.inventory = inventory;
         this.index = index;
     }

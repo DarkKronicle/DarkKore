@@ -5,6 +5,7 @@ import io.github.darkkronicle.darkkore.util.*;
 import io.github.darkkronicle.darkkore.util.render.ScissorsStack;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Util;
 
@@ -29,8 +30,8 @@ public class ScrollComponent extends OffsetComponent {
     /** If the scroll should apply vertically or horizontally */
     @Getter private final boolean vertical;
 
-    public ScrollComponent(Component component, int width, int height, boolean vertical) {
-        super(component, width, height);
+    public ScrollComponent(Screen parent, Component component, int width, int height, boolean vertical) {
+        super(parent, component, width, height);
         this.vertical = vertical;
         this.selectable = true;
     }

@@ -2,13 +2,13 @@ package io.github.darkkronicle.darkkore.gui;
 
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.gui.config.OptionComponent;
+import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BiFunction;
 
 public class OptionComponentHolder {
 
@@ -29,9 +29,9 @@ public class OptionComponentHolder {
         Collections.sort(converters);
     }
 
-    public OptionComponent<?, ?> convert(Option<?> option, int width) {
+    public OptionComponent<?, ?> convert(Screen parent, Option<?> option, int width) {
         for (OptionToComponent converter : converters) {
-            Optional<OptionComponent<?, ?>> converted = converter.getOption(option, width);
+            Optional<OptionComponent<?, ?>> converted = converter.getOption(parent, option, width);
             if (converted.isPresent()) {
                 return converted.get();
             }
@@ -46,8 +46,8 @@ public class OptionComponentHolder {
     public static OptionToComponent createOption(Integer order, OptionToComponent component) {
         return new OptionToComponent() {
             @Override
-            public Optional<OptionComponent<?, ?>> getOption(Option<?> option, int width) {
-                return component.getOption(option, width);
+            public Optional<OptionComponent<?, ?>> getOption(Screen parent, Option<?> option, int width) {
+                return component.getOption(parent, option, width);
             }
 
             @Override
@@ -59,7 +59,7 @@ public class OptionComponentHolder {
 
     public interface OptionToComponent extends Comparable<OptionToComponent> {
 
-        Optional<OptionComponent<?, ?>> getOption(Option<?> option, int width);
+        Optional<OptionComponent<?, ?>> getOption(Screen parent, Option<?> option, int width);
 
         default Integer order() {
             return 0;

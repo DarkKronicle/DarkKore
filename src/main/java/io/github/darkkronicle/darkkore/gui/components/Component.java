@@ -142,4 +142,9 @@ public interface Component {
         return false;
     }
 
+    /**
+     * Called when the screen closes/the element is destroyed
+     */
+    default void onDestroy() {}
+
 }

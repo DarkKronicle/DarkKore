@@ -15,7 +15,7 @@ public class NightConfigObject implements ConfigObject {
 
     @Override
     public <T> void set(String key, T value) {
-        object.set(key, value);
+        object.set(key, getElement(value));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class NightConfigObject implements ConfigObject {
 
     @Override
     public void set(String key, ConfigObject value) {
-        object.set(key, value);
+        object.set(key, getElement(value));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class NightConfigObject implements ConfigObject {
     }
 
     @Override
-    public ConfigObject createNew() {
+    public NightConfigObject createNew() {
         return new NightConfigObject(object.createSubConfig());
     }
 
@@ -68,12 +68,32 @@ public class NightConfigObject implements ConfigObject {
 
     @Override
     public <T> T get(String key) {
-        return object.get(key);
+        return (T) getAs(object.get(key));
     }
 
     @Override
     public boolean contains(String key) {
         return object.contains(key);
+    }
+
+    public Object getAs(Object object) {
+        if (object instanceof Config) {
+            return new NightConfigObject((Config) object);
+        }
+        return object;
+    }
+
+    public Object getElement(Object object) {
+        if (object instanceof ConfigObject) {
+            ConfigObject config = (ConfigObject) object;
+            NightConfigObject nest = createNew();
+            Config rawObj = nest.object;
+            for (Map.Entry<String, Object> entry : config.getValues().entrySet()) {
+                rawObj.set(entry.getKey(), getElement(entry.getValue()));
+            }
+            return rawObj;
+        }
+        return object;
     }
 
     @Override

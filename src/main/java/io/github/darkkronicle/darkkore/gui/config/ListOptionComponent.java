@@ -8,14 +8,15 @@ import io.github.darkkronicle.darkkore.gui.components.impl.TextComponent;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 public class ListOptionComponent<T extends OptionListEntry<T>> extends OptionComponent<T, ListOption<T>> {
 
     private CycleComponent<T> component;
 
-    public ListOptionComponent(ListOption<T> option, int width) {
-        super(option, width, 20);
+    public ListOptionComponent(Screen parent, ListOption<T> option, int width) {
+        super(parent, option, width, 20);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class ListOptionComponent<T extends OptionListEntry<T>> extends OptionCom
     @Override
     public Component getMainComponent() {
         component = new CycleComponent<>(
-                option.getValue(),
+                parent, option.getValue(),
                 -1,
                 14,
                 new Color(100, 100, 100, 150),
@@ -51,7 +52,7 @@ public class ListOptionComponent<T extends OptionListEntry<T>> extends OptionCom
         }
         FluidText fluid = new FluidText(builder.toString());
         fluid.append("\n").append(getConfigTypeInfo());
-        TextComponent text = new TextComponent(width - 2, -1, fluid);
+        TextComponent text = new TextComponent(parent, width - 2, -1, fluid);
         text.setLeftPadding(4);
         text.setRightPadding(4);
         text.setBackgroundColor(new Color(20, 20, 20, 255));
