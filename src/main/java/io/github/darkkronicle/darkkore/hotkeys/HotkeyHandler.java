@@ -34,6 +34,9 @@ public class HotkeyHandler implements InputEvent {
         return hotkeys.containsKey(new Identifier(modId, name));
     }
 
+    /**
+     * Rebuilds all the hotkeys. Should be safe to call back as much as needed
+     */
     public void rebuildHotkeys() {
         allHotkeys = new ArrayList<>();
         for (Supplier<List<Hotkey>> supplier : hotkeys.values()) {
@@ -45,6 +48,12 @@ public class HotkeyHandler implements InputEvent {
         return hotkeys.get(new Identifier(modId, name));
     }
 
+    /**
+     * Adds a supplier of {@link Hotkey}. These can easily be removed and re-added whenever desired.
+     * @param modId The ID of the mod adding it
+     * @param name The category/name of the hotkeys
+     * @param hotkeySupplier A supplier
+     */
     public void add(String modId, String name, Supplier<List<Hotkey>> hotkeySupplier) {
         hotkeys.put(new Identifier(modId, name), hotkeySupplier);
         rebuildHotkeys();
