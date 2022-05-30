@@ -14,7 +14,6 @@ import io.github.darkkronicle.darkkore.util.StringUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
-import net.minecraft.world.GameMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +58,7 @@ public class HotkeySettingsComponent extends OptionComponent<HotkeySettings, Hot
                     MinecraftClient.getInstance().setScreen(screen);
                 }
         );
-        ListComponent list = new ListComponent(-1, parent, -1, false);
+        ListComponent list = new ListComponent(parent, -1, -1, false);
         list.setTopPad(0);
         list.setRightPad(0);
         list.addComponent(component);

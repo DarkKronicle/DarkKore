@@ -33,7 +33,7 @@ public class ConfigScreen extends ComponentScreen {
     public void initImpl() {
         Dimensions dimensions = Dimensions.getScreen();
         int width = dimensions.getWidth() - 20;
-        ListComponent list = new ListComponent(width, this, -1, true);
+        ListComponent list = new ListComponent(this, width, -1, true);
         for (Option<?> option : options) {
             OptionComponent<?, ?> component = OptionComponentHolder.getInstance().convert(this, option, width - 2);
             if (component == null) {
