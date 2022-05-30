@@ -84,7 +84,7 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
                         comp.getBoundingBox().height()
                 )
         );
-        reset =  new ResetButtonComponent(parent, 14,
+        reset = new ResetButtonComponent(parent, 14,
                 new Color(100, 100, 100, 150),
                 new Color(150, 150, 150, 150),
                 button -> {
