@@ -10,4 +10,8 @@ public class IntegerOption extends NumberOption<Integer> {
         super(key, displayName, hoverName, defaultValue, min, max);
     }
 
+    @Override
+    public Integer convertNumber(Number number) {
+        return number.intValue();
+    }
 }

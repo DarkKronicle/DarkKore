@@ -4,6 +4,8 @@ import com.electronwill.nightconfig.core.Config;
 import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
 import lombok.Getter;
 
+import java.util.Optional;
+
 public class NumberOption<N extends Number & Comparable<N>> extends BasicOption<N> {
 
     @Getter private N min = null;
@@ -30,8 +32,21 @@ public class NumberOption<N extends Number & Comparable<N>> extends BasicOption<
 
     @Override
     public void load(ConfigObject config) {
-        super.load(config);
+        if (!config.contains(key)) {
+            setValue(getDefaultValue());
+            return;
+        }
+        Optional<Number> option = config.getOptional(key);
+        if (option.isEmpty()) {
+            setValue(defaultValue);
+            return;
+        }
+        setValue(convertNumber(option.get()));
         correctValue();
+    }
+
+    public N convertNumber(Number number) {
+        return (N) Integer.valueOf(number.intValue());
     }
 
     @Override

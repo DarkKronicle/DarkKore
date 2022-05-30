@@ -55,7 +55,7 @@ public class JsonConfigObject implements ConfigObject {
                 return primitive.getAsBoolean();
             }
             if (primitive.isNumber()) {
-                return primitive.getAsNumber().doubleValue();
+                return primitive.getAsNumber();
             }
             if (primitive.isString()) {
                 return primitive.getAsString();
