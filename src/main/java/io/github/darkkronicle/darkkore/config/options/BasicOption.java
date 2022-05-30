@@ -14,7 +14,7 @@ public class BasicOption<T> implements Option<T> {
     protected final String hoverNameKey;
 
     @Getter
-    protected final T defaultValue;
+    protected T defaultValue;
 
     protected T value;
 

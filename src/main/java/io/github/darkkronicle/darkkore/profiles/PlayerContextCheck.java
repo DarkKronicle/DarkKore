@@ -17,10 +17,14 @@ public class PlayerContextCheck {
         if (inGame != null && context.isInGame() != inGame) {
             return false;
         }
-        if (server != null && !context.getServer().equals(server)) {
-            return false;
+        if ((inGame == null || !inGame) && !context.isInGame()) {
+            // out of game so it should always work
+            return true;
         }
         if (inGui != null && context.isInGui() != inGui) {
+            return false;
+        }
+        if (server != null && !context.getServer().equals(server)) {
             return false;
         }
         if (gameMode != null && context.getGameMode() != gameMode) {
