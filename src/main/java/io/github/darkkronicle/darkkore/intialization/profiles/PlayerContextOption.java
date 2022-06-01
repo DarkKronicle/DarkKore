@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.profiles;
+package io.github.darkkronicle.darkkore.intialization.profiles;
 
 import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
 import io.github.darkkronicle.darkkore.config.options.*;

@@ -2,10 +2,9 @@ package io.github.darkkronicle.darkkore.settings;
 
 import io.github.darkkronicle.darkkore.config.ModConfig;
 import io.github.darkkronicle.darkkore.config.options.*;
-import io.github.darkkronicle.darkkore.gui.config.DoubleOptionComponent;
 import io.github.darkkronicle.darkkore.hotkeys.HotkeySettings;
 import io.github.darkkronicle.darkkore.hotkeys.HotkeySettingsOption;
-import io.github.darkkronicle.darkkore.profiles.PlayerContextCheck;
+import io.github.darkkronicle.darkkore.intialization.profiles.PlayerContextCheck;
 import io.github.darkkronicle.darkkore.util.FileUtil;
 import org.lwjgl.glfw.GLFW;
 
@@ -31,7 +30,7 @@ public class DarkKoreConfig extends ModConfig {
 
     public final DoubleOption doubleOption = new DoubleOption("doubleOption", "darkkore.option.doubleoption", "darkkore.option.info.integeroption", 5.5, 0, 10);
 
-    public final HotkeySettingsOption openGui = new HotkeySettingsOption("openGui", "darkkore.option.opengui", "darkkore.option.info.optengui",
+    public final HotkeySettingsOption openGui = new HotkeySettingsOption("openGui", "darkkore.option.opengui", "darkkore.option.info.opengui",
             new HotkeySettings(false, false, true, new ArrayList<>(List.of(GLFW.GLFW_KEY_J)), PlayerContextCheck.getDefault()));
 
     public static DarkKoreConfig getInstance() {

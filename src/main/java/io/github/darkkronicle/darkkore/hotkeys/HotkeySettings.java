@@ -1,6 +1,6 @@
 package io.github.darkkronicle.darkkore.hotkeys;
 
-import io.github.darkkronicle.darkkore.profiles.PlayerContextCheck;
+import io.github.darkkronicle.darkkore.intialization.profiles.PlayerContextCheck;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

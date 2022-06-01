@@ -7,7 +7,7 @@ import io.github.darkkronicle.darkkore.gui.components.impl.ButtonComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.ListComponent;
 import io.github.darkkronicle.darkkore.gui.config.OptionComponent;
 import io.github.darkkronicle.darkkore.gui.config.SettingsButtonComponent;
-import io.github.darkkronicle.darkkore.profiles.PlayerContextOption;
+import io.github.darkkronicle.darkkore.intialization.profiles.PlayerContextOption;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;

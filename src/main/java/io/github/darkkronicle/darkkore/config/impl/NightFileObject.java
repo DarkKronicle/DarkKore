@@ -1,6 +1,10 @@
 package io.github.darkkronicle.darkkore.config.impl;
 
 import com.electronwill.nightconfig.core.file.FileConfig;
+import com.electronwill.nightconfig.core.io.WritingException;
+import io.github.darkkronicle.darkkore.DarkKore;
+
+import java.io.IOException;
 
 public class NightFileObject extends NightConfigObject implements FileObject {
 
@@ -18,7 +22,17 @@ public class NightFileObject extends NightConfigObject implements FileObject {
 
     @Override
     public void load() {
-        config.load();
+        try {
+            config.load();
+        } catch (WritingException e) {
+            config.getFile().getParentFile().mkdirs();
+            try {
+                config.getFile().createNewFile();
+                config.load();
+            } catch (IOException s) {
+                DarkKore.LOGGER.error("Couldn't set up file" + config.getFile()) ;
+            }
+        }
     }
 
     @Override

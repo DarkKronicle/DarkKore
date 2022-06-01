@@ -1,6 +1,6 @@
 package io.github.darkkronicle.darkkore.hotkeys;
 
-import io.github.darkkronicle.darkkore.profiles.PlayerContext;
+import io.github.darkkronicle.darkkore.intialization.profiles.PlayerContext;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.util.Identifier;

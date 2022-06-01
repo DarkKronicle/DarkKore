@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.profiles;
+package io.github.darkkronicle.darkkore.intialization.profiles;
 
 import io.github.darkkronicle.darkkore.util.PlayerUtil;
 import lombok.Value;

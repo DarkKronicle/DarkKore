@@ -2,8 +2,8 @@ package io.github.darkkronicle.darkkore.hotkeys;
 
 import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
 import io.github.darkkronicle.darkkore.config.options.BasicOption;
-import io.github.darkkronicle.darkkore.profiles.PlayerContextCheck;
-import io.github.darkkronicle.darkkore.profiles.PlayerContextOption;
+import io.github.darkkronicle.darkkore.intialization.profiles.PlayerContextCheck;
+import io.github.darkkronicle.darkkore.intialization.profiles.PlayerContextOption;
 import io.github.darkkronicle.darkkore.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 

@@ -1,4 +1,4 @@
-package io.github.darkkronicle.darkkore.profiles;
+package io.github.darkkronicle.darkkore.intialization.profiles;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

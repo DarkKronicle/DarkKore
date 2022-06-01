@@ -22,6 +22,7 @@ public abstract class ModConfig implements OptionHolder, ConfigHolder {
     public void setupFileConfig() {
         if (!getFile().exists()) {
             try {
+                getFile().getParentFile().mkdirs();
                 getFile().createNewFile();
             } catch (IOException e) {
                 DarkKore.LOGGER.error("Couldn't initialize config!", e);

@@ -28,6 +28,9 @@ public class JsonConfigObject implements ConfigObject {
     }
 
     public JsonElement getElement(Object value) {
+        if (value == null) {
+            return null;
+        }
         if (value instanceof String) {
             return new JsonPrimitive((String) value);
         } else if (value instanceof Number) {
@@ -49,6 +52,9 @@ public class JsonConfigObject implements ConfigObject {
     }
 
     public Object getAs(JsonElement element) {
+        if (element == null) {
+            return null;
+        }
         if (element.isJsonPrimitive()) {
             JsonPrimitive primitive = (JsonPrimitive) element;
             if (primitive.isBoolean()) {
