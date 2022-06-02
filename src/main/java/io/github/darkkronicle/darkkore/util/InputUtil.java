@@ -177,7 +177,7 @@ public class InputUtil {
     }
 
     public String getKeyName(int key) {
-        return GLFW.glfwGetKeyName(key, 0);
+        return NAMES_TO_KEY.entrySet().stream().filter(entry -> entry.getValue() == key).findFirst().map(Map.Entry::getKey).orElse("UNKNOWN");
     }
 
 }
