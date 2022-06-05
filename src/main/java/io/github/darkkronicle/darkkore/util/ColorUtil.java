@@ -59,4 +59,23 @@ public class ColorUtil {
         }
         return new Color(formatting.getColorValue());
     }
+
+    public static Color getColorFromString(String value) {
+        if (value.startsWith("#")) {
+            value = value.substring(1);
+        }
+        StringBuilder valueBuilder = new StringBuilder(value);
+        while (valueBuilder.length() < 8) {
+            valueBuilder.insert(0, "F");
+        }
+        value = valueBuilder.toString();
+
+        int alpha = Integer.parseInt(value.substring(0, 2), 16);
+        int red = Integer.parseInt(value.substring(2, 4), 16);
+        int green = Integer.parseInt(value.substring(4, 6), 16);
+        int blue = Integer.parseInt(value.substring(6, 8), 16);
+
+        return new Color(red, green, blue, alpha);
+
+    }
 }

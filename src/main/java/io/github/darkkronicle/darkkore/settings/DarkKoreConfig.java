@@ -2,9 +2,11 @@ package io.github.darkkronicle.darkkore.settings;
 
 import io.github.darkkronicle.darkkore.config.ModConfig;
 import io.github.darkkronicle.darkkore.config.options.*;
+import io.github.darkkronicle.darkkore.gui.config.ColorOptionComponent;
 import io.github.darkkronicle.darkkore.hotkeys.HotkeySettings;
 import io.github.darkkronicle.darkkore.hotkeys.HotkeySettingsOption;
 import io.github.darkkronicle.darkkore.intialization.profiles.PlayerContextCheck;
+import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FileUtil;
 import org.lwjgl.glfw.GLFW;
 
@@ -33,6 +35,8 @@ public class DarkKoreConfig extends ModConfig {
     public final HotkeySettingsOption openGui = new HotkeySettingsOption("openGui", "darkkore.option.opengui", "darkkore.option.info.opengui",
             new HotkeySettings(false, false, true, new ArrayList<>(List.of(GLFW.GLFW_KEY_J)), PlayerContextCheck.getDefault()));
 
+    public final ColorOption colorOption = new ColorOption("color", "darkkore.option.color", "darkkore.option.info.color", new Color(100, 100, 255, 255));
+
     public static DarkKoreConfig getInstance() {
         return INSTANCE;
     }
@@ -49,7 +53,7 @@ public class DarkKoreConfig extends ModConfig {
 
     @Override
     public List<Option<?>> getOptions() {
-        return List.of(debug, cool, soundType, stringOption, integerOption, doubleOption, openGui);
+        return List.of(debug, cool, soundType, stringOption, integerOption, doubleOption, openGui, colorOption);
     }
 
     @Override

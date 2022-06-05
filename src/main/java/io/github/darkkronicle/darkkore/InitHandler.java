@@ -49,6 +49,12 @@ public class InitHandler implements Initializer {
                         )
         );
 
+        OptionComponentHolder.getInstance().addWithOrder(25, (parent, option, width) -> {
+            if (option instanceof ColorOption) {
+                return Optional.of(new ColorOptionComponent(parent, (ColorOption) option, width));
+            }
+            return Optional.empty();
+        });
         OptionComponentHolder.getInstance().addWithOrder(100, (parent, option, width) -> {
             if (option instanceof BooleanOption) {
                 return Optional.of(new BooleanOptionComponent(parent, (BooleanOption) option, width));

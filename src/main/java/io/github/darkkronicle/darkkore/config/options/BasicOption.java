@@ -55,7 +55,7 @@ public class BasicOption<T> implements Option<T> {
         }
         Optional<T> option = config.getOptional(key);
         if (option.isEmpty()) {
-            setValue(defaultValue);
+            setValue(getDefaultValue());
             return;
         }
         setValue(option.get());
