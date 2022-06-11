@@ -17,13 +17,14 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
     implementation "com.electronwill.night-config:toml:${project.night_config_version}"
     implementation "com.electronwill.night-config:json:${project.night_config_version}"
 
     implementation "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
     implementation "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
+
+    include "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
+    include "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
 
     include "com.electronwill.night-config:toml:${project.night_config_version}"
     include "com.electronwill.night-config:json:${project.night_config_version}"
