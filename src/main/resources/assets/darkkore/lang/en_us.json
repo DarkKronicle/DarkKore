@@ -12,10 +12,6 @@
   "darkkore.optiontype.info.konstruct": "Type Konstruct script in here",
   "darkkore.optiontype.info.color": "Type a hex color in the format #AARRGGBB here",
 
-  "darkkore.option.debug": "Debug Mode",
-  "darkkore.option.info.debug": "Enables some random settings that is used for testing/gathering information.",
-  "darkkore.option.cool": "Are you like super duper cool?",
-  "darkkore.option.info.cool": "Only select this if you are &l&overy cool&r. Bad things will happen if you lie!\n&kSecret message&r",
   "darkkore.option.soundtype": "UI Sound Type",
   "darkkore.option.info.soundtype": "How UI buttons sound in DarkKore menus (aka this one)",
   "darkkore.option.sound.normal": "Normal",
@@ -28,6 +24,8 @@
   "darkkore.option.sound.info.vibraphone": "Vibraphone instrument",
   "darkkore.option.opengui": "Open GUI Hotkey",
   "darkkore.option.info.opengui": "The hotkey to &6open this config screen&r",
+  "darkkore.option.scrollscale": "Scroll Scale",
+  "darkkore.option.info.scrollscale": "The coefficient to which a &6scroll input is multiplied to&r\nEquivalent to the &6Scroll Sensitivity&r option in Vanilla Minecraft",
 
   "darkkore.option.hotkey.blocking": "Block Other Inputs",
   "darkkore.option.hotkey.info.blocking": "Whether activating this hotkey prevents &6other inputs from being accepted&r",

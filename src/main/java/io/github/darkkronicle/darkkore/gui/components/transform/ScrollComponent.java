@@ -1,6 +1,7 @@
 package io.github.darkkronicle.darkkore.gui.components.transform;
 
 import io.github.darkkronicle.darkkore.gui.components.Component;
+import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
 import io.github.darkkronicle.darkkore.util.*;
 import io.github.darkkronicle.darkkore.util.render.ScissorsStack;
 import lombok.Getter;
@@ -130,7 +131,7 @@ public class ScrollComponent extends OffsetComponent {
     /** {@inheritDoc} */
     public void scroll(double amount) {
         scrollStart = scrollVal;
-        scrollEnd = amount * 3 + scrollEnd;
+        scrollEnd = (-1 * amount * DarkKoreConfig.getInstance().scrollScale.getValue()) + scrollEnd;
         lastScroll = Util.getMeasuringTimeMs();
     }
 

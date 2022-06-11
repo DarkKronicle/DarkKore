@@ -25,6 +25,8 @@ public class DarkKoreConfig extends ModConfig {
     public final HotkeySettingsOption openGui = new HotkeySettingsOption("openGui", "darkkore.option.opengui", "darkkore.option.info.opengui",
             new HotkeySettings(false, false, true, new ArrayList<>(List.of(GLFW.GLFW_KEY_J)), PlayerContextCheck.getDefault()));
 
+    public final DoubleOption scrollScale = new DoubleOption("scrollScale", "darkkore.option.scrollscale", "darkkore.option.info.scrollscale", .3, 0.01, 10);
+
     public static DarkKoreConfig getInstance() {
         return INSTANCE;
     }
@@ -41,7 +43,7 @@ public class DarkKoreConfig extends ModConfig {
 
     @Override
     public List<Option<?>> getOptions() {
-        return List.of(soundType, openGui);
+        return List.of(soundType, openGui, scrollScale);
     }
 
     @Override
