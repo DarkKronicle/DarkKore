@@ -10,6 +10,7 @@
   "darkkore.optiontype.info.integerrange": "Type any whole number in here from %d to %d",
   "darkkore.optiontype.info.hotkey": "Click on the hotkey and type a combination",
   "darkkore.optiontype.info.konstruct": "Type Konstruct script in here",
+  "darkkore.optiontype.info.color": "Type a hex color in the format #AARRGGBB here",
 
   "darkkore.option.debug": "Debug Mode",
   "darkkore.option.info.debug": "Enables some random settings that is used for testing/gathering information.",

@@ -23,7 +23,7 @@ public class HotkeySettingsOption extends BasicOption<HotkeySettings> {
         nest.set("blocking", settings.isBlocking());
         nest.set("ordered", settings.isOrdered());
         nest.set("exclusive", settings.isExclusive());
-        nest.set("keys", settings.getKeys().stream().map(num -> GLFW.glfwGetKeyName(num, 0).toUpperCase(Locale.ROOT)).toList());
+        nest.set("keys", settings.getKeys().stream().map(num -> InputUtil.getKeyName(num).toUpperCase(Locale.ROOT)).toList());
         PlayerContextOption.save("check", settings.getCheck(), nest);
         config.set(key, nest);
     }
