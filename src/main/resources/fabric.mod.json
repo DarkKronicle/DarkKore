@@ -12,6 +12,9 @@
   "entrypoints": {
     "client": [
       "io.github.darkkronicle.darkkore.DarkKore"
+    ],
+    "modmenu": [
+      "io.github.darkkronicle.darkkore.settings.ModMenuImpl"
     ]
   },
   "mixins": [

@@ -28,6 +28,8 @@ dependencies {
     include "com.electronwill.night-config:toml:${project.night_config_version}"
     include "com.electronwill.night-config:json:${project.night_config_version}"
     include "com.electronwill.night-config:core:${project.night_config_version}"
+
+    modCompileOnly "io.github.prospector:modmenu:1.16.8"
 }
 
 processResources {
