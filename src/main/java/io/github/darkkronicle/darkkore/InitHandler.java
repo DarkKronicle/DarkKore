@@ -10,11 +10,7 @@ import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
 import io.github.darkkronicle.darkkore.gui.ConfigScreen;
 import io.github.darkkronicle.darkkore.gui.OptionComponentHolder;
 import io.github.darkkronicle.darkkore.intialization.Initializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 import java.util.Optional;
