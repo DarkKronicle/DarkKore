@@ -23,20 +23,6 @@ public class InitHandler implements Initializer {
 
     @Override
     public void init() {
-        if (DarkKoreConfig.getInstance().debug.getValue()) {
-            KeyBinding keyBinding =
-                    new KeyBinding(
-                            "refinedcreativeinventory.key.test",
-                            InputUtil.Type.KEYSYM,
-                            GLFW.GLFW_KEY_U,
-                            "category.keys");
-            ClientTickEvents.START_CLIENT_TICK.register(
-                    s -> {
-                        if (keyBinding.wasPressed()) {
-                            MinecraftClient.getInstance().setScreen(new ConfigScreen(DarkKoreConfig.getInstance().getOptions()));
-                        }
-                    });
-        }
 
         HotkeyHandler.getInstance().add(
                 DarkKore.MOD_ID,
