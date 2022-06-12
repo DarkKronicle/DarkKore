@@ -5,18 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import io.github.darkkronicle.darkkore.util.Color;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.With;
 import lombok.experimental.Accessors;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
+import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 
 /**
@@ -25,19 +20,44 @@ import net.minecraft.util.Formatting;
  * <p>Contains only a {@link String} and {@link Style}
  */
 @Accessors(chain = true)
-@AllArgsConstructor
 @Environment(EnvType.CLIENT)
-public class RawText implements MutableText {
+public class RawText implements Text {
 
     /** The message of the {@link RawText} */
-    @Getter @Setter @With private String message;
+    @Getter private TextContent message;
 
     /** The style of the {@link RawText} */
     @Getter @Setter @With private Style style;
 
+    public RawText withMessage(TextContent content) {
+        return new RawText(content, style);
+    }
+
+    public RawText withMessage(String content) {
+        return new RawText(content, style);
+    }
+
+    public RawText(String message, Style style) {
+        this.message = new LiteralTextContent(message);
+        this.style = style;
+    }
+
+    public RawText(TextContent content, Style style) {
+        this.message = content;
+        this.style = style;
+    }
+
     private RawText(RawText text) {
         this.style = text.withStyle(text.getStyle()).getStyle();
         this.message = text.getMessage();
+    }
+
+    public void setMessage(String message) {
+        this.message = new LiteralTextContent(message);
+    }
+
+    public void setMessage(TextContent content) {
+        this.message = content;
     }
 
     /**
@@ -79,14 +99,9 @@ public class RawText implements MutableText {
         return new RawText(string, base);
     }
 
-    /**
-     * Return's the content
-     *
-     * @return Content of the RawText
-     */
     @Override
-    public String asString() {
-        return getString();
+    public TextContent getContent() {
+        return message;
     }
 
     /**
@@ -96,7 +111,7 @@ public class RawText implements MutableText {
      */
     @Override
     public String getString() {
-        return message;
+        return TextUtil.getString(getContent());
     }
 
     @Deprecated
@@ -111,19 +126,8 @@ public class RawText implements MutableText {
      *
      * @return Copy of RawText
      */
-    @Override
-    public RawText copy() {
-        return new RawText(this);
-    }
-
-    /**
-     * Deep copies the {@link RawText}
-     *
-     * @return Copy of RawText
-     */
-    @Override
     public RawText shallowCopy() {
-        return copy();
+        return new RawText(message, style);
     }
 
     /**
@@ -133,7 +137,7 @@ public class RawText implements MutableText {
      */
     @Override
     public OrderedText asOrderedText() {
-        return OrderedText.styledForwardsVisitedString(message, style);
+        return OrderedText.styledForwardsVisitedString(getString(), style);
     }
 
     /**
@@ -171,9 +175,8 @@ public class RawText implements MutableText {
      * @param <T> Type returned from the visitor
      * @return The value returned from the visitor
      */
-    @Override
     public <T> Optional<T> visitSelf(StyledVisitor<T> visitor, Style style) {
-        return visitor.accept(this.style.withParent(style), message);
+        return visitor.accept(this.style.withParent(style), getString());
     }
 
     /**
@@ -183,9 +186,8 @@ public class RawText implements MutableText {
      * @param <T> Type returned from the visitor
      * @return Value returned from the visitor
      */
-    @Override
     public <T> Optional<T> visitSelf(Visitor<T> visitor) {
-        return visitor.accept(message);
+        return visitor.accept(getString());
     }
 
     /**
@@ -194,9 +196,8 @@ public class RawText implements MutableText {
      * @param text Text message to add
      * @return MutableText that was added on
      */
-    @Override
-    public MutableText append(Text text) {
-        this.setMessage(message + text.getString());
+    public RawText append(Text text) {
+        this.setMessage(new LiteralTextContent(getString() + text.getString()));
         return this;
     }
 }

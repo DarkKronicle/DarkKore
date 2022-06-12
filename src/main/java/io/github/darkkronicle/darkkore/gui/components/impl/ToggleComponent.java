@@ -136,7 +136,7 @@ public class ToggleComponent extends ButtonComponent {
         } else {
             text = new FluidText(display);
         }
-        int index = text.asString().indexOf("%s");
+        int index = text.getString().indexOf("%s");
         if (index >= 0) {
             text.replaceStrings(Map.of(new StringMatch("%s", index, index + 2), (current, match) -> new FluidText(getName())));
         }

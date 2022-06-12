@@ -90,8 +90,7 @@ public class RenderUtil {
         bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a).next();
-        bufferBuilder.end();
-        BufferRenderer.draw(bufferBuilder);
+        BufferRenderer.drawWithShader(bufferBuilder.end());
         RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }

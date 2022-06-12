@@ -16,17 +16,14 @@ import lombok.Getter;
 import lombok.Setter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
+import net.minecraft.text.*;
 
 /**
  * A helper class that can take a Text, break it up, and put it back together. This breaks up the
  * Text into different {@link RawText}.
  */
 @Environment(EnvType.CLIENT)
-public class FluidText implements MutableText {
+public class FluidText implements Text {
 
     private ArrayList<RawText> rawTexts = new ArrayList<>();
 
@@ -38,6 +35,7 @@ public class FluidText implements MutableText {
      * @param text text to split into different {@link RawText}
      */
     public FluidText(Text text) {
+        super();
         text.visit(
                 (style, string) -> {
                     rawTexts.add(new RawText(string, style));
@@ -56,6 +54,7 @@ public class FluidText implements MutableText {
      * @param text {@link OrderedText} to convert
      */
     public FluidText(OrderedText text) {
+        super();
         text.accept(
                 (index, style, codePoint) -> {
                     RawText last;
@@ -65,7 +64,7 @@ public class FluidText implements MutableText {
                             .equals(style)) {
                         // Similar styles get grouped to minimize data
                         last.setMessage(
-                                last.getMessage() + new String(Character.toChars(codePoint)));
+                                last.getString() + new String(Character.toChars(codePoint)));
                     } else {
                         rawTexts.add(new RawText(new String(Character.toChars(codePoint)), style));
                     }
@@ -109,7 +108,7 @@ public class FluidText implements MutableText {
         // FluidText is made of RawTexts that contain the style and message.
         // Add all the messages together and you get the string value.
         for (RawText text : getRawTexts()) {
-            stringBuilder.append(text.getMessage());
+            stringBuilder.append(text.getString());
         }
         return stringBuilder.toString();
     }
@@ -127,14 +126,11 @@ public class FluidText implements MutableText {
         return rawTexts.get(0).getStyle();
     }
 
-    /**
-     * Same as getString() in this situation
-     *
-     * @return String value of the FluidText
-     */
     @Override
-    public String asString() {
-        return getString();
+    public TextContent getContent() {
+        StringBuilder builder = new StringBuilder();
+        rawTexts.forEach(text -> builder.append(text.getString()));
+        return new LiteralTextContent(builder.toString());
     }
 
     /**
@@ -152,23 +148,12 @@ public class FluidText implements MutableText {
      *
      * @return The copied FluidText
      */
-    @Override
-    public FluidText copy() {
+    public FluidText copyText() {
         FluidText newFluidText = new FluidText();
         for (RawText t : rawTexts) {
-            newFluidText.append(t.copy(), false);
+            newFluidText.append(t.shallowCopy(), false);
         }
         return newFluidText;
-    }
-
-    /**
-     * Returns a copy of FluidText. The children are the same objects.
-     *
-     * @return New FluidText
-     */
-    @Override
-    public FluidText shallowCopy() {
-        return new FluidText(rawTexts);
     }
 
     /**
@@ -187,7 +172,7 @@ public class FluidText implements MutableText {
         }
         Optional<T> optional;
         for (RawText text : rawTexts) {
-            optional = styledVisitor.accept(text.getStyle().withParent(style), text.getMessage());
+            optional = styledVisitor.accept(text.getStyle().withParent(style), text.getString());
             if (optional.isPresent()) {
                 return optional;
             }
@@ -208,23 +193,11 @@ public class FluidText implements MutableText {
     public <T> Optional<T> visit(Visitor<T> visitor) {
         Optional<T> optional;
         for (RawText text : rawTexts) {
-            optional = visitor.accept(text.getMessage());
+            optional = visitor.accept(text.getString());
             if (optional.isPresent()) {
                 return optional;
             }
         }
-        return Optional.empty();
-    }
-
-    @Deprecated
-    @Override
-    public <T> Optional<T> visitSelf(StyledVisitor<T> visitor, Style style) {
-        return Optional.empty();
-    }
-
-    @Deprecated
-    @Override
-    public <T> Optional<T> visitSelf(Visitor<T> visitor) {
         return Optional.empty();
     }
 
@@ -254,11 +227,11 @@ public class FluidText implements MutableText {
         // Total number of chars went through. Used to find where the match end and beginning is.
         int totalchar = 0;
         for (RawText text : getRawTexts()) {
-            if (text.getMessage() == null || text.getMessage().length() <= 0) {
+            if (text.getMessage() == null || text.getString().length() <= 0) {
                 continue;
             }
 
-            int length = text.getMessage().length();
+            int length = text.getString().length();
 
             // Checks to see if current text contains the match.start.
             if (totalchar + length > match.start) {
@@ -266,21 +239,21 @@ public class FluidText implements MutableText {
                     if (!start) {
                         newSiblings.add(
                                 text.withMessage(
-                                        text.getMessage()
+                                        text.getString()
                                                 .substring(
                                                         match.start - totalchar,
                                                         match.end - totalchar)));
                     } else {
                         newSiblings.add(
                                 text.withMessage(
-                                        text.getMessage().substring(0, match.end - totalchar)));
+                                        text.getString().substring(0, match.end - totalchar)));
                     }
                     return new FluidText(newSiblings);
                 } else {
                     if (!start) {
                         newSiblings.add(
                                 text.withMessage(
-                                        text.getMessage().substring(match.start - totalchar)));
+                                        text.getString().substring(match.start - totalchar)));
                         start = true;
                     } else {
                         newSiblings.add(text);
@@ -295,8 +268,7 @@ public class FluidText implements MutableText {
         return null;
     }
 
-    @Override
-    public MutableText fillStyle(Style styleOverride) {
+    public FluidText fillStyle(Style styleOverride) {
         for (RawText t : rawTexts) {
             if (t.getStyle().equals(Style.EMPTY)) {
                 t.setStyle(styleOverride);
@@ -311,11 +283,15 @@ public class FluidText implements MutableText {
      * @param style {@link Style} to set
      * @return this
      */
-    @Override
     public FluidText setStyle(Style style) {
         for (RawText t : rawTexts) {
             t.setStyle(style);
         }
+        return this;
+    }
+
+    public FluidText append(String string) {
+        append(new RawText(string, Style.EMPTY), true);
         return this;
     }
 
@@ -325,7 +301,6 @@ public class FluidText implements MutableText {
      * @param text {@link Text} to add
      * @return this
      */
-    @Override
     public FluidText append(Text text) {
         append(new RawText(text.getString(), text.getStyle()), false);
         return this;
@@ -446,7 +421,7 @@ public class FluidText implements MutableText {
         int totalchar = 0;
         boolean inMatch = false;
         for (RawText text : getRawTexts()) {
-            if (text.getMessage() == null || text.getMessage().length() <= 0) {
+            if (text.getMessage() == null || text.getString().length() <= 0) {
                 continue;
             }
             if (match == null) {
@@ -454,11 +429,11 @@ public class FluidText implements MutableText {
                 newSiblings.add(text);
                 continue;
             }
-            int length = text.getMessage().length();
+            int length = text.getString().length();
             int last = 0;
             while (true) {
                 if (length + totalchar <= match.getKey().start) {
-                    newSiblings.add(text.withMessage(text.getMessage().substring(last)));
+                    newSiblings.add(text.withMessage(text.getString().substring(last)));
                     break;
                 }
                 int start = match.getKey().start - totalchar;
@@ -466,7 +441,7 @@ public class FluidText implements MutableText {
                 if (inMatch) {
                     if (end <= length) {
                         inMatch = false;
-                        newSiblings.add(text.withMessage(text.getMessage().substring(end)));
+                        newSiblings.add(text.withMessage(text.getString().substring(end)));
                         last = end;
                         if (!sortedMatches.hasNext()) {
                             match = null;
@@ -480,7 +455,7 @@ public class FluidText implements MutableText {
                     // End will go onto another string
                     if (start > 0) {
                         // Add previous string section
-                        newSiblings.add(text.withMessage(text.getMessage().substring(last, start)));
+                        newSiblings.add(text.withMessage(text.getString().substring(last, start)));
                     }
                     if (end >= length) {
                         newSiblings.addAll(
@@ -505,7 +480,7 @@ public class FluidText implements MutableText {
                     }
                     last = end;
                     if (match == null || match.getKey().start - totalchar > length) {
-                        newSiblings.add(text.withMessage(text.getMessage().substring(end)));
+                        newSiblings.add(text.withMessage(text.getString().substring(end)));
                         break;
                     }
                 } else {
@@ -544,7 +519,7 @@ public class FluidText implements MutableText {
             // Prevent having a ton of the same siblings in one...
             if (last.getStyle().equals(text.getStyle())
                     || (copyIfEmpty && text.getStyle().equals(Style.EMPTY))) {
-                last.setMessage(last.getMessage() + text.getMessage());
+                last.setMessage(last.getString() + text.getString());
             } else {
                 rawTexts.add(text);
             }
