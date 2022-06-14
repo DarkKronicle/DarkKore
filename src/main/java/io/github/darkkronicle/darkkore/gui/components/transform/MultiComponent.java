@@ -157,7 +157,9 @@ public class MultiComponent extends BasicComponent {
     @Override
     public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         boolean success = false;
-        for (Component component : components) {
+        List<Component> componentCopy = new ArrayList<>(components);
+        // We want to avoid concurrent modification
+        for (Component component : componentCopy) {
             if (hoveredComponent != null && hoveredComponent.equals(component)) {
                 success = hoveredComponent.mouseClicked(x, y, mouseX, mouseY, button) || success;
             } else {
@@ -220,14 +222,18 @@ public class MultiComponent extends BasicComponent {
 
     @Override
     public void mouseClickedOutsideImpl(int x, int y, int mouseX, int mouseY, int button) {
-        for (Component component : components) {
+        List<Component> componentCopy = new ArrayList<>(components);
+        // We want to avoid concurrent modification
+        for (Component component : componentCopy) {
             component.mouseClickedOutside(x, y, mouseX, mouseY, button);
         }
     }
 
     @Override
     public boolean charTyped(char key, int modifiers) {
-        for (Component component : components) {
+        List<Component> componentCopy = new ArrayList<>(components);
+        // We want to avoid concurrent modification
+        for (Component component : componentCopy) {
             if (component.isSelected()) {
                 return component.charTyped(key, modifiers);
             }
@@ -237,7 +243,9 @@ public class MultiComponent extends BasicComponent {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        for (Component component : components) {
+        List<Component> componentCopy = new ArrayList<>(components);
+        // We want to avoid concurrent modification
+        for (Component component : componentCopy) {
             if (component.isSelected()) {
                 return component.keyPressed(keyCode, scanCode, modifiers);
             }
@@ -248,7 +256,9 @@ public class MultiComponent extends BasicComponent {
     /** {@inheritDoc} */
     @Override
     public void onDestroy() {
-        for (Component component : components) {
+        List<Component> componentCopy = new ArrayList<>(components);
+        // We want to avoid concurrent modification
+        for (Component component : componentCopy) {
             component.onDestroy();
         }
     }

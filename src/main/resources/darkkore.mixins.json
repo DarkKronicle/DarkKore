@@ -7,8 +7,9 @@
   ],
   "client": [
     "MixinClientPlayNetworkHandler",
+    "MixinKeyboard",
     "MixinMinecraftClient",
-    "MixinKeyboard"
+    "MixinClickableWidget"
   ],
   "injectors": {
     "defaultRequire": 1

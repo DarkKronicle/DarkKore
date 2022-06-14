@@ -1,6 +1,7 @@
 package io.github.darkkronicle.darkkore.gui.components.impl;
 
 import io.github.darkkronicle.darkkore.util.Color;
+import io.github.darkkronicle.darkkore.util.ColorUtil;
 import io.github.darkkronicle.darkkore.util.SoundUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class ButtonComponent extends TextComponent {
     @Getter @Setter private Consumer<ButtonComponent> onClick;
 
     /** Is this button able to be clicked */
-    @Getter @Setter private boolean disabled = false;
+    @Getter private boolean disabled = false;
 
     /**
      * Creates a new button with automatic width/height
@@ -95,7 +96,7 @@ public class ButtonComponent extends TextComponent {
             }
         }
         if (!hovered) {
-            setBackgroundColor(background);
+            updateBackground();
         }
     }
 
@@ -117,5 +118,18 @@ public class ButtonComponent extends TextComponent {
     protected void updateWidth() {
         super.updateWidth();
         setWidth(getWidth() + 4);
+    }
+
+    public void updateBackground() {
+        if (disabled) {
+            setBackgroundColor(ColorUtil.blend(getBackground(), new Color(0, 0, 0, 100), .5f).withAlpha(getBackground().alpha()));
+        } else {
+            setBackgroundColor(getBackground());
+        }
+    }
+
+    public void setDisabled(boolean value) {
+        disabled = value;
+        updateBackground();
     }
 }

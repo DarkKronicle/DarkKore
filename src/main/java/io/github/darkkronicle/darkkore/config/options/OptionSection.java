@@ -1,7 +1,5 @@
 package io.github.darkkronicle.darkkore.config.options;
 
-import com.electronwill.nightconfig.core.Config;
-import io.github.darkkronicle.darkkore.config.ConfigHolder;
 import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
 
 import java.util.ArrayList;
@@ -10,20 +8,26 @@ import java.util.Optional;
 
 public class OptionSection extends BasicOption<List<Option<?>>> implements OptionHolder {
 
-    private final List<Option<?>> options = new ArrayList<>();
-
     public OptionSection(String key, String displayName, String hoverName) {
+        this(key, displayName, hoverName, new ArrayList<>());
+        this.setValue(new ArrayList<>());
+    }
+
+    public OptionSection(String key, String displayName, String hoverName, List<Option<?>> options) {
         super(key, displayName, hoverName, new ArrayList<>());
+        this.setValue(options);
+        this.setDefaultValue(new ArrayList<>(options));
     }
 
     @Override
     public List<Option<?>> getValue() {
-        return options;
+        return value;
     }
 
     @Override
     public void addOption(Option<?> option) {
-        options.add(option);
+        value.add(option);
+        this.setDefaultValue(new ArrayList<>(value));
     }
 
     @Override
@@ -33,9 +37,9 @@ public class OptionSection extends BasicOption<List<Option<?>>> implements Optio
 
     @Override
     public void save(ConfigObject config) {
-        Optional<ConfigObject> sub = config.get(key);
+        Optional<ConfigObject> sub = config.getOptional(key);
         ConfigObject conf;
-        if (sub.isEmpty()) {
+        if (sub == null || sub.isEmpty()) {
             conf = config.createNew();
             config.set(key, conf);
         } else {

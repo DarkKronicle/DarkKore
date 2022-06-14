@@ -63,7 +63,7 @@ public class NightConfigObject implements ConfigObject {
 
     @Override
     public <T> Optional<T> getOptional(String key) {
-        return object.getOptional(key);
+        return (Optional<T>) Optional.of(getAs(object.get(key)));
     }
 
     @Override

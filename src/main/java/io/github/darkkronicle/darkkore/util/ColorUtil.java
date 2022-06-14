@@ -29,6 +29,16 @@ public class ColorUtil {
         return new Color(red, green, blue, alpha);
     }
 
+    public Color blend(Color one, Color two, float percent) {
+        float other = 1 - percent;
+        return new Color(
+                (int) (one.red() * percent + two.red() * other),
+                (int) (one.green() * percent + two.green() * other),
+                (int) (one.blue() * percent + two.blue() * other),
+                (int) (one.alpha() * percent + two.alpha() * other)
+        );
+    }
+
     /**
      * Turns a Color into a packed RGB int
      *

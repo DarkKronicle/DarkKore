@@ -3,10 +3,13 @@ package io.github.darkkronicle.darkkore.config;
 import com.electronwill.nightconfig.core.file.FileConfig;
 import io.github.darkkronicle.darkkore.DarkKore;
 import io.github.darkkronicle.darkkore.config.impl.FileObject;
+import io.github.darkkronicle.darkkore.config.impl.JsonFileObject;
 import io.github.darkkronicle.darkkore.config.impl.NightFileObject;
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.config.options.OptionHolder;
+import io.github.darkkronicle.darkkore.gui.ConfigScreen;
 import lombok.Getter;
+import net.minecraft.client.gui.screen.Screen;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +31,11 @@ public abstract class ModConfig implements OptionHolder, ConfigHolder {
                 DarkKore.LOGGER.error("Couldn't initialize config!", e);
             }
         }
-        config = new NightFileObject(FileConfig.of(getFile()));
+        if (getFile().toString().endsWith(".toml")) {
+            config = new NightFileObject(FileConfig.of(getFile()));
+        } else {
+            config = new JsonFileObject(getFile());
+        }
     }
 
     public void save() {
@@ -55,5 +62,9 @@ public abstract class ModConfig implements OptionHolder, ConfigHolder {
     }
 
     public abstract List<Option<?>> getOptions();
+
+    public Screen getScreen() {
+        return new ConfigScreen(getOptions());
+    }
 
 }

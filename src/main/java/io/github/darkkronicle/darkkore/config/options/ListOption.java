@@ -13,24 +13,24 @@ public class ListOption<T extends OptionListEntry<T>> extends BasicOption<T> {
     @Override
     public void load(ConfigObject config) {
         if (!config.contains(key)) {
-            value = defaultValue;
+            setValue(getDefaultValue());
             return;
         }
         Optional<String> option = config.getOptional(key);
         if (option.isEmpty()) {
-            value = defaultValue;
+            setValue(getDefaultValue());
             return;
         }
-        OptionListEntry<T> entry = defaultValue.fromString(option.get());
+        OptionListEntry<T> entry = getDefaultValue().fromString(option.get());
         if (entry != null) {
-            value = defaultValue.fromString(option.get());
+            setValue(getDefaultValue().fromString(option.get()));
         } else {
-            value = defaultValue;
+            setValue(getDefaultValue());
         }
     }
 
     @Override
     public void save(ConfigObject config) {
-        config.set(getKey(), value.getSaveKey());
+        config.set(getKey(), getValue().getSaveKey());
     }
 }

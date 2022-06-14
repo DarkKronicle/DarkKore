@@ -22,11 +22,11 @@ public class NumberOption<N extends Number & Comparable<N>> extends BasicOption<
     }
 
     public void correctValue() {
-        if (max != null && value.compareTo(max) > 0) {
-            value = max;
+        if (max != null && getValue().compareTo(max) > 0) {
+            setValue(max);
         }
-        if (min != null && value.compareTo(min) < 0) {
-            value = min;
+        if (min != null && getValue().compareTo(min) < 0) {
+            setValue(min);
         }
     }
 
@@ -38,7 +38,7 @@ public class NumberOption<N extends Number & Comparable<N>> extends BasicOption<
         }
         Optional<Number> option = config.getOptional(key);
         if (option.isEmpty()) {
-            setValue(defaultValue);
+            setValue(getDefaultValue());
             return;
         }
         setValue(convertNumber(option.get()));

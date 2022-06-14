@@ -1,6 +1,8 @@
 {
   "darkkore.component.toggle.true": "Yes",
   "darkkore.component.toggle.false": "No",
+  "darkkore.option.section.general": "General",
+  "darkkore.option.section.gui": "GUI",
   "darkkore.optiontype.info.boolean": "Click the button to toggle between on/off",
   "darkkore.optiontype.info.list": "Click the button to cycle between options",
   "darkkore.optiontype.info.string": "Type any text in here",
@@ -26,6 +28,8 @@
   "darkkore.option.info.opengui": "The hotkey to &6open this config screen&r",
   "darkkore.option.scrollscale": "Scroll Scale",
   "darkkore.option.info.scrollscale": "The coefficient to which a &6scroll input is multiplied to&r\nEquivalent to the &6Scroll Sensitivity&r option in Vanilla Minecraft",
+  "darkkore.option.changevanillaoptions": "Override Vanilla Button Sounds",
+  "darkkore.option.info.changevanillaoptions": "Makes it so that &6Minecraft's buttons&r use &6DarkKore's&r sound effects",
 
   "darkkore.option.hotkey.blocking": "Block Other Inputs",
   "darkkore.option.hotkey.info.blocking": "Whether activating this hotkey prevents &6other inputs from being accepted&r",

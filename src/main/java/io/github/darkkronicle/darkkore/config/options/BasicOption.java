@@ -2,6 +2,7 @@ package io.github.darkkronicle.darkkore.config.options;
 
 import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ public class BasicOption<T> implements Option<T> {
     protected final String hoverNameKey;
 
     @Getter
+    @Setter
     protected T defaultValue;
 
     protected T value;
