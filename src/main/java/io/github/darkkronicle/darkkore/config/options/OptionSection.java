@@ -1,6 +1,8 @@
 package io.github.darkkronicle.darkkore.config.options;
 
+import io.github.darkkronicle.darkkore.DarkKore;
 import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
+import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,11 @@ public class OptionSection extends BasicOption<List<Option<?>>> implements Optio
             conf = sub.get();
         }
         for (Option<?> option : getOptions()) {
-            option.save(conf);
+            try {
+                option.save(conf);
+            } catch (Exception e) {
+                DarkKore.LOGGER.log(Level.WARN, "Fail saving option " + option.getValue(), e);
+            }
         }
     }
 
@@ -57,7 +63,11 @@ public class OptionSection extends BasicOption<List<Option<?>>> implements Optio
             return;
         }
         for (Option<?> option : getOptions()) {
-            option.load(nest);
+            try {
+                option.load(nest);
+            } catch (Exception e) {
+                DarkKore.LOGGER.log(Level.WARN, "Fail loading option " + option.getValue(), e);
+            }
         }
     }
 }

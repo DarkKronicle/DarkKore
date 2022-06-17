@@ -10,6 +10,7 @@ import io.github.darkkronicle.darkkore.config.options.OptionHolder;
 import io.github.darkkronicle.darkkore.gui.ConfigScreen;
 import lombok.Getter;
 import net.minecraft.client.gui.screen.Screen;
+import org.apache.logging.log4j.Level;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,11 +39,16 @@ public abstract class ModConfig implements OptionHolder, ConfigHolder {
         }
     }
 
+    @Override
     public void save() {
         setupFileConfig();
         config.load();
         for (Option<?> entry : getOptions()) {
-            entry.save(config.getConfig());
+            try {
+                entry.save(config.getConfig());
+            } catch (Exception e) {
+                DarkKore.LOGGER.log(Level.WARN, "Fail saving option " + entry.getValue(), e);
+            }
         }
         config.save();
         config.close();
@@ -51,10 +57,15 @@ public abstract class ModConfig implements OptionHolder, ConfigHolder {
     public void rawLoad() {
         config.load();
         for (Option<?> entry : getOptions()) {
-            entry.load(config.getConfig());
+            try {
+                entry.load(config.getConfig());
+            } catch (Exception e) {
+                DarkKore.LOGGER.log(Level.WARN, "Fail loading option " + entry.getValue(), e);
+            }
         }
     }
 
+    @Override
     public void load() {
         setupFileConfig();
         rawLoad();

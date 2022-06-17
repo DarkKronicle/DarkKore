@@ -63,7 +63,7 @@ public class ConfigScreen extends ComponentScreen {
         return new ConfigScreen(tabs);
     }
 
-    private static Tab populate(OptionSection section) {
+    public static Tab populate(OptionSection section) {
         boolean allSections = true;
         for (Option<?> option : section.getOptions()) {
             if (!(option instanceof OptionSection)) {
@@ -128,8 +128,6 @@ public class ConfigScreen extends ComponentScreen {
         }
         for (Tab tab : tabs) {
             ButtonComponent button = new ButtonComponent(this, StringUtil.translateToText(tab.getDisplayKey()), new Color(100, 100, 100, 100), new Color(150, 150, 150, 150), (comp) -> {
-//                comp.setDisabled(true);
-//                comp.setOutlineColor(new Color(180, 180, 180, 180));
                 setTab(tab);
             });
             if (tab.equals(selected)) {
