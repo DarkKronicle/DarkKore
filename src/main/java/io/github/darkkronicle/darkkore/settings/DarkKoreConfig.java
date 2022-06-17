@@ -60,12 +60,7 @@ public class DarkKoreConfig extends ModConfig {
     }
 
     @Override
-    public void addOption(Option<?> option) {
-
-    }
-
-    @Override
     public Screen getScreen() {
-        return ConfigScreen.of(getSections());
+        return ConfigScreen.ofSections(getSections());
     }
 }

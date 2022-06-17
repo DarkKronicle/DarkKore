@@ -6,6 +6,9 @@ public interface OptionHolder {
 
     List<Option<?>> getOptions();
 
-    void addOption(Option<?> option);
+    @Deprecated
+    default void addOption(Option<?> option) {
+
+    }
 
 }

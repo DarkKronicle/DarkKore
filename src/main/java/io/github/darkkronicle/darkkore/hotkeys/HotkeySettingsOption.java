@@ -7,6 +7,7 @@ import io.github.darkkronicle.darkkore.intialization.profiles.PlayerContextOptio
 import io.github.darkkronicle.darkkore.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,10 +36,10 @@ public class HotkeySettingsOption extends BasicOption<HotkeySettings> {
             setValue(getDefaultValue());
             return;
         }
-        boolean blocking = nest.get("blocking");
-        boolean ordered = nest.get("ordered");
-        boolean exclusive = nest.get("exclusive");
-        List<String> keys = nest.get("keys");
+        boolean blocking = (boolean) nest.getOptional("blocking").orElseGet(() -> getDefaultValue().isBlocking());
+        boolean ordered = (boolean) nest.getOptional("ordered").orElseGet(() -> getDefaultValue().isOrdered());
+        boolean exclusive = (boolean) nest.getOptional("exclusive").orElseGet(() -> getDefaultValue().isExclusive());
+        List<String> keys = (List<String>) nest.getOptional("keys").orElseGet(ArrayList::new);
         PlayerContextCheck check = PlayerContextOption.load("check", nest);
         if (check == null) {
             check = getDefaultValue().getCheck().copy();

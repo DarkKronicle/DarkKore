@@ -63,6 +63,9 @@ public class NightConfigObject implements ConfigObject {
 
     @Override
     public <T> Optional<T> getOptional(String key) {
+        if (!object.contains(key)) {
+            return Optional.empty();
+        }
         return (Optional<T>) Optional.of(getAs(object.get(key)));
     }
 

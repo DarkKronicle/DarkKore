@@ -53,7 +53,7 @@ public class HotkeySettingsComponent extends OptionComponent<HotkeySettings, Hot
                 new Color(100, 100, 100, 150),
                 new Color(150, 150, 150, 150),
                 button -> {
-                    ConfigScreen screen = new ConfigScreen(getDetailedOptions());
+                    ConfigScreen screen = ConfigScreen.of(getDetailedOptions());
                     screen.setParent(parent);
                     MinecraftClient.getInstance().setScreen(screen);
                 }

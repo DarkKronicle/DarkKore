@@ -1,8 +1,10 @@
 package io.github.darkkronicle.darkkore.gui;
 
+import io.github.darkkronicle.darkkore.DarkKore;
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.config.options.OptionSection;
 import io.github.darkkronicle.darkkore.gui.components.impl.ButtonComponent;
+import io.github.darkkronicle.darkkore.gui.components.impl.TextComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.ListComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.PositionedComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.ScrollComponent;
@@ -10,18 +12,20 @@ import io.github.darkkronicle.darkkore.gui.config.OptionComponent;
 import io.github.darkkronicle.darkkore.hotkeys.HotkeyHandler;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.Dimensions;
+import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
+import lombok.Getter;
+import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ConfigScreen extends ComponentScreen {
 
-    private Map<String, List<Option<?>>> options = null;
-    private String currentTab = null;
-    private ListComponent optionsComp;
+    @Getter
+    protected List<Tab> tabs = new ArrayList<>();
+    protected Tab currentTab = null;
+    protected ListComponent optionsComp;
+    protected ListComponent tabComp;
 
     protected int yDist = 12;
 
@@ -29,40 +33,76 @@ public class ConfigScreen extends ComponentScreen {
 
     }
 
-    public ConfigScreen(List<Option<?>> options) {
-        this.options = new HashMap<>();
-        this.options.put("Main", options);
+    public ConfigScreen(List<Tab> tabs) {
+        this.tabs = tabs;
     }
 
-    public ConfigScreen(Map<String, List<Option<?>>> options) {
-        this.options = options;
+    public static ConfigScreen of(List<Option<?>> sections) {
+        List<Tab> tabs = new ArrayList<>();
+        boolean allSections = true;
+        for (Option<?> option : sections) {
+            if (!(option instanceof OptionSection)) {
+                allSections = false;
+                break;
+            }
+        }
+        if (allSections) {
+            for (Option<?> opt : sections) {
+                tabs.add(populate((OptionSection) opt));
+            }
+            return new ConfigScreen(tabs);
+        }
+        return new ConfigScreen(List.of(Tab.ofOptions(new Identifier(DarkKore.MOD_ID, "main"), "main", sections)));
     }
 
-    public static ConfigScreen of(List<OptionSection> sections) {
-        Map<String, List<Option<?>>> tabs = new HashMap<>();
-        for (OptionSection section : sections) {
-            tabs.put(section.getNameKey(), section.getValue());
+    public static ConfigScreen ofSections(List<OptionSection> sections) {
+        List<Tab> tabs = new ArrayList<>();
+        for (OptionSection opt : sections) {
+            tabs.add(populate(opt));
         }
         return new ConfigScreen(tabs);
     }
 
-    public Map<String, List<Option<?>>> getOptions() {
-        return options;
+    private static Tab populate(OptionSection section) {
+        boolean allSections = true;
+        for (Option<?> option : section.getOptions()) {
+            if (!(option instanceof OptionSection)) {
+                allSections = false;
+                break;
+            }
+        }
+        if (allSections) {
+            List<Tab> nest = new ArrayList<>();
+            for (Option<?> opt : section.getOptions()) {
+                OptionSection sect = (OptionSection) opt;
+                nest.add(populate(sect));
+            }
+            return Tab.ofTabs(new Identifier(DarkKore.MOD_ID, section.getKey().toLowerCase(Locale.ROOT)), section.getNameKey(), nest);
+        }
+        return Tab.ofOptions(new Identifier(DarkKore.MOD_ID, section.getKey().toLowerCase(Locale.ROOT)), section.getNameKey(), section.getOptions());
     }
 
-    private void setTab(String tab) {
+    public static ConfigScreen ofOptions(List<Option<?>> options) {
+        List<Tab> tabs = new ArrayList<>();
+        tabs.add(Tab.ofOptions(new Identifier(DarkKore.MOD_ID, "main"), "main", options));
+        return new ConfigScreen(tabs);
+    }
+
+    private void setTab(Tab tab) {
         Dimensions dimensions = Dimensions.getScreen();
         int width = dimensions.getWidth() - 20;
         if (tab == null) {
-            tab = options.keySet().stream().findFirst().get();
+            tab = tabs.get(0);
         }
         this.currentTab = tab;
+        tabComp.clear();
+        addTabButtons(0, tabComp.getWidth(), null, tabs, tabComp);
         if (optionsComp == null) {
             optionsComp = new ListComponent(this, width, -1, true);
         } else {
             optionsComp.clear();
         }
-        for (Option<?> option : options.get(currentTab)) {
+        for (Option<?> option : tab.getNestedOptions()) {
             OptionComponent<?, ?> component = OptionComponentHolder.getInstance().convert(this, option, width - 2);
             if (component == null) {
                 continue;
@@ -71,46 +111,63 @@ public class ConfigScreen extends ComponentScreen {
         }
     }
 
-    public List<ButtonComponent> getCategoryButtons() {
-        List<ButtonComponent> buttonComponents = new ArrayList<>();
-        for (String key : options.keySet()) {
-            ButtonComponent button = new ButtonComponent(this, StringUtil.translateToText(key), new Color(100, 100, 100, 100), new Color(150, 150, 150, 150), (comp) -> {
-                for (ButtonComponent component : buttonComponents) {
-                    component.setDisabled(false);
-                    component.setOutlineColor(null);
-                }
-                setTab(key);
-                comp.setDisabled(true);
-                comp.setOutlineColor(new Color(180, 180, 180, 180));
-            });
-            buttonComponents.add(button);
+    public void addTabButtons(int depth, int width, Tab parent, List<Tab> tabs, ListComponent mainList) {
+        ListComponent list = new ListComponent(getParent(), -1 ,-1, false);
+        list.setWidth(0);
+        if (depth > 0) {
+            list.addComponent(new TextComponent(getParent(), new FluidText(">".repeat(depth))));
         }
-        return buttonComponents;
+        Tab selected;
+        if (parent == null) {
+            if (currentTab == null) {
+                currentTab = tabs.get(0);
+            }
+            selected = currentTab;
+        } else {
+            selected = parent.getSelected();
+        }
+        for (Tab tab : tabs) {
+            ButtonComponent button = new ButtonComponent(this, StringUtil.translateToText(tab.getDisplayKey()), new Color(100, 100, 100, 100), new Color(150, 150, 150, 150), (comp) -> {
+//                comp.setDisabled(true);
+//                comp.setOutlineColor(new Color(180, 180, 180, 180));
+                setTab(tab);
+            });
+            if (tab.equals(selected)) {
+                button.setOutlineColor(new Color(255, 255, 255, 255));
+                button.setBackground(new Color(50, 50, 50, 150));
+            }
+            list.addComponent(button);
+        }
+        mainList.addComponent(new ScrollComponent(getParent(), list, width, list.getHeight(), false));
+
+        if (selected.getTabs() != null) {
+            addTabButtons(depth + 1, width, selected, tabs, mainList);
+        }
     }
 
     @Override
     public void initImpl() {
         Dimensions dimensions = Dimensions.getScreen();
         int width = dimensions.getWidth() - 20;
+        int y = 10;
 
+        tabComp = new ListComponent(this, width, -1, false);
         setTab(currentTab);
-        ListComponent buttons = new ListComponent(this, -1, -1, false);
-        for (ButtonComponent component : getCategoryButtons()) {
-            buttons.addComponent(component);
-        }
-        if (buttons.getComponents().size() > 1) {
+        if (tabs.size() > 1) {
             addComponent(new PositionedComponent(
                     this,
-                    new ScrollComponent(this, buttons, width, buttons.getHeight(), false),
-                    10, 10
+                    tabComp,
+                    10,
+                    10
             ));
+            y += tabComp.getHeight();
         }
 
         addComponent(
                 new PositionedComponent(
                         this,
-                        new ScrollComponent(this, optionsComp, width, dimensions.getHeight() - 40, true),
-                        10, 40
+                        new ScrollComponent(this, optionsComp, width, dimensions.getHeight() - y - 20, true),
+                        10, y
                 )
         );
     }
