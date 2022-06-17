@@ -110,7 +110,7 @@ public class ScrollComponent extends OffsetComponent {
                 ))
         )));
 
-        int total = component.getBoundingBox().height() - height;
+        int total = vertical ? component.getBoundingBox().height() - height : component.getBoundingBox().width() - width;
 
         // Bound checks
         if (scrollVal > total) {
