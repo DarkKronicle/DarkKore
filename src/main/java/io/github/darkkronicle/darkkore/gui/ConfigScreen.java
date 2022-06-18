@@ -100,11 +100,7 @@ public class ConfigScreen extends ComponentScreen {
         int scroll = tabScroll == null ? 0 : tabScroll.getScrollVal();
         tabComp.clear();
         addTabButtons(0, tabComp.getWidth(), null, tabs, tabComp);
-        if (optionsComp == null) {
-            optionsComp = new ListComponent(this, width, -1, true);
-        } else {
-            optionsComp.clear();
-        }
+        optionsComp.clear();
         for (Option<?> option : tab.getNestedOptions()) {
             OptionComponent<?, ?> component = OptionComponentHolder.getInstance().convert(this, option, width - 2);
             if (component == null) {
@@ -169,12 +165,16 @@ public class ConfigScreen extends ComponentScreen {
         int y = 10;
 
         tabComp = new ListComponent(this, width, -1, false);
+        optionsComp = new ListComponent(this, width, -1, true);
         optionsPosition = new PositionedComponent(
                 this,
                 new ScrollComponent(this, optionsComp, width, dimensions.getHeight() - y - 20, true),
                 10, y
         );
         setTab(currentTab);
+        if (tabs.size() > 1) {
+            addComponent(tabComp);
+        }
         addComponent(optionsPosition);
     }
 

@@ -33,7 +33,7 @@ public class DarkKoreConfig extends ModConfig {
 
     public final DoubleOption scrollScale = new DoubleOption("scrollScale", "darkkore.option.scrollscale", "darkkore.option.info.scrollscale", .3, 0.01, 10);
 
-    public final OptionSection gui = new OptionSection("gui", "rci.option.section.gui", "rci.option.section.info.gui",
+    public final OptionSection gui = new OptionSection("gui", "darkkore.option.section.gui", "darkkore.option.section.info.gui",
             List.of(scrollScale));
 
     public static DarkKoreConfig getInstance() {
