@@ -139,8 +139,8 @@ public class ConfigScreen extends ComponentScreen {
         for (Tab tab : tabs) {
             ButtonComponent button = new ButtonComponent(this, StringUtil.translateToText(tab.getDisplayKey()), new Color(100, 100, 100, 100), new Color(150, 150, 150, 150), (comp) -> {
                 if (parent != null) {
-                    setTab(parent);
                     parent.select(tab.getIdentifier());
+                    setTab(parent);
                 } else {
                     setTab(tab);
                 }
@@ -175,15 +175,7 @@ public class ConfigScreen extends ComponentScreen {
                 10, y
         );
         setTab(currentTab);
-        if (tabs.size() > 1) {
-            addComponent(new PositionedComponent(
-                    this,
-                    tabComp,
-                    10,
-                    10
-            ));
-        }
-        addComponent(optionsComp);
+        addComponent(optionsPosition);
     }
 
     @Override
