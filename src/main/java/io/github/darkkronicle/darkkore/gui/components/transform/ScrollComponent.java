@@ -19,6 +19,9 @@ public class ScrollComponent extends OffsetComponent {
     private double scrollStart = 0;
     /** The position where scroll animation ends */
     private double scrollEnd = 0;
+
+    @Setter
+    @Getter
     /** The actual scroll value */
     private int scrollVal = 0;
 

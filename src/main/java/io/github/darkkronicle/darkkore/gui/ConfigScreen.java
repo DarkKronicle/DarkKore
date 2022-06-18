@@ -24,8 +24,10 @@ public class ConfigScreen extends ComponentScreen {
     @Getter
     protected List<Tab> tabs = new ArrayList<>();
     protected Tab currentTab = null;
+    protected ScrollComponent tabScroll = null;
     protected ListComponent optionsComp;
     protected ListComponent tabComp;
+    protected PositionedComponent optionsPosition;
 
     protected int yDist = 12;
 
@@ -95,6 +97,7 @@ public class ConfigScreen extends ComponentScreen {
             tab = tabs.get(0);
         }
         this.currentTab = tab;
+        int scroll = tabScroll == null ? 0 : tabScroll.getScrollVal();
         tabComp.clear();
         addTabButtons(0, tabComp.getWidth(), null, tabs, tabComp);
         if (optionsComp == null) {
@@ -108,6 +111,13 @@ public class ConfigScreen extends ComponentScreen {
                 continue;
             }
             optionsComp.addComponent(component);
+        }
+        if (tabs.size() > 1) {
+            optionsPosition.setY(10 + tabComp.getHeight());
+            ((ScrollComponent) optionsPosition.getComponent()).setHeight(Dimensions.getScreen().getHeight() - (10 + tabComp.getHeight()) - 20);
+        }
+        if (tabScroll != null) {
+            tabScroll.setScrollVal(scroll);
         }
     }
 
@@ -128,7 +138,12 @@ public class ConfigScreen extends ComponentScreen {
         }
         for (Tab tab : tabs) {
             ButtonComponent button = new ButtonComponent(this, StringUtil.translateToText(tab.getDisplayKey()), new Color(100, 100, 100, 100), new Color(150, 150, 150, 150), (comp) -> {
-                setTab(tab);
+                if (parent != null) {
+                    setTab(parent);
+                    parent.select(tab.getIdentifier());
+                } else {
+                    setTab(tab);
+                }
             });
             if (tab.equals(selected)) {
                 button.setOutlineColor(new Color(255, 255, 255, 255));
@@ -136,7 +151,11 @@ public class ConfigScreen extends ComponentScreen {
             }
             list.addComponent(button);
         }
-        mainList.addComponent(new ScrollComponent(getParent(), list, width, list.getHeight(), false));
+        ScrollComponent scroll = new ScrollComponent(getParent(), list, width, list.getHeight(), false);
+        if (depth == 0) {
+            tabScroll = scroll;
+        }
+        mainList.addComponent(scroll);
 
         if (selected.getTabs() != null) {
             addTabButtons(depth + 1, width, selected, selected.getTabs(), mainList);
@@ -150,6 +169,11 @@ public class ConfigScreen extends ComponentScreen {
         int y = 10;
 
         tabComp = new ListComponent(this, width, -1, false);
+        optionsPosition = new PositionedComponent(
+                this,
+                new ScrollComponent(this, optionsComp, width, dimensions.getHeight() - y - 20, true),
+                10, y
+        );
         setTab(currentTab);
         if (tabs.size() > 1) {
             addComponent(new PositionedComponent(
@@ -158,16 +182,8 @@ public class ConfigScreen extends ComponentScreen {
                     10,
                     10
             ));
-            y += tabComp.getHeight();
         }
-
-        addComponent(
-                new PositionedComponent(
-                        this,
-                        new ScrollComponent(this, optionsComp, width, dimensions.getHeight() - y - 20, true),
-                        10, y
-                )
-        );
+        addComponent(optionsComp);
     }
 
     @Override

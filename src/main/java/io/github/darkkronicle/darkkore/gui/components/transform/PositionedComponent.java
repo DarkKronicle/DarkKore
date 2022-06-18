@@ -1,11 +1,14 @@
 package io.github.darkkronicle.darkkore.gui.components.transform;
 
 import io.github.darkkronicle.darkkore.gui.components.Component;
+import lombok.Setter;
 import net.minecraft.client.gui.screen.Screen;
 
 public class PositionedComponent extends OffsetComponent {
 
+    @Setter
     private int x;
+    @Setter
     private int y;
 
     public PositionedComponent(Screen parent, Component component, int x, int y, int width, int height) {

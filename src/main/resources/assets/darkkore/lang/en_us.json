@@ -14,6 +14,7 @@
   "darkkore.optiontype.info.konstruct": "Type Konstruct script in here",
   "darkkore.optiontype.info.color": "Type a hex color in the format #AARRGGBB here",
   "darkkore.optiontype.info.optionsection": "Click configure to see a list of options",
+  "darkkore.button.configure": "Configure",
 
   "darkkore.option.soundtype": "UI Sound Type",
   "darkkore.option.info.soundtype": "How UI buttons sound in DarkKore menus (aka this one)",

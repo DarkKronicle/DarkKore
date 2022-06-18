@@ -18,8 +18,10 @@ import net.minecraft.client.util.math.MatrixStack;
 public abstract class WrapperComponent extends BasicComponent {
 
     /** The width the component should be */
+    @Setter
     protected int width;
     /** The height the component should be */
+    @Setter
     protected int height;
 
     /** The component that is being handled */
