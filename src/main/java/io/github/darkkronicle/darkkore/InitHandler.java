@@ -73,6 +73,12 @@ public class InitHandler implements Initializer {
             }
             return Optional.empty();
         });
+        OptionComponentHolder.getInstance().addWithOrder(100, (parent, option, width) -> {
+            if (option instanceof OptionSection) {
+                return Optional.of(new OptionSectionComponent(parent, (OptionSection) option, width));
+            }
+            return Optional.empty();
+        });
     }
 
 }

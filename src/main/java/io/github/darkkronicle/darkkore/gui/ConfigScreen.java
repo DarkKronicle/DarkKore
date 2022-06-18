@@ -139,7 +139,7 @@ public class ConfigScreen extends ComponentScreen {
         mainList.addComponent(new ScrollComponent(getParent(), list, width, list.getHeight(), false));
 
         if (selected.getTabs() != null) {
-            addTabButtons(depth + 1, width, selected, tabs, mainList);
+            addTabButtons(depth + 1, width, selected, selected.getTabs(), mainList);
         }
     }
 
