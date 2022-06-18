@@ -117,7 +117,7 @@ public class ConfigScreen extends ComponentScreen {
         }
     }
 
-    public void addTabButtons(int depth, int width, Tab parent, List<Tab> tabs, ListComponent mainList) {
+    public void addTabButtons(int depth, int width, List<Tab> parent, List<Tab> tabs, ListComponent mainList) {
         ListComponent list = new ListComponent(getParent(), -1 ,-1, false);
         list.setWidth(0);
         if (depth > 0) {
@@ -130,13 +130,13 @@ public class ConfigScreen extends ComponentScreen {
             }
             selected = currentTab;
         } else {
-            selected = parent.getSelected();
+            selected = parent.get(parent.size() - 1).getSelected();
         }
         for (Tab tab : tabs) {
             ButtonComponent button = new ButtonComponent(this, StringUtil.translateToText(tab.getDisplayKey()), new Color(100, 100, 100, 100), new Color(150, 150, 150, 150), (comp) -> {
                 if (parent != null) {
-                    parent.select(tab.getIdentifier());
-                    setTab(parent);
+                    parent.get(parent.size() - 1).select(tab.getIdentifier());
+                    setTab(parent.get(0));
                 } else {
                     setTab(tab);
                 }
@@ -154,7 +154,9 @@ public class ConfigScreen extends ComponentScreen {
         mainList.addComponent(scroll);
 
         if (selected.getTabs() != null) {
-            addTabButtons(depth + 1, width, selected, selected.getTabs(), mainList);
+            List<Tab> par = new ArrayList<>(parent);
+            par.add(selected);
+            addTabButtons(depth + 1, width, par, selected.getTabs(), mainList);
         }
     }
 
