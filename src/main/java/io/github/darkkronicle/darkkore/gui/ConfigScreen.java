@@ -154,7 +154,10 @@ public class ConfigScreen extends ComponentScreen {
         mainList.addComponent(scroll);
 
         if (selected.getTabs() != null) {
-            List<Tab> par = new ArrayList<>(parent);
+            List<Tab> par = new ArrayList<>();
+            if (parent != null) {
+                par.addAll(parent);
+            }
             par.add(selected);
             addTabButtons(depth + 1, width, par, selected.getTabs(), mainList);
         }
