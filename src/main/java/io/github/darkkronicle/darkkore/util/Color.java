@@ -9,25 +9,24 @@ import lombok.experimental.Accessors;
 /**
  * A color utility class that allows for easy mutability of RGBA colors
  */
-@Value
 @Accessors(fluent = true)
 public class Color {
 
     @Getter
-    int red;
+    private final int red;
 
     @Getter
-    int green;
+    private final int green;
 
     @Getter
-    int blue;
+    private final int blue;
 
     @Getter
     @With(AccessLevel.PUBLIC)
-    int alpha;
+    private final int alpha;
 
     @Getter
-    int color;
+    private final int color;
 
     public Color(int color) {
         this.color = color;
@@ -43,7 +42,7 @@ public class Color {
      * @return Red value 0-1
      */
     public float floatRed() {
-        return ((float) red) / 255;
+        return ((float) red()) / 255;
     }
 
     /**
@@ -51,7 +50,7 @@ public class Color {
      * @return Green value 0-1
      */
     public float floatGreen() {
-        return ((float) green) / 255;
+        return ((float) green()) / 255;
     }
 
     /**
@@ -59,7 +58,7 @@ public class Color {
      * @return Blue value 0-1
      */
     public float floatBlue() {
-        return ((float) blue) / 255;
+        return ((float) blue()) / 255;
     }
 
     /**
@@ -67,7 +66,7 @@ public class Color {
      * @return Alpha value 0-1
      */
     public float floatAlpha() {
-        return ((float) alpha) / 255;
+        return ((float) alpha()) / 255;
     }
 
     public Color(int red, int green, int blue, int alpha) {

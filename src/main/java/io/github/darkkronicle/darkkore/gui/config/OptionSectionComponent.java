@@ -1,11 +1,11 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
+import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.config.options.OptionSection;
 import io.github.darkkronicle.darkkore.gui.ConfigScreen;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.gui.components.impl.ButtonComponent;
-import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
 import net.minecraft.client.MinecraftClient;
@@ -32,7 +32,7 @@ public class OptionSectionComponent extends OptionComponent<List<Option<?>>, Opt
 
     @Override
     public Component getMainComponent() {
-        ButtonComponent configure = new ButtonComponent(parent, StringUtil.translateToText("darkkore.button.configure"), new Color(100, 100, 100, 100), new Color(150, 150, 150, 150), (button) -> {
+        ButtonComponent configure = new ButtonComponent(parent, StringUtil.translateToText("darkkore.button.configure"), CommonColors.getButtonColor(), CommonColors.getButtonHover(), (button) -> {
             ConfigScreen screen = ConfigScreen.of(option.getValue());
             screen.setParent(parent);
             MinecraftClient.getInstance().setScreen(screen);

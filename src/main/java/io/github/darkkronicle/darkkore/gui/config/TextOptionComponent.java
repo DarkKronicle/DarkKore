@@ -1,5 +1,6 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
+import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.gui.components.impl.TextBoxComponent;
@@ -38,7 +39,7 @@ public abstract class TextOptionComponent<N, T extends Option<N>> extends Option
     public void onHovered(int x, int y, int mouseX, int mouseY, boolean hovered) {
         super.onHovered(x, y, mouseX, mouseY, hovered);
         if (hovered) {
-            setBackgroundColor(new Color(100, 100, 100, 100));
+            setBackgroundColor(CommonColors.getOptionBackgroundHover());
         } else {
             setBackgroundColor(null);
         }

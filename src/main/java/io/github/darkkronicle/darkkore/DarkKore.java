@@ -1,5 +1,6 @@
 package io.github.darkkronicle.darkkore;
 
+import io.github.darkkronicle.darkkore.colors.Colors;
 import io.github.darkkronicle.darkkore.config.ConfigurationManager;
 import io.github.darkkronicle.darkkore.hotkeys.HotkeyHandler;
 import io.github.darkkronicle.darkkore.hotkeys.InputHandler;
@@ -24,6 +25,7 @@ public class DarkKore implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        ConfigurationManager.getInstance().add(Colors.getInstance());
         ConfigurationManager.getInstance().add(DarkKoreConfig.getInstance());
         InputHandler.getInstance().addHook(HotkeyHandler.getInstance());
         // This should be called first

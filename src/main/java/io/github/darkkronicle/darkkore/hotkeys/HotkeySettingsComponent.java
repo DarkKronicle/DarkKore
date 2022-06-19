@@ -1,5 +1,6 @@
 package io.github.darkkronicle.darkkore.hotkeys;
 
+import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.config.options.*;
 import io.github.darkkronicle.darkkore.gui.ConfigScreen;
 import io.github.darkkronicle.darkkore.gui.components.Component;
@@ -44,14 +45,14 @@ public class HotkeySettingsComponent extends OptionComponent<HotkeySettings, Hot
                 option.getValue().getKeys(),
                 132,
                 14,
-                new Color(100, 100, 100, 150),
-                new Color(150, 150, 150, 150)
+                CommonColors.getButtonColor(),
+                CommonColors.getButtonHover()
         );
         ButtonComponent settings = new SettingsButtonComponent(
                 parent,
                 14,
-                new Color(100, 100, 100, 150),
-                new Color(150, 150, 150, 150),
+                CommonColors.getButtonColor(),
+                CommonColors.getButtonHover(),
                 button -> {
                     ConfigScreen screen = ConfigScreen.of(getDetailedOptions());
                     screen.setParent(parent);

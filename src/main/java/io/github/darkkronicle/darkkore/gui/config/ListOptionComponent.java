@@ -1,5 +1,6 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
+import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.config.options.ListOption;
 import io.github.darkkronicle.darkkore.config.options.OptionListEntry;
 import io.github.darkkronicle.darkkore.gui.components.Component;
@@ -30,8 +31,8 @@ public class ListOptionComponent<T extends OptionListEntry<T>> extends OptionCom
                 parent, option.getValue(),
                 -1,
                 14,
-                new Color(100, 100, 100, 150),
-                new Color(150, 150, 150, 150),
+                CommonColors.getButtonColor(),
+                CommonColors.getButtonHover(),
                 value -> {
                     option.setValue(value);
                     onUpdate();

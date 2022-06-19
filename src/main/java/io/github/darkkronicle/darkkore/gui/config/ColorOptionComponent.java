@@ -1,5 +1,7 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
+import io.github.darkkronicle.darkkore.colors.ColorAlias;
+import io.github.darkkronicle.darkkore.colors.Colors;
 import io.github.darkkronicle.darkkore.config.options.ColorOption;
 import io.github.darkkronicle.darkkore.gui.components.BasicComponent;
 import io.github.darkkronicle.darkkore.gui.components.Component;
@@ -13,7 +15,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
-public class ColorOptionComponent extends TextOptionComponent<Color, ColorOption> {
+public class ColorOptionComponent extends TextOptionComponent<ColorAlias, ColorOption> {
 
     public ColorOptionComponent(Screen parent, ColorOption option, int width) {
         super(parent, option, width);
@@ -26,11 +28,17 @@ public class ColorOptionComponent extends TextOptionComponent<Color, ColorOption
 
     @Override
     public boolean isValid(String string) {
-        return SearchUtil.isMatch(string, "^(?:#)?(?:[0-9A-F]{2}){3,4}$", FindType.REGEX);
+        if (SearchUtil.isMatch(string, "^(?:#)?(?:[0-9A-F]{2}){3,4}$", FindType.REGEX)) {
+            return true;
+        }
+        return Colors.getInstance().getColor(string).isPresent();
     }
 
     @Override
     public String getStringValue() {
+        if (getOption().getValue().isAlias()) {
+            return getOption().getValue().getAliasName();
+        }
         return getOption().getValue().getString();
     }
 
@@ -59,6 +67,10 @@ public class ColorOptionComponent extends TextOptionComponent<Color, ColorOption
 
     @Override
     public void setValueFromString(String string) {
-        getOption().setValue(ColorUtil.getColorFromString(string));
+        if (string.startsWith("#")) {
+            getOption().setValue(new ColorAlias(ColorUtil.getColorFromString(string)));
+            return;
+        }
+        getOption().setValue(new ColorAlias(string));
     }
 }

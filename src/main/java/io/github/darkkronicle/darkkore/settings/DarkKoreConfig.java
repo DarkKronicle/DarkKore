@@ -20,7 +20,7 @@ public class DarkKoreConfig extends ModConfig {
 
     private final File file;
 
-    public final ListOption<SoundType> soundType = new ListOption<>("soundType", "darkkore.option.soundtype", "darkkore.option.info.soundtype", SoundType.CHIME);
+    public final ListOption<SoundType> soundType = new ListOption<>("soundType", "darkkore.option.soundtype", "darkkore.option.info.soundtype", SoundType.NORMAL);
 
     public final BooleanOption changeVanillaButtons = new BooleanOption("changeVanillaButtons", "darkkore.option.changevanillaoptions", "darkkore.option.info.changevanillaoptions",
             false);

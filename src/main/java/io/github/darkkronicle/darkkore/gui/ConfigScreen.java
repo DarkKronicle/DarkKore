@@ -1,6 +1,8 @@
 package io.github.darkkronicle.darkkore.gui;
 
 import io.github.darkkronicle.darkkore.DarkKore;
+import io.github.darkkronicle.darkkore.colors.Colors;
+import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.config.options.OptionSection;
 import io.github.darkkronicle.darkkore.gui.components.impl.ButtonComponent;
@@ -133,7 +135,7 @@ public class ConfigScreen extends ComponentScreen {
             selected = parent.get(parent.size() - 1).getSelected();
         }
         for (Tab tab : tabs) {
-            ButtonComponent button = new ButtonComponent(this, StringUtil.translateToText(tab.getDisplayKey()), new Color(100, 100, 100, 100), new Color(150, 150, 150, 150), (comp) -> {
+            ButtonComponent button = new ButtonComponent(this, StringUtil.translateToText(tab.getDisplayKey()), CommonColors.getButtonColor(), CommonColors.getButtonHover(), (comp) -> {
                 if (parent != null) {
                     parent.get(parent.size() - 1).select(tab.getIdentifier());
                     setTab(parent.get(0));
@@ -142,7 +144,7 @@ public class ConfigScreen extends ComponentScreen {
                 }
             });
             if (tab.equals(selected)) {
-                button.setOutlineColor(new Color(255, 255, 255, 255));
+                button.setOutlineColor(Colors.getInstance().getColorOrWhite("tab_outline_select"));
                 button.setBackground(new Color(50, 50, 50, 150));
             }
             list.addComponent(button);

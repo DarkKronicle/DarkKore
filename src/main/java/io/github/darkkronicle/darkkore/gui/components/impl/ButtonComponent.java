@@ -1,5 +1,6 @@
 package io.github.darkkronicle.darkkore.gui.components.impl;
 
+import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.ColorUtil;
 import io.github.darkkronicle.darkkore.util.SoundUtil;
@@ -122,7 +123,7 @@ public class ButtonComponent extends TextComponent {
 
     public void updateBackground() {
         if (disabled) {
-            setBackgroundColor(ColorUtil.blend(getBackground(), new Color(0, 0, 0, 100), .5f).withAlpha(getBackground().alpha()));
+            setBackgroundColor(ColorUtil.blend(getBackground(), CommonColors.getButtonDisabled(), .5f).withAlpha(getBackground().alpha()));
         } else {
             setBackgroundColor(getBackground());
         }

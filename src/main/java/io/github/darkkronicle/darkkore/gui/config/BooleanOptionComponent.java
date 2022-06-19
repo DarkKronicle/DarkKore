@@ -1,5 +1,6 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
+import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.config.options.BooleanOption;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.gui.components.impl.ToggleComponent;
@@ -35,8 +36,8 @@ public class BooleanOptionComponent extends OptionComponent<Boolean, BooleanOpti
                 parent, option.getValue(),
                 150,
                 14,
-                new Color(100, 100, 100, 150),
-                new Color(150, 150, 150, 150),
+                CommonColors.getButtonColor(),
+                CommonColors.getButtonHover(),
                 bool -> {
                     option.setValue(bool);
                     onUpdate();
