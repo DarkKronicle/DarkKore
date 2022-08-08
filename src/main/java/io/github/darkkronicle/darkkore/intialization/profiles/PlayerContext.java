@@ -18,7 +18,7 @@ public class PlayerContext {
         boolean inGame = client.world != null;
         String server = PlayerUtil.getServer();
         GameMode gameMode = null;
-        if (inGame) {
+        if (inGame && client.interactionManager != null) {
             gameMode = client.interactionManager.getCurrentGameMode();
         }
         boolean inGui = client.currentScreen != null;
