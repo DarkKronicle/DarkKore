@@ -156,7 +156,7 @@ public class Colors implements ConfigHolder {
             int blue = Integer.parseInt(string.substring(4, 6), 16);
             int alpha = 255;
             if (string.length() == 8) {
-                alpha = Integer.parseInt(string.substring(6));
+                alpha = Integer.parseInt(string.substring(6), 16);
             }
             return new Color(red, green, blue, alpha);
         } catch (Exception e) {

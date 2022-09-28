@@ -4,6 +4,8 @@ plugins {
     id "io.freefair.lombok" version "6.0.0-m2"
 }
 
+apply from: 'https://raw.githubusercontent.com/DarkKronicle/GradleScripts/main/gradle/publish.gradle'
+
 version = "${project.mod_version}-${project.minecraft_version}"
 group = project.maven_group
 
