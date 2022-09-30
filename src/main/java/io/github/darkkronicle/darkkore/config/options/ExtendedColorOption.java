@@ -1,5 +1,6 @@
 package io.github.darkkronicle.darkkore.config.options;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.darkkronicle.darkkore.colors.ColorAlias;
 import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
 import io.github.darkkronicle.darkkore.intialization.Saveable;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +54,14 @@ public class ExtendedColorOption extends ColorOption {
             object.getOptional("speed").ifPresent((opt) -> speed = (float) opt);
             object.getOptional("saturation").ifPresent((opt) -> saturation = (float) opt);
         }
+
+        /**
+         * Sets the color modulation in {@link RenderSystem}. This tells the shaders what values to use for size/speed/saturation/opacity
+         */
+        public void setColorModulation() {
+            RenderSystem.setShaderColor(size, speed, saturation, opacity);
+        }
+
     }
 
     @Setter
@@ -61,6 +71,16 @@ public class ExtendedColorOption extends ColorOption {
     @Setter
     @Getter
     private ChromaOptions defaultChromaOptions;
+
+    @Getter
+    @Setter
+    private boolean showChromaOptions = true;
+    // Incase I ever want to add more options
+
+    public boolean anyExtended() {
+        // When adding more use ||
+        return showChromaOptions;
+    }
 
     public ExtendedColorOption(String key, String displayName, String hoverName, Color defaultValue, ChromaOptions chromaOptions) {
         super(key, displayName, hoverName, defaultValue);
@@ -72,8 +92,6 @@ public class ExtendedColorOption extends ColorOption {
         super(key, displayName, hoverName, defaultValue);
         this.chromaOptions = chromaOptions;
     }
-
-
 
     @Override
     public void save(ConfigObject config) {
@@ -113,7 +131,7 @@ public class ExtendedColorOption extends ColorOption {
 
     }
 
-    public List<OptionSection> getNestedSections() {
+    public OptionSection getChromaSection() {
         OptionSection chroma = new OptionSection("chroma", "darkkore.option.color.chroma", "darkkore.option.color.info.chroma");
         ChromaOptions defaultValue = getDefaultChromaOptions().copy();
         chroma.addOption(
@@ -198,8 +216,15 @@ public class ExtendedColorOption extends ColorOption {
                     }
                 }
         );
+        return chroma;
+    }
 
-        return List.of(chroma);
+    public List<OptionSection> getNestedSections() {
+        List<OptionSection> sections = new ArrayList<>();
+        if (showChromaOptions) {
+            sections.add(getChromaSection());
+        }
+        return sections;
     }
 
 

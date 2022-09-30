@@ -28,6 +28,9 @@ public class ExtendColorOptionComponent extends ColorOptionComponent {
         ListComponent list = super.getMainComponent();
         // This **has** to be an extended color option
         ExtendedColorOption option = getOption();
+        if (!option.anyExtended()) {
+            return list;
+        }
         ButtonComponent settings = new SettingsButtonComponent(
                 parent,
                 14,
