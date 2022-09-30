@@ -9,6 +9,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Matrix4f;
 
+import java.util.function.Supplier;
+
 /**
  * Various methods to help make rendering easier
  */
@@ -65,6 +67,10 @@ public class RenderUtil {
     }
 
     public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color) {
+        fill(matrix, x1, y1, x2, y2, color, GameRenderer::getPositionColorShader);
+    }
+
+    public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color, Supplier<Shader> shaderSupplier) {
         int i;
         if (x1 < x2) {
             i = x1;
@@ -84,7 +90,7 @@ public class RenderUtil {
         RenderSystem.enableBlend();
         RenderSystem.disableTexture();
         RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.setShader(shaderSupplier);
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         bufferBuilder.vertex(matrix, x1, y2, 0.0f).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(r, g, b, a).next();
@@ -112,10 +118,14 @@ public class RenderUtil {
     }
 
     public void fillGradient(MatrixStack matrices, int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
+        fillGradient(matrices, startX, startY, endX, endY, colorStart, colorEnd, GameRenderer::getPositionColorShader);
+    }
+
+    public void fillGradient(MatrixStack matrices, int startX, int startY, int endX, int endY, int colorStart, int colorEnd, Supplier<Shader> shaderSupplier) {
         RenderSystem.disableTexture();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.setShader(shaderSupplier);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);

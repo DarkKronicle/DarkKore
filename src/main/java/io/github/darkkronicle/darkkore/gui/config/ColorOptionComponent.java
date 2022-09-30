@@ -43,7 +43,7 @@ public class ColorOptionComponent extends TextOptionComponent<ColorAlias, ColorO
     }
 
     @Override
-    public Component getMainComponent() {
+    public ListComponent getMainComponent() {
         ListComponent list = new ListComponent(parent, -1, -1, false);
         list.setLeftPad(0);
         list.setRightPad(0);

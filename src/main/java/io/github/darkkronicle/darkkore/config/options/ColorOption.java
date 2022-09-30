@@ -34,11 +34,14 @@ public class ColorOption extends BasicOption<ColorAlias> {
             setValue(getDefaultValue());
             return;
         }
-        if (option.get().startsWith("#")) {
-            setValue(new ColorAlias(ColorUtil.getColorFromString(option.get())));
-            return;
+        setValue(parseString(option.get()));
+    }
+
+    public static ColorAlias parseString(String option) {
+        if (option.startsWith("#")) {
+            return new ColorAlias(ColorUtil.getColorFromString(option));
         }
-        setValue(new ColorAlias(option.get()));
+        return new ColorAlias(option);
     }
 
 }

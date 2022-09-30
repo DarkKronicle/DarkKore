@@ -6,10 +6,11 @@
   "mixins": [
   ],
   "client": [
+    "MixinClickableWidget",
     "MixinClientPlayNetworkHandler",
+    "MixinGameRenderer",
     "MixinKeyboard",
-    "MixinMinecraftClient",
-    "MixinClickableWidget"
+    "MixinMinecraftClient"
   ],
   "injectors": {
     "defaultRequire": 1
