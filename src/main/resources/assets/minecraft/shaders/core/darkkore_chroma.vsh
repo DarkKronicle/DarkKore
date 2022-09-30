@@ -23,6 +23,9 @@ void main() {
     vec4 colorInbetween = (
         (.6 + .6 * cos(size * (dist + GameTime * speed) + vec4(0, 23, 21, 0)))
     );
+    colorInbetween[0] = colorInbetween[0] * saturation;
+    colorInbetween[1] = colorInbetween[1] * saturation;
+    colorInbetween[2] = colorInbetween[2] * saturation;
     colorInbetween[3] = Color[3];
     vertexColor = colorInbetween;
 }
