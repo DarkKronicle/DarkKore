@@ -1,7 +1,6 @@
 package io.github.darkkronicle.darkkore.colors;
 
 import io.github.darkkronicle.darkkore.util.Color;
-import lombok.Setter;
 
 public class ColorAlias extends Color {
 
@@ -13,7 +12,7 @@ public class ColorAlias extends Color {
     }
 
     public ColorAlias(Color color) {
-        this(color.color());
+        this(color.rawColor());
     }
 
     public ColorAlias(int color) {
@@ -68,11 +67,11 @@ public class ColorAlias extends Color {
     }
 
     @Override
-    public int color() {
+    public int rawColor() {
         if (alias == null) {
-            return super.color();
+            return super.rawColor();
         }
-        return getAlias().color();
+        return getAlias().rawColor();
     }
 
     @Override

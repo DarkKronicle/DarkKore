@@ -1,6 +1,7 @@
 package io.github.darkkronicle.darkkore.util.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.darkkronicle.darkkore.util.Color;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
@@ -22,6 +23,21 @@ public class RenderUtil {
      */
     public void drawOutline(MatrixStack matrices, int x, int y, int width, int height, int color) {
         fillOutline(matrices, x, y, x + width, y + height, color);
+    }
+
+    public void drawOutline(MatrixStack matrices, int x, int y, int width, int height, Color color) {
+        fillOutline(matrices, x, y, x + width, y + height, color);
+    }
+
+    public void fillOutline(MatrixStack matrices, int x, int y, int x2, int y2, Color color) {
+        // Top line
+        fill(matrices, x, y, x2, y + 1, color);
+        // Left line
+        fill(matrices, x, y + 1, x + 1, y2 - 1, color);
+        // Right line
+        fill(matrices, x2 - 1, y + 1, x2, y2 - 1, color);
+        // Bottom line
+        fill(matrices, x, y2 - 1, x2, y2, color);
     }
 
     /**
@@ -59,6 +75,10 @@ public class RenderUtil {
         fill(matrices, x, y, x + width, y + height, color);
     }
 
+    public void drawRectangle(MatrixStack matrices, int x, int y, int width, int height, int color, Supplier<Shader> shaderSupplier) {
+        fill(matrices.peek().getPositionMatrix(), x, y, x + width, y + height, color, shaderSupplier);
+    }
+
     /**
      * Fills in a rectangle with a color. Uses raw x/y values. x/y
      */
@@ -68,6 +88,30 @@ public class RenderUtil {
 
     public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color) {
         fill(matrix, x1, y1, x2, y2, color, GameRenderer::getPositionColorShader);
+    }
+
+    public void drawRectangle(MatrixStack matrices, int x, int y, int width, int height, Color color) {
+        fill(matrices, x, y, x + width, y + height, color);
+    }
+
+    public void fill(MatrixStack matrix, int x1, int y1, int x2, int y2, Color color) {
+        fill(matrix.peek().getPositionMatrix(), x1, y1, x2, y2, color);
+    }
+
+    public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, Color color) {
+        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+        int colorInt = color.preRender();
+        float a = (float)(colorInt >> 24 & 0xFF) / 255.0f;
+        float r = (float)(colorInt >> 16 & 0xFF) / 255.0f;
+        float g = (float)(colorInt >> 8 & 0xFF) / 255.0f;
+        float b = (float)(colorInt & 0xFF) / 255.0f;
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+        bufferBuilder.vertex(matrix, x1, y2, 0.0f).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a).next();
+        BufferRenderer.drawWithShader(bufferBuilder.end());
+        color.postRender();
     }
 
     public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color, Supplier<Shader> shaderSupplier) {

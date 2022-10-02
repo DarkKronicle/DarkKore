@@ -1,11 +1,11 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
-import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.gui.components.*;
 import io.github.darkkronicle.darkkore.gui.components.impl.TextComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.MultiComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.PositionedComponent;
+import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
 import io.github.darkkronicle.darkkore.util.*;
 import lombok.Getter;
 import net.minecraft.client.gui.screen.Screen;
@@ -33,7 +33,7 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
     @Override
     public void onHovered(int x, int y, int mouseX, int mouseY, boolean hovered) {
         if (hovered) {
-            setBackgroundColor(CommonColors.getOptionBackgroundHover());
+            setBackgroundColor(DarkKoreConfig.getInstance().hoverColor.getValue());
         } else {
             setBackgroundColor(null);
         }

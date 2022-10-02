@@ -8,6 +8,7 @@ in ivec2 UV2;
 uniform mat4 ModelViewMat;
 uniform mat4 ProjMat;
 uniform float GameTime;
+uniform vec4 ColorModulator;
 
 out vec4 vertexColor;
 
@@ -16,16 +17,29 @@ void main() {
 
     gl_Position = ProjMat * ModelViewMat * vertex;
     float dist = gl_Position.x + gl_Position.y;
-    float size = 30 * Color[0];
-    float speed = 1000 * Color[1];
-    float saturation = Color[2];
+    float size = 30 * ColorModulator[0];
+    float speed = 1000 * ColorModulator[1];
+    float saturation = ColorModulator[2];
+
+    if (size <= 0) {
+        // Solid color
+        dist = 0;
+    }
 
     vec4 colorInbetween = (
         (.6 + .6 * cos(size * (dist + GameTime * speed) + vec4(0, 23, 21, 0)))
     );
-    colorInbetween[0] = colorInbetween[0] * saturation;
-    colorInbetween[1] = colorInbetween[1] * saturation;
-    colorInbetween[2] = colorInbetween[2] * saturation;
-    colorInbetween[3] = Color[3];
+
+    if (saturation < 1) {
+        float gray = colorInbetween[0] * 0.299 + colorInbetween[1] * 0.587 + colorInbetween[2] * 0.114;
+        if (saturation > 0) {
+            colorInbetween[0] = (gray * (saturation - 1)) + (colorInbetween[0] * saturation);
+            colorInbetween[1] = (gray * (saturation - 1)) + (colorInbetween[1] * saturation);
+            colorInbetween[2] = (gray * (saturation - 1)) + (colorInbetween[2] * saturation);
+        } else {
+            colorInbetween = vec4(gray, gray, gray, 1);
+        }
+    }
+    colorInbetween[3] = ColorModulator[3];
     vertexColor = colorInbetween;
 }

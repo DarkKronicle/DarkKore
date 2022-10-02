@@ -1,10 +1,14 @@
 package io.github.darkkronicle.darkkore.util;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
+import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Shader;
+
+import java.util.function.Supplier;
 
 /**
  * A color utility class that allows for easy mutability of RGBA colors
@@ -25,7 +29,6 @@ public class Color {
     @With(AccessLevel.PUBLIC)
     private final int alpha;
 
-    @Getter
     private final int color;
 
     public Color(int color) {
@@ -35,6 +38,14 @@ public class Color {
         this.green = completeColor.green();
         this.blue = completeColor.blue();
         this.alpha = completeColor.alpha();
+    }
+
+    public int color() {
+        return rawColor();
+    }
+
+    public int rawColor() {
+        return color;
     }
 
     /**
@@ -106,6 +117,24 @@ public class Color {
      */
     public String getString() {
         return String.format("#%08X", color);
+    }
+
+    public Supplier<Shader> getShader() {
+        return GameRenderer::getPositionColorShader;
+    }
+
+    public int preRender() {
+        RenderSystem.setShaderColor(red() / 255f, green() / 255f, blue() / 255f, alpha() / 255f);
+        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(getShader());
+        return color();
+    }
+
+    public void postRender() {
+        RenderSystem.enableTexture();
+        RenderSystem.disableBlend();
     }
 
 }

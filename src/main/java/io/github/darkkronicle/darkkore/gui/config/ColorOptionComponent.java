@@ -4,8 +4,6 @@ import io.github.darkkronicle.darkkore.colors.ColorAlias;
 import io.github.darkkronicle.darkkore.colors.Colors;
 import io.github.darkkronicle.darkkore.config.options.ColorOption;
 import io.github.darkkronicle.darkkore.gui.components.BasicComponent;
-import io.github.darkkronicle.darkkore.gui.components.Component;
-import io.github.darkkronicle.darkkore.gui.components.impl.TextComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.ListComponent;
 import io.github.darkkronicle.darkkore.util.*;
 import io.github.darkkronicle.darkkore.util.render.RenderUtil;
@@ -42,14 +40,8 @@ public class ColorOptionComponent extends TextOptionComponent<ColorAlias, ColorO
         return getOption().getValue().getString();
     }
 
-    @Override
-    public ListComponent getMainComponent() {
-        ListComponent list = new ListComponent(parent, -1, -1, false);
-        list.setLeftPad(0);
-        list.setRightPad(0);
-        list.setTopPad(0);
-        list.setBottomPad(0);
-        BasicComponent component = new BasicComponent(parent) {
+    public BasicComponent getInnerComponent() {
+        return new BasicComponent(parent) {
             @Override
             public Rectangle getBoundingBox() {
                 return new Rectangle(14, 14);
@@ -60,7 +52,17 @@ public class ColorOptionComponent extends TextOptionComponent<ColorAlias, ColorO
                 RenderUtil.drawRectangle(matrices, x, y, 14, 14, getOption().getValue().color());
             }
         };
-        list.addComponent(component);
+    }
+
+    @Override
+    public ListComponent getMainComponent() {
+        ListComponent list = new ListComponent(parent, -1, -1, false);
+        list.setLeftPad(0);
+        list.setRightPad(0);
+        list.setTopPad(0);
+        list.setBottomPad(0);
+
+        list.addComponent(getInnerComponent());
         list.addComponent(super.getMainComponent());
         return list;
     }

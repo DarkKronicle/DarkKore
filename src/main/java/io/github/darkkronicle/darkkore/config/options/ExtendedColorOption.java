@@ -1,76 +1,18 @@
 package io.github.darkkronicle.darkkore.config.options;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.darkkronicle.darkkore.colors.ColorAlias;
+import io.github.darkkronicle.darkkore.colors.ExtendedColor;
 import io.github.darkkronicle.darkkore.config.impl.ConfigObject;
-import io.github.darkkronicle.darkkore.intialization.Saveable;
-import io.github.darkkronicle.darkkore.util.Color;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ExtendedColorOption extends ColorOption {
-
-    @Data
-    @AllArgsConstructor
-    public static class ChromaOptions implements Saveable {
-
-        public static String DISPLAY_KEY = "darkkore.optiontype.chroma";
-        public static String INFO_KEY = "darkkore.optiontype.info.chroma";
-
-        private boolean active;
-        private float opacity;
-        private float size;
-        private float speed;
-        private float saturation;
-
-        public static ChromaOptions getDefault() {
-            return new ChromaOptions(false, 1, 0.5f, 0.5f, 1);
-        }
-
-        public ChromaOptions copy() {
-            return new ChromaOptions(active, opacity, size, speed, saturation);
-        }
-
-        @Override
-        public void save(ConfigObject object) {
-            object.set("active", active);
-            object.set("opacity", opacity);
-            object.set("size", size);
-            object.set("speed", speed);
-            object.set("saturation", saturation);
-        }
-
-        @Override
-        public void load(ConfigObject object) {
-            object.getOptional("active").ifPresent((opt) -> active = (boolean) opt);
-            object.getOptional("opacity").ifPresent((opt) -> opacity = (float) opt);
-            object.getOptional("size").ifPresent((opt) -> size = (float) opt);
-            object.getOptional("speed").ifPresent((opt) -> speed = (float) opt);
-            object.getOptional("saturation").ifPresent((opt) -> saturation = (float) opt);
-        }
-
-        /**
-         * Sets the color modulation in {@link RenderSystem}. This tells the shaders what values to use for size/speed/saturation/opacity
-         */
-        public void setColorModulation() {
-            RenderSystem.setShaderColor(size, speed, saturation, opacity);
-        }
-
-    }
-
-    @Setter
-    @Getter
-    private ChromaOptions chromaOptions;
-
-    @Setter
-    @Getter
-    private ChromaOptions defaultChromaOptions;
+@Accessors(chain = true)
+public class ExtendedColorOption extends BasicOption<ExtendedColor> {
 
     @Getter
     @Setter
@@ -82,15 +24,8 @@ public class ExtendedColorOption extends ColorOption {
         return showChromaOptions;
     }
 
-    public ExtendedColorOption(String key, String displayName, String hoverName, Color defaultValue, ChromaOptions chromaOptions) {
+    public ExtendedColorOption(String key, String displayName, String hoverName, ExtendedColor defaultValue) {
         super(key, displayName, hoverName, defaultValue);
-        this.chromaOptions = chromaOptions.copy();
-        this.defaultChromaOptions = chromaOptions.copy();
-    }
-
-    public ExtendedColorOption(String key, String displayName, String hoverName, ColorAlias defaultValue, ChromaOptions chromaOptions) {
-        super(key, displayName, hoverName, defaultValue);
-        this.chromaOptions = chromaOptions;
     }
 
     @Override
@@ -98,7 +33,7 @@ public class ExtendedColorOption extends ColorOption {
         ConfigObject nested = config.createNew();
         String color = getValue().isAlias() ? getValue().getAliasName() : getValue().getString();
         config.set("color", color);
-        ChromaOptions chromaOptions = getChromaOptions();
+        ExtendedColor.ChromaOptions chromaOptions = getValue().getChroma();
         ConfigObject chroma = nested.createNew();
 
         chromaOptions.save(chroma);
@@ -109,113 +44,131 @@ public class ExtendedColorOption extends ColorOption {
 
     @Override
     public void load(ConfigObject config) {
-        Optional<Object> obj = config.get(config.get(getKey()));
+        Optional<Object> obj = config.getOptional(getKey());
         if (obj.isEmpty()) {
             return;
         }
         if (obj.get() instanceof String option) {
-            setValue(parseString(option));
+            ColorAlias alias = ColorOption.parseString(option);
+            if (alias.isAlias()) {
+                setValue(new ExtendedColor(alias.getAliasName(), getDefaultValue().getChroma()));
+            } else {
+                setValue(new ExtendedColor(alias.color(), getDefaultValue().getChroma()));
+            }
             return;
         }
         ConfigObject nested = (ConfigObject) obj.get();
-        ChromaOptions options = getDefaultChromaOptions().copy();
+        ExtendedColor.ChromaOptions options = getDefaultValue().getChroma();
         String option = nested.get("color");
-        setValue(parseString(option));
+        ColorAlias alias = ColorOption.parseString(option);
 
         ConfigObject chroma = nested.get("chroma");
-        options.load(chroma);
+        ExtendedColor.ChromaOptions loaded = ExtendedColor.ChromaOptions.load(chroma, options);
 
-        setChromaOptions(options);
-
-        options.load(chroma);
-
+        if (alias.isAlias()) {
+            setValue(new ExtendedColor(alias.getAliasName(), loaded));
+        } else {
+            setValue(new ExtendedColor(alias.color(), loaded));
+        }
     }
 
     public OptionSection getChromaSection() {
         OptionSection chroma = new OptionSection("chroma", "darkkore.option.color.chroma", "darkkore.option.color.info.chroma");
-        ChromaOptions defaultValue = getDefaultChromaOptions().copy();
-        chroma.addOption(
-                new BooleanOption(
-                        "active",
-                        "darkkore.option.color.chroma.active",
-                        "darkkore.option.color.chroma.info.active",
-                        defaultValue.active
-                ) {
-                    @Override
-                    public void setValue(Boolean value) {
-                        super.setValue(value);
-                        getChromaOptions().setActive(value);
-                    }
-                }
-        );
+        ExtendedColor.ChromaOptions defaultValue = getDefaultValue().getChroma();
+        ExtendedColor.ChromaOptions currentValue = getValue().getChroma();
 
-        chroma.addOption(
-                new DoubleOption(
-                        "opacity",
-                        "darkkore.option.color.chroma.opacity",
-                        "darkkore.option.color.chroma.info.opacity",
-                        defaultValue.opacity,
-                        0,
-                        1
-                ) {
-                    @Override
-                    public void setValue(Double value) {
-                        super.setValue(value);
-                        getChromaOptions().setOpacity(value.floatValue());
-                    }
-                }
-        );
+        BooleanOption activeOption = new BooleanOption(
+                "active",
+                "darkkore.option.color.chroma.active",
+                "darkkore.option.color.chroma.info.active",
+                defaultValue.isActive()
+        ) {
+            @Override
+            public void setValue(Boolean value) {
+                super.setValue(value);
+                ExtendedColor col = ExtendedColorOption.this.getValue();
+                ExtendedColorOption.this.setValue(col.withChroma(col.getChroma().withActive(value)));
+            }
+        };
 
-        chroma.addOption(
-                new DoubleOption(
-                        "size",
-                        "darkkore.option.color.chroma.size",
-                        "darkkore.option.color.chroma.info.size",
-                        defaultValue.size,
-                        0,
-                        1
-                ) {
-                    @Override
-                    public void setValue(Double value) {
-                        super.setValue(value);
-                        getChromaOptions().setSize(value.floatValue());
-                    }
-                }
-        );
+        activeOption.setValue(currentValue.isActive());
+        chroma.addOption(activeOption);
 
-        chroma.addOption(
-                new DoubleOption(
-                        "speed",
-                        "darkkore.option.color.chroma.speed",
-                        "darkkore.option.color.chroma.info.speed",
-                        defaultValue.speed,
-                        0,
-                        1
-                ) {
-                    @Override
-                    public void setValue(Double value) {
-                        super.setValue(value);
-                        getChromaOptions().setSpeed(value.floatValue());
-                    }
-                }
-        );
+        DoubleOption opacityOption =  new DoubleOption(
+                "opacity",
+                "darkkore.option.color.chroma.opacity",
+                "darkkore.option.color.chroma.info.opacity",
+                defaultValue.getOpacity(),
+                0,
+                1
+        ) {
+            @Override
+            public void setValue(Double value) {
+                super.setValue(value);
+                ExtendedColor col = ExtendedColorOption.this.getValue();
+                ExtendedColorOption.this.setValue(col.withChroma(col.getChroma().withOpacity(value.floatValue())));
+            }
+        };
+        opacityOption.setValue((double) currentValue.getOpacity());
+        chroma.addOption(opacityOption);
 
-        chroma.addOption(
-                new DoubleOption(
-                        "saturation",
-                        "darkkore.option.color.chroma.saturation",
-                        "darkkore.option.color.chroma.info.saturation",
-                        defaultValue.saturation,
-                        0,
-                        1
-                ) {
-                    @Override
-                    public void setValue(Double value) {
-                        super.setValue(value);
-                        getChromaOptions().setSaturation(value.floatValue());
-                    }
-                }
-        );
+        DoubleOption sizeOption = new DoubleOption(
+                "size",
+                "darkkore.option.color.chroma.size",
+                "darkkore.option.color.chroma.info.size",
+                defaultValue.getSize(),
+                0,
+                1
+        ) {
+            @Override
+            public void setValue(Double value) {
+                super.setValue(value);
+                ExtendedColor col = ExtendedColorOption.this.getValue();
+                ExtendedColorOption.this.setValue(col.withChroma(col.getChroma().withSize(value.floatValue())));
+            }
+        };
+        chroma.addOption(sizeOption);
+        sizeOption.setValue((double) currentValue.getSize());
+
+        DoubleOption speedOption = new DoubleOption(
+                "speed",
+                "darkkore.option.color.chroma.speed",
+                "darkkore.option.color.chroma.info.speed",
+                defaultValue.getSpeed(),
+                0,
+                1
+        ) {
+            @Override
+            public void setValue(Double value) {
+                super.setValue(value);
+                ExtendedColor col = ExtendedColorOption.this.getValue();
+                ExtendedColorOption.this.setValue(col.withChroma(col.getChroma().withSpeed(value.floatValue())));
+            }
+        };
+
+        chroma.addOption(speedOption);
+
+        speedOption.setValue((double) currentValue.getSpeed());
+
+        DoubleOption saturationOption = new DoubleOption(
+                "saturation",
+                "darkkore.option.color.chroma.saturation",
+                "darkkore.option.color.chroma.info.saturation",
+                defaultValue.getSaturation(),
+                0,
+                1
+        ) {
+            @Override
+            public void setValue(Double value) {
+                super.setValue(value);
+                ExtendedColor col = ExtendedColorOption.this.getValue();
+                ExtendedColorOption.this.setValue(col.withChroma(col.getChroma().withSaturation(value.floatValue())));
+            }
+        };
+
+        saturationOption.setValue((double) currentValue.getSaturation());
+
+        chroma.addOption(saturationOption);
         return chroma;
     }
 

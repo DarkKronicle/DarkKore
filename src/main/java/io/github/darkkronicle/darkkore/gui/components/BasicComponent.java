@@ -191,11 +191,11 @@ public abstract class BasicComponent implements Component {
         }
         if (backgroundColor != null) {
             Rectangle bounds = getBoundingBox();
-            RenderUtil.drawRectangle(matrices, x, y, bounds.width(), bounds.height(), backgroundColor.color());
+            RenderUtil.drawRectangle(matrices, x, y, bounds.width(), bounds.height(), backgroundColor);
         }
         if (outlineColor != null) {
             Rectangle bounds = getBoundingBox();
-            RenderUtil.drawOutline(matrices, x, y, bounds.width(), bounds.height(), outlineColor.color());
+            RenderUtil.drawOutline(matrices, x, y, bounds.width(), bounds.height(), outlineColor);
         }
         if (checkIfHovered(renderBounds, x, y, mouseX, mouseY)) {
             hovered = true;

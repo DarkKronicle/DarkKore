@@ -1,5 +1,7 @@
 package io.github.darkkronicle.darkkore.settings;
 
+import io.github.darkkronicle.darkkore.colors.Colors;
+import io.github.darkkronicle.darkkore.colors.ExtendedColor;
 import io.github.darkkronicle.darkkore.config.ModConfig;
 import io.github.darkkronicle.darkkore.config.options.*;
 import io.github.darkkronicle.darkkore.gui.ConfigScreen;
@@ -33,8 +35,11 @@ public class DarkKoreConfig extends ModConfig {
 
     public final DoubleOption scrollScale = new DoubleOption("scrollScale", "darkkore.option.scrollscale", "darkkore.option.info.scrollscale", .3, 0.01, 10);
 
+    public final ExtendedColorOption hoverColor = new ExtendedColorOption("hoverColor", "darkkore.option.hovercolor", "darkkore.option.info.scrollscale",
+            new ExtendedColor(Colors.getInstance().getColorOrWhite("option_background_hover"), ExtendedColor.ChromaOptions.getDefault()));
+
     public final OptionSection gui = new OptionSection("gui", "darkkore.option.section.gui", "darkkore.option.section.info.gui",
-            List.of(scrollScale));
+            List.of(scrollScale, hoverColor));
 
     public static DarkKoreConfig getInstance() {
         return INSTANCE;

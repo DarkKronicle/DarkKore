@@ -53,6 +53,14 @@ public class ColorUtil {
         return rgb;
     }
 
+    public int colorToInt4f(float r, float g, float b, float a) {
+        int rgb = (int) (a * 255);
+        rgb = (rgb << 8) + (int) (r * 255);
+        rgb = (rgb << 8) + (int) (g * 255);
+        rgb = (rgb << 8) + (int) (b * 255);
+        return rgb;
+    }
+
     public Color fade(Color color, float percent) {
         float alpha = (float) color.alpha();
         return color.withAlpha((int) Math.floor((alpha * percent)));

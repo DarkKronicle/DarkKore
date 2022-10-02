@@ -4,6 +4,7 @@ import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.config.options.Option;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.gui.components.impl.TextBoxComponent;
+import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
 import io.github.darkkronicle.darkkore.util.Color;
 import net.minecraft.client.gui.screen.Screen;
 
@@ -39,7 +40,7 @@ public abstract class TextOptionComponent<N, T extends Option<N>> extends Option
     public void onHovered(int x, int y, int mouseX, int mouseY, boolean hovered) {
         super.onHovered(x, y, mouseX, mouseY, hovered);
         if (hovered) {
-            setBackgroundColor(CommonColors.getOptionBackgroundHover());
+            setBackgroundColor(DarkKoreConfig.getInstance().hoverColor.getValue());
         } else {
             setBackgroundColor(null);
         }
