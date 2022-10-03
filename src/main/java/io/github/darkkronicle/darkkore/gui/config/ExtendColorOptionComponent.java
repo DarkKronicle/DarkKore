@@ -44,7 +44,7 @@ public class ExtendColorOptionComponent extends TextOptionComponent<ExtendedColo
 
     @Override
     public Text getConfigTypeInfo() {
-        return new FluidText("§7§o" + StringUtil.translate("darkkore.optiontype.info.color"));
+        return new FluidText("§7§o" + StringUtil.translate("darkkore.optiontype.info.extendedcolor"));
     }
 
     @Override

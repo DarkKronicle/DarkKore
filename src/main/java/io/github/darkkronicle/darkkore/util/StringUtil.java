@@ -14,19 +14,21 @@ public class StringUtil {
     /**
      * Retrieves the translation for a string and converts & to §
      * @param key Key to translate
+     * @param arguments Arguments for String.format
      * @return String with formatting
      */
-    public String translate(String key) {
-        return rawTranslate(key).replaceAll("&", "§");
+    public String translate(String key, Object... arguments) {
+        return rawTranslate(key, arguments).replaceAll("&", "§");
     }
 
     /**
      * Retrieves the translation for a string key
      * @param key Key that should be within a language file
+     * @param arguments Arguments that are used for String.format
      * @return The direct string translated
      */
-    public String rawTranslate(String key) {
-        return I18n.translate(key);
+    public String rawTranslate(String key, Object... arguments) {
+        return I18n.translate(key, arguments);
     }
 
     /**

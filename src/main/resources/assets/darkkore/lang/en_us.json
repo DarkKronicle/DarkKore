@@ -7,12 +7,13 @@
   "darkkore.optiontype.info.list": "Click the button to cycle between options",
   "darkkore.optiontype.info.string": "Type any text in here",
   "darkkore.optiontype.info.double": "Type any number with or without decimals in here",
-  "darkkore.optiontype.info.doublerange": "Type any number with or without decimals in here from %f to %f",
+  "darkkore.optiontype.info.doublerange": "Type any number with or without decimals in here from %.2f to %.2f",
   "darkkore.optiontype.info.integer": "Type any whole number in here",
   "darkkore.optiontype.info.integerrange": "Type any whole number in here from %d to %d",
   "darkkore.optiontype.info.hotkey": "Click on the hotkey and type a combination",
   "darkkore.optiontype.info.konstruct": "Type Konstruct script in here",
   "darkkore.optiontype.info.color": "Type a hex color in the format #AARRGGBB here",
+  "darkkore.optiontype.info.extendedcolor": "Type a hex color in the format #AARRGGBB here. You can also click the gear icon to add special affect to the color like chroma",
   "darkkore.optiontype.info.optionsection": "Click configure to see a list of options",
   "darkkore.button.configure": "Configure",
 
@@ -58,5 +59,16 @@
   "darkkore.option.hotkey.server": "Server-Specific Regex",
   "darkkore.option.hotkey.info.server": "The &6RegEx String&r used to apply this keybind to &6specific servers&r\n  &7&oUse &fsingleplayer&7 if you want this keybind to be specific to singleplayer\n  &7&oLeave blank for this keybind to be available across all servers",
   "darkkore.option.hotkey.gamemode":"Gamemode",
-  "darkkore.option.hotkey.info.gamemode": "The &6gamemode&r that this keybind will work in, in the form of the &6legacy numerical gamemodes&r\n  &7&oSet to -1 for the keybind to work in all gamemodes"
+  "darkkore.option.hotkey.info.gamemode": "The &6gamemode&r that this keybind will work in, in the form of the &6legacy numerical gamemodes&r\n  &7&oSet to -1 for the keybind to work in all gamemodes",
+
+  "darkkore.option.color.chroma.active": "Chroma Active",
+  "darkkore.option.color.chroma.info.active": "If active this color renders as chroma. The specified color outside this menu will have no effect",
+  "darkkore.option.color.chroma.opacity": "Opacity",
+  "darkkore.option.color.chroma.info.opacity": "The opacity of the chroma. 1 is completely opaque, 0 is transparent",
+  "darkkore.option.color.chroma.size": "Size",
+  "darkkore.option.color.chroma.info.size": "The size of the bands of chroma. A higher value will have a higher band of color",
+  "darkkore.option.color.chroma.speed": "Speed",
+  "darkkore.option.color.chroma.info.speed": "The speed of the bands of chroma",
+  "darkkore.option.color.chroma.saturation": "Saturation",
+  "darkkore.option.color.chroma.info.saturation": "The saturation of the colors. 0 is grayscale, 1 is fully saturated"
 }

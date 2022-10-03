@@ -17,8 +17,8 @@ void main() {
 
     gl_Position = ProjMat * ModelViewMat * vertex;
     float dist = gl_Position.x + gl_Position.y;
-    float size = 30 * ColorModulator[0];
-    float speed = 1000 * ColorModulator[1];
+    float size = 150 * (1 - ColorModulator[0]);
+    float speed = 5000 * ColorModulator[1];
     float saturation = ColorModulator[2];
 
     if (size <= 0) {
@@ -26,16 +26,18 @@ void main() {
         dist = 0;
     }
 
+    dist = dist / size;
+
     vec4 colorInbetween = (
-        (.6 + .6 * cos(size * (dist + GameTime * speed) + vec4(0, 23, 21, 0)))
+        (.6 + .6 * cos((dist + GameTime * speed) + vec4(0, 23, 21, 0)))
     );
 
     if (saturation < 1) {
         float gray = colorInbetween[0] * 0.299 + colorInbetween[1] * 0.587 + colorInbetween[2] * 0.114;
         if (saturation > 0) {
-            colorInbetween[0] = (gray * (saturation - 1)) + (colorInbetween[0] * saturation);
-            colorInbetween[1] = (gray * (saturation - 1)) + (colorInbetween[1] * saturation);
-            colorInbetween[2] = (gray * (saturation - 1)) + (colorInbetween[2] * saturation);
+            colorInbetween[0] = (gray * (1 - saturation)) + (colorInbetween[0] * saturation);
+            colorInbetween[1] = (gray * (1 - saturation)) + (colorInbetween[1] * saturation);
+            colorInbetween[2] = (gray * (1 - saturation)) + (colorInbetween[2] * saturation);
         } else {
             colorInbetween = vec4(gray, gray, gray, 1);
         }

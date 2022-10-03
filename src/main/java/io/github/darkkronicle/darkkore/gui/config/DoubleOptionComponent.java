@@ -15,7 +15,7 @@ public class DoubleOptionComponent extends TextOptionComponent<Double, DoubleOpt
     @Override
     public Text getConfigTypeInfo() {
         if (option.getMin() != null && option.getMax() != null) {
-            return new FluidText("§7§o" + String.format(StringUtil.translate("darkkore.optiontype.info.doublerange"), option.getMin(), option.getMax()));
+            return new FluidText("§7§o" + String.format(StringUtil.translate("darkkore.optiontype.info.doublerange", option.getMin(), option.getMax())));
         }
         return new FluidText("§7§o" + StringUtil.translate("darkkore.optiontype.info.double"));
     }

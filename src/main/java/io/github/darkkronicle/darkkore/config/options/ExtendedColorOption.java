@@ -32,7 +32,7 @@ public class ExtendedColorOption extends BasicOption<ExtendedColor> {
     public void save(ConfigObject config) {
         ConfigObject nested = config.createNew();
         String color = getValue().isAlias() ? getValue().getAliasName() : getValue().getString();
-        config.set("color", color);
+        nested.set("color", color);
         ExtendedColor.ChromaOptions chromaOptions = getValue().getChroma();
         ConfigObject chroma = nested.createNew();
 
