@@ -17,7 +17,7 @@ void main() {
 
     gl_Position = ProjMat * ModelViewMat * vertex;
     float dist = gl_Position.x + gl_Position.y;
-    float size = 150 * (1 - ColorModulator[0]);
+    float size = 50 * (1 - ColorModulator[0]);
     float speed = 5000 * ColorModulator[1];
     float saturation = ColorModulator[2];
 
@@ -26,7 +26,7 @@ void main() {
         dist = 0;
     }
 
-    dist = dist / size;
+    dist = dist * size;
 
     vec4 colorInbetween = (
         (.6 + .6 * cos((dist + GameTime * speed) + vec4(0, 23, 21, 0)))

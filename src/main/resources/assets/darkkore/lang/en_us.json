@@ -13,7 +13,7 @@
   "darkkore.optiontype.info.hotkey": "Click on the hotkey and type a combination",
   "darkkore.optiontype.info.konstruct": "Type Konstruct script in here",
   "darkkore.optiontype.info.color": "Type a hex color in the format #AARRGGBB here",
-  "darkkore.optiontype.info.extendedcolor": "Type a hex color in the format #AARRGGBB here. You can also click the gear icon to add special affect to the color like chroma",
+  "darkkore.optiontype.info.extendedcolor": "Type a hex color in the format #AARRGGBB here. You can also click the gear icon to add special effects to the color like chroma",
   "darkkore.optiontype.info.optionsection": "Click configure to see a list of options",
   "darkkore.button.configure": "Configure",
 
@@ -33,6 +33,10 @@
   "darkkore.option.info.scrollscale": "The coefficient to which a &6scroll input is multiplied to&r\nEquivalent to the &6Scroll Sensitivity&r option in Vanilla Minecraft",
   "darkkore.option.changevanillaoptions": "Override Vanilla Button Sounds",
   "darkkore.option.info.changevanillaoptions": "Makes it so that &6Minecraft's buttons&r use &6DarkKore's&r sound effects",
+  "darkkore.option.hovercolor": "Option Hover Color",
+  "darkkore.option.info.hovercolor": "The hover color for options in DarkKore menus",
+  "darkkore.option.screenbackgroundcolor": "Config Background Color",
+  "darkkore.option.info.screenbackgroundcolor": "The background color for DarkKore configuration screens",
 
   "darkkore.option.hotkey.blocking": "Block Other Inputs",
   "darkkore.option.hotkey.info.blocking": "Whether activating this hotkey prevents &6other inputs from being accepted&r",

@@ -8,6 +8,7 @@ import io.github.darkkronicle.darkkore.gui.ConfigScreen;
 import io.github.darkkronicle.darkkore.hotkeys.HotkeySettings;
 import io.github.darkkronicle.darkkore.hotkeys.HotkeySettingsOption;
 import io.github.darkkronicle.darkkore.intialization.profiles.PlayerContextCheck;
+import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FileUtil;
 import net.minecraft.client.gui.screen.Screen;
 import org.lwjgl.glfw.GLFW;
@@ -35,11 +36,14 @@ public class DarkKoreConfig extends ModConfig {
 
     public final DoubleOption scrollScale = new DoubleOption("scrollScale", "darkkore.option.scrollscale", "darkkore.option.info.scrollscale", .3, 0.01, 10);
 
-    public final ExtendedColorOption hoverColor = new ExtendedColorOption("hoverColor", "darkkore.option.hovercolor", "darkkore.option.info.scrollscale",
+    public final ExtendedColorOption hoverColor = new ExtendedColorOption("hoverColor", "darkkore.option.hovercolor", "darkkore.option.info.hovercolor",
             new ExtendedColor(Colors.getInstance().getColorOrWhite("option_background_hover"), ExtendedColor.ChromaOptions.getDefault()));
 
+    public final ExtendedColorOption screenBackgroundColor = new ExtendedColorOption("screenBackgroundColor", "darkkore.option.screenbackgroundcolor", "darkkore.option.info.screenbackgroundcolor",
+            new ExtendedColor(new Color(0xB0000000), ExtendedColor.ChromaOptions.getDefault()));
+
     public final OptionSection gui = new OptionSection("gui", "darkkore.option.section.gui", "darkkore.option.section.info.gui",
-            List.of(scrollScale, hoverColor));
+            List.of(scrollScale, hoverColor, screenBackgroundColor));
 
     public static DarkKoreConfig getInstance() {
         return INSTANCE;

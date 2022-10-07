@@ -64,13 +64,13 @@ public class ExtendedColor extends ColorAlias {
             AtomicReference<Float> size = new AtomicReference<>(defaultValue.getSize());
             AtomicReference<Float> speed = new AtomicReference<>(defaultValue.getSpeed());
             AtomicReference<Float> saturation = new AtomicReference<>(defaultValue.getSaturation());
-            // Cast from double to float is necessary since the values get loaded as Double's, and those can't be cast to floats natively
-            // Could techincally caste to Double then use .floatValue, but I think this works fine
+            // ~~Could techincally caste to Double then use .floatValue, but I think this works fine~~
+            // IT DID NOT WORK FINE
             object.getOptional("active").ifPresent((opt) -> active.set((boolean) opt));
-            object.getOptional("opacity").ifPresent((opt) -> opacity.set(((float) (double) opt)));
-            object.getOptional("size").ifPresent((opt) -> size.set((float) (double) opt));
-            object.getOptional("speed").ifPresent((opt) -> speed.set((float) (double) opt));
-            object.getOptional("saturation").ifPresent((opt) -> saturation.set((float) (double) opt));
+            object.getOptional("opacity").ifPresent((opt) -> opacity.set(((Number) opt).floatValue()));
+            object.getOptional("size").ifPresent((opt) -> size.set(((Number) opt).floatValue()));
+            object.getOptional("speed").ifPresent((opt) -> speed.set(((Number) opt).floatValue()));
+            object.getOptional("saturation").ifPresent((opt) -> saturation.set(((Number) opt).floatValue()));
             return new ChromaOptions(active.get(), opacity.get(), size.get(), speed.get(), saturation.get());
         }
 

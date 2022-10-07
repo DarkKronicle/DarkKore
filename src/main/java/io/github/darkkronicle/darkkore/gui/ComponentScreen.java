@@ -1,13 +1,14 @@
 package io.github.darkkronicle.darkkore.gui;
 
 import io.github.darkkronicle.darkkore.gui.components.Component;
+import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
+import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralTextContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,11 @@ public abstract class ComponentScreen extends Screen {
 
     @Getter @Setter private Screen parent;
 
+    @Getter @Setter private Color backgroundColor;
+
     protected ComponentScreen() {
         super(new FluidText(""));
+        backgroundColor = DarkKoreConfig.getInstance().screenBackgroundColor.getValue();
     }
 
     public void addComponent(Component component) {
@@ -51,7 +55,7 @@ public abstract class ComponentScreen extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
-        RenderUtil.drawRectangle(matrices, 0, 0, this.width, this.height, 0xB0000000);
+        RenderUtil.drawRectangle(matrices, 0, 0, this.width, this.height, backgroundColor);
         renderComponents(matrices, mouseX, mouseY);
     }
 
