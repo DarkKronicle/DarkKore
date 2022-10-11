@@ -37,7 +37,7 @@ public class DarkKoreConfig extends ModConfig {
     public final DoubleOption scrollScale = new DoubleOption("scrollScale", "darkkore.option.scrollscale", "darkkore.option.info.scrollscale", .3, 0.01, 10);
 
     public final ExtendedColorOption hoverColor = new ExtendedColorOption("hoverColor", "darkkore.option.hovercolor", "darkkore.option.info.hovercolor",
-            new ExtendedColor(Colors.getInstance().getColorOrWhite("option_background_hover"), ExtendedColor.ChromaOptions.getDefault()));
+            new ExtendedColor(new Color(0x64000000), ExtendedColor.ChromaOptions.getDefault()));
 
     public final ExtendedColorOption screenBackgroundColor = new ExtendedColorOption("screenBackgroundColor", "darkkore.option.screenbackgroundcolor", "darkkore.option.info.screenbackgroundcolor",
             new ExtendedColor(new Color(0xB0000000), ExtendedColor.ChromaOptions.getDefault()));
