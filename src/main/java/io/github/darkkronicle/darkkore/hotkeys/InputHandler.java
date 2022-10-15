@@ -28,4 +28,15 @@ public class InputHandler implements InputEvent {
         }
         return false;
     }
+
+    @Override
+    public boolean onMouse(int button, int action, int mods) {
+        for (InputEvent event : hooks) {
+            if (event.onMouse(button, action, mods)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -10,7 +10,8 @@
     "MixinClientPlayNetworkHandler",
     "MixinGameRenderer",
     "MixinKeyboard",
-    "MixinMinecraftClient"
+    "MixinMinecraftClient",
+    "MixinMouse"
   ],
   "injectors": {
     "defaultRequire": 1

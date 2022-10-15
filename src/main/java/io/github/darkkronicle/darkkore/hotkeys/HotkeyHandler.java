@@ -21,7 +21,9 @@ public class HotkeyHandler implements InputEvent {
     private HotkeyHandler() {}
 
     @Nullable
-    @Getter @Setter private HotkeyComponent activeComponent = null;
+    @Getter
+    @Setter
+    private HotkeyComponent activeComponent = null;
 
     // String should be mod id or some unique smth
     private final Map<Identifier, Supplier<List<Hotkey>>> hotkeys = new HashMap<>();
@@ -50,8 +52,9 @@ public class HotkeyHandler implements InputEvent {
 
     /**
      * Adds a supplier of {@link Hotkey}. These can easily be removed and re-added whenever desired.
-     * @param modId The ID of the mod adding it
-     * @param name The category/name of the hotkeys
+     *
+     * @param modId          The ID of the mod adding it
+     * @param name           The category/name of the hotkeys
      * @param hotkeySupplier A supplier
      */
     public void add(String modId, String name, Supplier<List<Hotkey>> hotkeySupplier) {
@@ -71,29 +74,73 @@ public class HotkeyHandler implements InputEvent {
                 activeComponent.onKey(key, scancode, action, modifiers);
                 return true;
             }
-            PlayerContext context = PlayerContext.get();
-            keysPressed.add(key);
-            for (Hotkey hotkey : allHotkeys) {
-                HotkeySettings settings = hotkey.getSettings();
-                if (settings.getKeys().isEmpty()) {
-                    continue;
-                }
-                if (settings.getCheck() != null && !settings.getCheck().check(context)) {
-                    continue;
-                }
-                if (settings.isExclusive() && (hotkey.getKeys().size() != keysPressed.size() && !hotkey.getKeys().containsAll(keysPressed))) {
-                    continue;
-                }
-                if ((settings.isOrdered() && Collections.indexOfSubList(keysPressed, hotkey.getKeys()) >= 0) || (!settings.isOrdered() && keysPressed.containsAll(hotkey.getKeys()))) {
-                    hotkey.run();
-                    if (settings.isBlocking()) {
-                        return true;
-                    }
-                    break;
-                }
+            if (onInputPress(key)) {
+                return true;
             }
         } else if (action == GLFW.GLFW_RELEASE) {
-            keysPressed.removeIf(num -> num == key);
+            onInputRelease(key);
+        }
+        return false;
+    }
+
+    private boolean shouldBeRun(Hotkey hotkey, HotkeySettings settings, PlayerContext context) {
+        if (settings.getKeys().isEmpty()) {
+            return false;
+        }
+        if (settings.getCheck() != null && !settings.getCheck().check(context)) {
+            return false;
+        }
+        if (settings.isExclusive() && (hotkey.getKeys().size() != keysPressed.size() && !hotkey.getKeys().containsAll(keysPressed))) {
+            return false;
+        }
+        return (settings.isOrdered() && Collections.indexOfSubList(keysPressed, hotkey.getKeys()) >= 0) || (
+                !settings.isOrdered() && keysPressed.containsAll(hotkey.getKeys())
+        );
+    }
+
+    private void onInputRelease(int key) {
+        keysPressed.removeIf(num -> num == key);
+        PlayerContext context = PlayerContext.get();
+        for (Hotkey hotkey : allHotkeys) {
+            if (hotkey.isActive()) {
+                HotkeySettings settings = hotkey.getSettings();
+                if (!shouldBeRun(hotkey, settings, context)) {
+                    hotkey.setActive(false);
+                }
+            }
+        }
+    }
+
+    private boolean onInputPress(int key) {
+        PlayerContext context = PlayerContext.get();
+        keysPressed.add(key);
+        for (Hotkey hotkey : allHotkeys) {
+            HotkeySettings settings = hotkey.getSettings();
+            if (hotkey.isActive()) {
+                if (!shouldBeRun(hotkey, settings, context)) {
+                    hotkey.setActive(false);
+                }
+            } else if (shouldBeRun(hotkey, settings, context)) {
+                hotkey.setActive(true);
+                if (settings.isBlocking()) {
+                    return true;
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onMouse(int button, int action, int mods) {
+        int serial = button - 10;
+        if (action == GLFW.GLFW_PRESS) {
+            if (activeComponent != null) {
+                return activeComponent.onMouse(button, action, mods);
+            }
+            onInputPress(serial);
+        } else {
+            onInputRelease(serial);
         }
         return false;
     }

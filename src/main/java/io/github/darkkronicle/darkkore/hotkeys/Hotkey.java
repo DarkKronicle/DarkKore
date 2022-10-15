@@ -8,6 +8,8 @@ public interface Hotkey {
 
     HotkeySettings getSettings();
 
-    void run();
+    boolean isActive();
+
+    void setActive(boolean state);
 
 }

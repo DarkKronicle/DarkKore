@@ -10,7 +10,19 @@ import java.util.Map;
 @UtilityClass
 public class InputUtil {
 
+    public final int MOUSE_LEFT = GLFW.GLFW_MOUSE_BUTTON_LEFT - 10;
+    public final int MOUSE_RIGHT = GLFW.GLFW_MOUSE_BUTTON_RIGHT - 10;
+    public final int MOUSE_MIDDLE = GLFW.GLFW_MOUSE_BUTTON_MIDDLE - 10;
+
     public final Integer[] KEYS = {
+            GLFW.GLFW_MOUSE_BUTTON_LEFT - 10,
+            GLFW.GLFW_MOUSE_BUTTON_RIGHT - 10,
+            GLFW.GLFW_MOUSE_BUTTON_MIDDLE - 10,
+            GLFW.GLFW_MOUSE_BUTTON_4 - 10,
+            GLFW.GLFW_MOUSE_BUTTON_5 - 10,
+            GLFW.GLFW_MOUSE_BUTTON_6 - 10,
+            GLFW.GLFW_MOUSE_BUTTON_7 - 10,
+            GLFW.GLFW_MOUSE_BUTTON_8 - 10,
             GLFW.GLFW_KEY_UNKNOWN, GLFW.GLFW_KEY_SPACE, GLFW.GLFW_KEY_APOSTROPHE,
             GLFW.GLFW_KEY_COMMA, GLFW.GLFW_KEY_MINUS, GLFW.GLFW_KEY_PERIOD,
             GLFW.GLFW_KEY_SLASH, GLFW.GLFW_KEY_0, GLFW.GLFW_KEY_1, GLFW.GLFW_KEY_2,
@@ -169,7 +181,15 @@ public class InputUtil {
             Map.entry("RIGHT_ALT", GLFW.GLFW_KEY_RIGHT_ALT),
             Map.entry("RIGHT_SUPER", GLFW.GLFW_KEY_RIGHT_SUPER),
             Map.entry("MENU", GLFW.GLFW_KEY_MENU),
-            Map.entry("LAST", GLFW.GLFW_KEY_LAST)
+            Map.entry("LAST", GLFW.GLFW_KEY_LAST),
+            Map.entry("MB_LEFT", GLFW.GLFW_MOUSE_BUTTON_LEFT - 10),
+            Map.entry("MB_RIGHT", GLFW.GLFW_MOUSE_BUTTON_RIGHT - 10),
+            Map.entry("MB_MIDDLE", GLFW.GLFW_MOUSE_BUTTON_MIDDLE - 10),
+            Map.entry("MB_4", GLFW.GLFW_MOUSE_BUTTON_4 - 10),
+            Map.entry("MB_5", GLFW.GLFW_MOUSE_BUTTON_5 - 10),
+            Map.entry("MB_6", GLFW.GLFW_MOUSE_BUTTON_6 - 10),
+            Map.entry("MB_7", GLFW.GLFW_MOUSE_BUTTON_7 - 10),
+            Map.entry("MB_8", GLFW.GLFW_MOUSE_BUTTON_8 - 10)
     );
 
     public int getKeyCode(String name) {

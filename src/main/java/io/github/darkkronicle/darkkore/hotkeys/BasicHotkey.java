@@ -1,14 +1,28 @@
 package io.github.darkkronicle.darkkore.hotkeys;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@AllArgsConstructor
 public class BasicHotkey implements Hotkey {
 
     private HotkeySettings settings;
-    private Runnable run;
+    private Runnable onPress;
+    private Runnable onRelease;
+
+    public BasicHotkey(HotkeySettings settings, Runnable onPress) {
+        this(settings, onPress, null);
+    }
+
+    public BasicHotkey(HotkeySettings settings, Runnable onPress, @Nullable Runnable onRelease) {
+        this.settings = settings;
+        this.onPress = onPress;
+        this.onRelease = onRelease;
+    }
+
+    @Getter
+    private boolean active;
 
     @Override
     public List<Integer> getKeys() {
@@ -21,7 +35,27 @@ public class BasicHotkey implements Hotkey {
     }
 
     @Override
-    public void run() {
-        run.run();
+    public void setActive(boolean value) {
+        if (this.active == value) {
+            // Nothing new here
+            return;
+        }
+        this.active = value;
+        if (value) {
+            run();
+        } else {
+            runStopped();
+        }
     }
+
+    protected void run() {
+        onPress.run();
+    }
+
+    protected void runStopped() {
+        if (onRelease != null) {
+            onRelease.run();
+        }
+    }
+
 }

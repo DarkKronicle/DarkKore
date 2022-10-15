@@ -19,6 +19,7 @@ public class HotkeyComponent extends ButtonComponent implements InputEvent {
     private final Color realBackground;
     @Getter private List<Integer> keys;
     private boolean started;
+    private boolean focused = false;
 
     public HotkeyComponent(Screen parent, List<Integer> keys, int width, int height, Color background, Color hover) {
         super(parent, width, height, new FluidText(String.join(" + ", keys.stream().map(InputUtil::getKeyName).toList())), background, hover, null);
@@ -51,6 +52,23 @@ public class HotkeyComponent extends ButtonComponent implements InputEvent {
     }
 
     @Override
+    public boolean onMouse(int button, int action, int mods) {
+        if (!isHovered()) {
+            return false;
+        }
+        if (started) {
+            // Make it so if you immediately click out you keep keys
+            started = false;
+            keys = new ArrayList<>();
+        }
+        if (!keys.contains(button - 10)) {
+            keys.add(button - 10);
+        }
+        setFocusedText();
+        return true;
+    }
+
+    @Override
     public void onDestroy() {
         unfocus();
     }
@@ -68,12 +86,15 @@ public class HotkeyComponent extends ButtonComponent implements InputEvent {
         if (isDisabled()) {
             return true;
         }
-        playInterfaceSound();
-        focus();
+        if (!focused) {
+            playInterfaceSound();
+            focus();
+        }
         return true;
     }
 
     public void unfocus() {
+        focused = false;
         if (this.equals(HotkeyHandler.getInstance().getActiveComponent())) {
             HotkeyHandler.getInstance().setActiveComponent(null);
         }
@@ -83,6 +104,7 @@ public class HotkeyComponent extends ButtonComponent implements InputEvent {
     }
 
     public void focus() {
+        focused = true;
         setBackground(getHover());
         HotkeyHandler.getInstance().setActiveComponent(this);
         started = true;
