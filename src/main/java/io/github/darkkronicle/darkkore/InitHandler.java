@@ -26,7 +26,7 @@ public class InitHandler implements Initializer {
                         List.of(
                                 new BasicHotkey(
                                         DarkKoreConfig.getInstance().openGui.getValue(),
-                                        () -> MinecraftClient.getInstance().setScreen(DarkKoreConfig.getInstance().getScreen())
+                                        () -> MinecraftClient.getInstance().setScreen(new TestScreen())
                                 )
                         )
         );

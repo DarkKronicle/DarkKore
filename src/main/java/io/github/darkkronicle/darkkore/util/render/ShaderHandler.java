@@ -19,7 +19,8 @@ public class ShaderHandler {
     }
 
     public enum CustomShader {
-        CHROMA((resourceManager, extraShaderList) -> new Shader(resourceManager, "darkkore_chroma", VertexFormats.POSITION_COLOR))
+        CHROMA((resourceManager, extraShaderList) -> new Shader(resourceManager, "darkkore_chroma", VertexFormats.POSITION_COLOR)),
+        CIRCLE((resourceManager, extraShaderList) -> new Shader(resourceManager, "darkkore_circle", VertexFormats.POSITION_COLOR))
         ;
 
         private final ShaderInit init;

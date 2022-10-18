@@ -98,6 +98,49 @@ public class RenderUtil {
         fill(matrix.peek().getPositionMatrix(), x1, y1, x2, y2, color);
     }
 
+    public void drawCircle(MatrixStack matrices, float centerX, float centerY, float radius, int color) {
+        drawRingInnerPercent(matrices, centerX, centerY, radius, 0, color);
+    }
+
+    public void drawRing(MatrixStack matrices, float centerX, float centerY, float radius, float innerRadius, int color) {
+        drawRing(matrices.peek().getPositionMatrix(), centerX - radius, centerY - radius, radius * 2, radius * 2,
+                (float) Math.pow(innerRadius / radius, 2), color);
+    }
+
+    public void drawRingInnerPercent(MatrixStack matrices, float centerX, float centerY, float radius, float innerPercent, int color) {
+        drawRing(matrices.peek().getPositionMatrix(), centerX - radius, centerY - radius, radius * 2, radius * 2, innerPercent, color);
+    }
+
+    public void drawRingInnerPercent(MatrixStack matrices, float x, float y, float width, float height, float innerRadiusPercent, int color) {
+        drawRing(matrices.peek().getPositionMatrix(), x, y, width, height, innerRadiusPercent, color);
+    }
+
+    public void drawRing(Matrix4f matrix, float x, float y, float width, float height, float innerRadiusPercent, int color) {
+        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+        RenderSystem.setShaderColor(innerRadiusPercent, 1, 1, 1);
+        RenderSystem.enableBlend();
+        RenderSystem.disableTexture();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(ShaderHandler.CustomShader.CIRCLE::getShader);
+
+        float x2 = x + width;
+
+        float y2 = y + height;
+
+        float a = (float)(color >> 24 & 0xFF) / 255.0f;
+        float r = (float)(color >> 16 & 0xFF) / 255.0f;
+        float g = (float)(color >> 8 & 0xFF) / 255.0f;
+        float b = (float)(color & 0xFF) / 255.0f;
+
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
+        bufferBuilder.vertex(matrix, x, y2, 0.0f).texture(0, 1).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix, x2, y2, 0.0f).texture(1, 1).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix, x2, y, 0.0f).texture(1, 0).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix, x, y, 0.0f).texture(0, 0).color(r, g, b, a).next();
+        BufferRenderer.drawWithShader(bufferBuilder.end());
+        RenderSystem.disableBlend();
+    }
+
     public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, Color color) {
         BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
         int colorInt = color.preRender();
@@ -112,6 +155,7 @@ public class RenderUtil {
         bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a).next();
         BufferRenderer.drawWithShader(bufferBuilder.end());
         color.postRender();
+
     }
 
     public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color, Supplier<Shader> shaderSupplier) {
