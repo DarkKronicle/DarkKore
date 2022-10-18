@@ -11,8 +11,16 @@ void main() {
     float x = (texCoord0.x - .5) * 2;
     float y = (texCoord0.y - .5) * 2;
     float calc = x * x + y * y;
+
     if (calc > 1 || calc < innerRad) {
         discard;
     }
-    fragColor = vertexColor;
+
+    float d = length(vec2(x, y));
+    float wd = d * .02; // <=> float wd = fwidth(d);
+    float circle = smoothstep(1 + wd, 1 - wd, d);
+    if (circle > .99 && innerRad > 0 && d - innerRad < .3) {
+        circle = smoothstep(1 - .3, 1, d / innerRad);
+    }
+    fragColor = vec4(vertexColor.rgb, vertexColor.a * circle);
 }
