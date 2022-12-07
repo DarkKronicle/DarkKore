@@ -4,11 +4,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.darkkronicle.darkkore.util.Color;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Matrix4f;
+import org.joml.Matrix4f;
 
 import java.util.function.Supplier;
 
@@ -75,7 +76,7 @@ public class RenderUtil {
         fill(matrices, x, y, x + width, y + height, color);
     }
 
-    public void drawRectangle(MatrixStack matrices, int x, int y, int width, int height, int color, Supplier<Shader> shaderSupplier) {
+    public void drawRectangle(MatrixStack matrices, int x, int y, int width, int height, int color, Supplier<ShaderProgram> shaderSupplier) {
         fill(matrices.peek().getPositionMatrix(), x, y, x + width, y + height, color, shaderSupplier);
     }
 
@@ -87,7 +88,7 @@ public class RenderUtil {
     }
 
     public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color) {
-        fill(matrix, x1, y1, x2, y2, color, GameRenderer::getPositionColorShader);
+        fill(matrix, x1, y1, x2, y2, color, GameRenderer::getPositionColorProgram);
     }
 
     public void drawRectangle(MatrixStack matrices, int x, int y, int width, int height, Color color) {
@@ -137,7 +138,7 @@ public class RenderUtil {
         bufferBuilder.vertex(matrix, x2, y2, 0.0f).texture(1, 1).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x2, y, 0.0f).texture(1, 0).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x, y, 0.0f).texture(0, 0).color(r, g, b, a).next();
-        BufferRenderer.drawWithShader(bufferBuilder.end());
+        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
         RenderSystem.disableBlend();
     }
 
@@ -153,12 +154,12 @@ public class RenderUtil {
         bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a).next();
-        BufferRenderer.drawWithShader(bufferBuilder.end());
+        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
         color.postRender();
 
     }
 
-    public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color, Supplier<Shader> shaderSupplier) {
+    public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, int color, Supplier<ShaderProgram> shaderSupplier) {
         int i;
         if (x1 < x2) {
             i = x1;
@@ -184,7 +185,7 @@ public class RenderUtil {
         bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a).next();
-        BufferRenderer.drawWithShader(bufferBuilder.end());
+        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
         RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
@@ -206,10 +207,10 @@ public class RenderUtil {
     }
 
     public void fillGradient(MatrixStack matrices, int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
-        fillGradient(matrices, startX, startY, endX, endY, colorStart, colorEnd, GameRenderer::getPositionColorShader);
+        fillGradient(matrices, startX, startY, endX, endY, colorStart, colorEnd, GameRenderer::getPositionColorProgram);
     }
 
-    public void fillGradient(MatrixStack matrices, int startX, int startY, int endX, int endY, int colorStart, int colorEnd, Supplier<Shader> shaderSupplier) {
+    public void fillGradient(MatrixStack matrices, int startX, int startY, int endX, int endY, int colorStart, int colorEnd, Supplier<ShaderProgram> shaderSupplier) {
         RenderSystem.disableTexture();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();

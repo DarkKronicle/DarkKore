@@ -32,7 +32,7 @@ public class SoundUtil {
      */
     public void playInterfaceSound(@Nullable Instrument instrument) {
         if (instrument == null) {
-            playSound(SoundEvents.UI_BUTTON_CLICK, 1, 3f);
+            playSound(SoundEvents.UI_BUTTON_CLICK.value(), 1, 3f);
         } else {
             playPentatonic(instrument, 3f);
         }
@@ -46,7 +46,7 @@ public class SoundUtil {
      */
     public void playNote(Instrument instrument, int note, float volume) {
         float pitch = (float)Math.pow(2.0, (double)(note - 12) / 12.0);
-        playSound(instrument.getSound(), pitch, volume);
+        playSound(instrument.getSound().value(), pitch, volume);
     }
 
     /**

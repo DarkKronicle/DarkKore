@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.With;
-import net.minecraft.client.render.Shader;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.util.Util;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -183,7 +183,7 @@ public class ExtendedColor extends ColorAlias {
     }
 
     @Override
-    public Supplier<Shader> getShader() {
+    public Supplier<ShaderProgram> getShader() {
         if (!chroma.isActive()) {
             return super.getShader();
         }
