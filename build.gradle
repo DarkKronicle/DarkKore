@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.12-SNAPSHOT'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'maven-publish'
     id "io.freefair.lombok" version "6.0.0-m2"
 }
@@ -12,6 +12,14 @@ group = project.maven_group
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
+    maven {
+        name = 'Ladysnake Mods'
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        content {
+            includeGroup 'io.github.ladysnake'
+            includeGroupByRegex 'io\\.github\\.onyxstudios.*'
+        }
+    }
 }
 
 dependencies {
@@ -24,6 +32,10 @@ dependencies {
 
     implementation "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
     implementation "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
+
+    modImplementation "io.github.ladysnake:satin:${satin_version}"
+
+    include "io.github.ladysnake:satin:${satin_version}"
 
     include "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
     include "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
