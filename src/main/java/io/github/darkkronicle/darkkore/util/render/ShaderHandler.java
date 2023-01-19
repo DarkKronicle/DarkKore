@@ -1,18 +1,19 @@
 package io.github.darkkronicle.darkkore.util.render;
 
-import com.mojang.datafixers.util.Pair;
-import lombok.Getter;
-import net.minecraft.client.gl.ShaderProgram;
-import net.minecraft.client.render.Shader;
+import io.github.darkkronicle.darkkore.DarkKore;
+import ladysnake.satin.api.managed.ManagedCoreShader;
+import ladysnake.satin.api.managed.ShaderEffectManager;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.resource.ResourceManager;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.function.Consumer;
+import net.minecraft.util.Identifier;
 
 public class ShaderHandler {
 
-        public final static Shader CHROMA = ((resourceManager, extraShaderList) -> new Shader(resourceManager, "darkkore_chroma", VertexFormats.POSITION_COLOR));
-        CIRCLE((resourceManager, extraShaderList) -> new Shader(resourceManager, "darkkore_circle", VertexFormats.POSITION_COLOR))
+    public final static ManagedCoreShader CHROMA = ShaderEffectManager.getInstance().manageCoreShader(new Identifier(DarkKore.MOD_ID, "darkkore_chroma"), VertexFormats.POSITION_COLOR);
+
+    public final static ManagedCoreShader CIRCLE = ShaderEffectManager.getInstance().manageCoreShader(new Identifier(DarkKore.MOD_ID, "darkkore_circle"), VertexFormats.POSITION_COLOR);
+
+    public static void initialize() {
+        // We just want chroma and circle to load
+    }
+
 }

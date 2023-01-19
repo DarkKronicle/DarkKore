@@ -96,8 +96,8 @@ public class TextBoxComponent extends BasicComponent {
     /** {@inheritDoc} */
     @Override
     public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
-        textField.x = x + 3;
-        textField.y = y + 3;
+        textField.setX(x + 3);
+        textField.setY(y + 3);
         textField.render(matrices, mouseX, mouseY, 0);
     }
 

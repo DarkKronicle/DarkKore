@@ -5,8 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.With;
 import lombok.experimental.Accessors;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Shader;
 
 import java.util.function.Supplier;
 
@@ -119,8 +119,8 @@ public class Color {
         return String.format("#%08X", color);
     }
 
-    public Supplier<Shader> getShader() {
-        return GameRenderer::getPositionColorShader;
+    public Supplier<ShaderProgram> getShader() {
+        return GameRenderer::getPositionColorProgram;
     }
 
     public int preRender() {

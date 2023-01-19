@@ -10,6 +10,7 @@ import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
 import io.github.darkkronicle.darkkore.gui.ConfigScreen;
 import io.github.darkkronicle.darkkore.gui.OptionComponentHolder;
 import io.github.darkkronicle.darkkore.intialization.Initializer;
+import io.github.darkkronicle.darkkore.util.render.ShaderHandler;
 import net.minecraft.client.MinecraftClient;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public class InitHandler implements Initializer {
                                 )
                         )
         );
+
+        ShaderHandler.initialize();
 
         OptionComponentHolder.getInstance().addWithOrder(25, (parent, option, width) -> {
             if (option instanceof ColorOption) {
