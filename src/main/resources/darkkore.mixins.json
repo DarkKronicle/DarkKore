@@ -8,7 +8,6 @@
   "client": [
     "MixinClickableWidget",
     "MixinClientPlayNetworkHandler",
-    "MixinGameRenderer",
     "MixinKeyboard",
     "MixinMinecraftClient",
     "MixinMouse"
