@@ -245,13 +245,11 @@ public class RenderUtil {
      * @param zOffset The Z value that should be used. It adds 50 to whatever.
      */
     public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y, boolean showCount, int zOffset) {
-        matrices.push();
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
         itemRenderer.renderInGuiWithOverrides(matrices, stack, x, y, 0, zOffset);
         if (showCount) {
             itemRenderer.renderGuiItemOverlay(matrices, MinecraftClient.getInstance().textRenderer, stack, x, y, stack.getCount() > 1 ? String.valueOf(stack.getCount()) : "");
         }
-        matrices.pop();
     }
 
 }
