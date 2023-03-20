@@ -12,10 +12,14 @@ import io.github.darkkronicle.darkkore.config.impl.NightFileObject;
 import io.github.darkkronicle.darkkore.util.Color;
 import io.github.darkkronicle.darkkore.util.FileUtil;
 import lombok.Getter;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.*;
 
 public class Colors implements ConfigHolder {
@@ -49,8 +53,8 @@ public class Colors implements ConfigHolder {
         palettes.clear();
 
         JsonObject object = null;
-        try {
-            object = (JsonObject) JsonParser.parseReader(new InputStreamReader(FileUtil.getResource("basic_colors.json")));
+        try (Reader reader = new InputStreamReader(getClass().getResourceAsStream("/basic_colors.json"))) {
+            object = JsonParser.parseReader(reader).getAsJsonObject();
         } catch (Exception e) {
             DarkKore.LOGGER.log(Level.ERROR, "Could not load basic colors!", e);
         }
@@ -63,8 +67,8 @@ public class Colors implements ConfigHolder {
         // Get file or create if it doesn't exist
         File file = getFile();
         if (!file.exists()) {
-            try {
-                org.apache.commons.io.FileUtils.copyInputStreamToFile(FileUtil.getResource("colors.toml"), file);
+            try (InputStream in = getClass().getResourceAsStream("/colors.toml")) {
+                FileUtils.copyInputStreamToFile(in, file);
             } catch (Exception e) {
                 // Rip
                 DarkKore.LOGGER.log(Level.ERROR, "Colors could not be loaded correctly!", e);
