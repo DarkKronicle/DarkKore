@@ -131,6 +131,7 @@ public class Color {
     }
 
     public void postRender() {
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.disableBlend();
     }
 

@@ -138,6 +138,7 @@ public class RenderUtil {
         bufferBuilder.vertex(matrix, x, y, 0.0f).texture(0, 0).color(r, g, b, a).next();
         BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
         RenderSystem.disableBlend();
+        RenderSystem.setShaderColor(1, 1, 1, 1);
     }
 
     public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, Color color) {
