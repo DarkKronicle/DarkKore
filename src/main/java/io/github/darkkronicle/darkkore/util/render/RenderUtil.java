@@ -223,7 +223,7 @@ public class RenderUtil {
         drawItem(matrices, stack, x, y, false);
     }
 
-    /*
+    /**
      * Draws an item
      * @param matrices Matrices
      * @param stack {@link ItemStack} to render
