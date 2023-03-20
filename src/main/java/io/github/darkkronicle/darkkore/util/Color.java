@@ -126,14 +126,11 @@ public class Color {
     public int preRender() {
         RenderSystem.setShaderColor(red() / 255f, green() / 255f, blue() / 255f, alpha() / 255f);
         RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
-        RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(getShader());
         return color();
     }
 
     public void postRender() {
-        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
 

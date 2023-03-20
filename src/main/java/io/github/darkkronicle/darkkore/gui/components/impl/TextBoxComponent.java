@@ -116,13 +116,13 @@ public class TextBoxComponent extends BasicComponent {
     /** {@inheritDoc} */
     @Override
     public void mouseClickedOutsideImpl(int x, int y, int mouseX, int mouseY, int button) {
-        textField.setTextFieldFocused(false);
+        textField.setFocused(false);
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
-        textField.setTextFieldFocused(true);
+        textField.setFocused(true);
         textField.mouseClicked(mouseX, mouseY, 0);
         return true;
     }
@@ -150,6 +150,6 @@ public class TextBoxComponent extends BasicComponent {
     @Override
     public void setSelected(boolean value) {
         super.setSelected(value);
-        textField.setTextFieldFocused(value);
+        textField.setFocused(value);
     }
 }

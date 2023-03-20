@@ -196,8 +196,6 @@ public class ExtendedColor extends ColorAlias {
             return super.preRender();
         }
         RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
-        RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(getShader());
         LAST_GAME_TIME = RenderSystem.getShaderGameTime();
         float timeInTicks = ((float) Util.getMeasuringTimeMs()) / 50;
@@ -216,7 +214,6 @@ public class ExtendedColor extends ColorAlias {
         float tickDelta = time % 1;
         int ticks = (int) time;
         RenderSystem.setShaderGameTime(ticks, tickDelta);
-        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
 }
