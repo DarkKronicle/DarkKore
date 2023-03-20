@@ -223,7 +223,7 @@ public class RenderUtil {
         drawItem(matrices, stack, x, y, false);
     }
 
-    /**
+    /*
      * Draws an item
      * @param matrices Matrices
      * @param stack {@link ItemStack} to render
@@ -232,11 +232,26 @@ public class RenderUtil {
      * @param showCount Whether item count should show
      */
     public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y, boolean showCount) {
+        drawItem(matrices, stack, x, y, showCount, 0);
+    }
+
+    /**
+     * Draws an item with a specified z-offset
+     * @param matrices Matrices
+     * @param stack {@link ItemStack} to render
+     * @param x x
+     * @param y y
+     * @param showCount Whether item count should show
+     * @param zOffset The Z value that should be used. It adds 50 to whatever.
+     */
+    public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y, boolean showCount, int zOffset) {
+        matrices.push();
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-        itemRenderer.renderInGuiWithOverrides(matrices, stack, x, y);
+        itemRenderer.renderInGuiWithOverrides(matrices, stack, x, y, 0, zOffset);
         if (showCount) {
             itemRenderer.renderGuiItemOverlay(matrices, MinecraftClient.getInstance().textRenderer, stack, x, y, stack.getCount() > 1 ? String.valueOf(stack.getCount()) : "");
         }
+        matrices.pop();
     }
 
 }

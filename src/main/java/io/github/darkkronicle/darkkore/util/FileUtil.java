@@ -68,6 +68,28 @@ public class FileUtil {
         }
     }
 
+    /**
+     * Gets a resource from src/resources. Works in an emulated environment.
+     *
+     * @param path Path from the resources to get
+     * @return Stream of the resource
+     * @throws URISyntaxException If the resource doesn't exist
+     * @throws IOException Can't be opened
+     */
+    public static InputStream getResource(String path) throws URISyntaxException, IOException {
+        URI uri = Thread.currentThread().getContextClassLoader().getResource(path).toURI();
+        if (!uri.getScheme().equals("file")) {
+            // Not IDE
+            // jar.toString() begins with file:
+            // Trim it out
+            return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+        } else {
+            // IDE
+            return new FileInputStream(Paths.get(uri).toFile());
+        }
+    }
+
+
     public void write(String data, File file) throws IOException {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
             writer.write(data);
