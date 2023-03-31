@@ -120,8 +120,6 @@ public class RenderUtil {
         BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
         RenderSystem.setShaderColor(innerRadiusPercent, 1, 1, 1);
         RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
-        RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(ShaderHandler.CIRCLE::getProgram);
 
         float x2 = x + width;
@@ -140,6 +138,7 @@ public class RenderUtil {
         bufferBuilder.vertex(matrix, x, y, 0.0f).texture(0, 0).color(r, g, b, a).next();
         BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
         RenderSystem.disableBlend();
+        RenderSystem.setShaderColor(1, 1, 1, 1);
     }
 
     public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, Color color) {
@@ -177,8 +176,6 @@ public class RenderUtil {
         float b = (float)(color & 0xFF) / 255.0f;
         BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
         RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
-        RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(shaderSupplier);
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         bufferBuilder.vertex(matrix, x1, y2, 0.0f).color(r, g, b, a).next();
@@ -186,7 +183,6 @@ public class RenderUtil {
         bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(r, g, b, a).next();
         bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a).next();
         BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
-        RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
 
@@ -211,17 +207,13 @@ public class RenderUtil {
     }
 
     public void fillGradient(MatrixStack matrices, int startX, int startY, int endX, int endY, int colorStart, int colorEnd, Supplier<ShaderProgram> shaderSupplier) {
-        RenderSystem.disableTexture();
         RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(shaderSupplier);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         fillGradient(matrices.peek().getPositionMatrix(), bufferBuilder, startX, startY, endX, endY, colorStart, colorEnd);
         tessellator.draw();
         RenderSystem.disableBlend();
-        RenderSystem.enableTexture();
     }
 
     /**
@@ -253,15 +245,11 @@ public class RenderUtil {
      * @param zOffset The Z value that should be used. It adds 50 to whatever.
      */
     public void drawItem(MatrixStack matrices, ItemStack stack, int x, int y, boolean showCount, int zOffset) {
-        matrices.push();
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-        itemRenderer.zOffset = 50 + zOffset;
-        itemRenderer.renderInGuiWithOverrides(stack, x, y);
+        itemRenderer.renderInGuiWithOverrides(matrices, stack, x, y, 0, zOffset);
         if (showCount) {
-            itemRenderer.renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, stack, x, y, stack.getCount() > 1 ? String.valueOf(stack.getCount()) : "");
+            itemRenderer.renderGuiItemOverlay(matrices, MinecraftClient.getInstance().textRenderer, stack, x, y, stack.getCount() > 1 ? String.valueOf(stack.getCount()) : "");
         }
-        itemRenderer.zOffset = 0;
-        matrices.pop();
     }
 
 }

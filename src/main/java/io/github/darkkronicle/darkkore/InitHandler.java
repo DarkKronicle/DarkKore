@@ -20,14 +20,13 @@ public class InitHandler implements Initializer {
 
     @Override
     public void init() {
-
         HotkeyHandler.getInstance().add(
                 DarkKore.MOD_ID,
                 "settings", () ->
                         List.of(
                                 new BasicHotkey(
                                         DarkKoreConfig.getInstance().openGui.getValue(),
-                                        () -> MinecraftClient.getInstance().setScreen(ConfigScreen.ofSections(DarkKoreConfig.getInstance().getSections()))
+                                        () -> MinecraftClient.getInstance().setScreen(DarkKoreConfig.getInstance().getScreen())
                                 )
                         )
         );

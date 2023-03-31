@@ -11,3 +11,8 @@ classes/
 lombok.config
 extra.properties
 swear_words.csv
+bin/
+.settings/
+.classpath
+.project
+*.launch

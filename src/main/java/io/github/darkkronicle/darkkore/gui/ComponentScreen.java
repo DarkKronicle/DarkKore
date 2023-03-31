@@ -55,7 +55,11 @@ public abstract class ComponentScreen extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
-        RenderUtil.drawRectangle(matrices, 0, 0, this.width, this.height, backgroundColor);
+        if (client.world != null) {
+            RenderUtil.drawRectangle(matrices, 0, 0, this.width, this.height, backgroundColor);
+        } else {
+            renderBackgroundTexture(matrices);
+        }
         renderComponents(matrices, mouseX, mouseY);
     }
 
@@ -85,10 +89,8 @@ public abstract class ComponentScreen extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         for (Component component : components) {
-            if (component.isSelected()) {
-                if (component.keyPressed(keyCode, scanCode, modifiers)) {
-                    return true;
-                }
+            if (component.isSelected() && component.keyPressed(keyCode, scanCode, modifiers)) {
+                return true;
             }
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
@@ -97,10 +99,8 @@ public abstract class ComponentScreen extends Screen {
     @Override
     public boolean charTyped(char chr, int modifiers) {
         for (Component component : components) {
-            if (component.isSelected()) {
-                if (component.charTyped(chr, modifiers)) {
-                    return true;
-                }
+            if (component.isSelected() && component.charTyped(chr, modifiers)) {
+                return true;
             }
         }
         return super.charTyped(chr, modifiers);

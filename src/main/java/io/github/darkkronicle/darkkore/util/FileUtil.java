@@ -78,13 +78,11 @@ public class FileUtil {
      */
     public static InputStream getResource(String path) throws URISyntaxException, IOException {
         URI uri = Thread.currentThread().getContextClassLoader().getResource(path).toURI();
-        if (uri.getScheme().contains("jar")) {
-            // Not IDE
-            // jar.toString() begins with file:
-            // Trim it out
+        if (!uri.getScheme().equals("file")) {
+            // it's not a file
             return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
         } else {
-            // IDE
+            // it's a file - try to access it directly!
             return new FileInputStream(Paths.get(uri).toFile());
         }
     }
