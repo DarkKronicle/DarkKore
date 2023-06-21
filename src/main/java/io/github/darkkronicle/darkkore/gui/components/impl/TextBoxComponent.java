@@ -9,8 +9,8 @@ import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -95,10 +95,10 @@ public class TextBoxComponent extends BasicComponent {
 
     /** {@inheritDoc} */
     @Override
-    public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         textField.setX(x + 3);
         textField.setY(y + 3);
-        textField.render(matrices, mouseX, mouseY, 0);
+        textField.render(context, mouseX, mouseY, 0);
     }
 
     /** {@inheritDoc} */

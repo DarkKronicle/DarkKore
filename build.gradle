@@ -1,7 +1,7 @@
 plugins {
-    id 'fabric-loom' version '1.0-SNAPSHOT'
+    id 'fabric-loom' version '1.2-SNAPSHOT'
     id 'maven-publish'
-    id "io.freefair.lombok" version "6.0.0-m2"
+    id "io.freefair.lombok" version "8.0.1"
 }
 
 apply from: 'https://raw.githubusercontent.com/DarkKronicle/GradleScripts/main/gradle/publish.gradle'
@@ -34,9 +34,13 @@ dependencies {
     implementation "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
     implementation "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
 
-    modImplementation "io.github.ladysnake:satin:${satin_version}"
+    modImplementation ("io.github.ladysnake:satin:${satin_version}"){
+        exclude group: "net.fabricmc.fabric-api"
+    }
 
     include "io.github.ladysnake:satin:${satin_version}"
+
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
 
     include "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
     include "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"

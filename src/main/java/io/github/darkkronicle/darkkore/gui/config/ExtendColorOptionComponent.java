@@ -1,10 +1,8 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
-import io.github.darkkronicle.darkkore.colors.ColorAlias;
 import io.github.darkkronicle.darkkore.colors.Colors;
 import io.github.darkkronicle.darkkore.colors.CommonColors;
 import io.github.darkkronicle.darkkore.colors.ExtendedColor;
-import io.github.darkkronicle.darkkore.config.options.ColorOption;
 import io.github.darkkronicle.darkkore.config.options.ExtendedColorOption;
 import io.github.darkkronicle.darkkore.gui.ConfigScreen;
 import io.github.darkkronicle.darkkore.gui.components.BasicComponent;
@@ -15,8 +13,8 @@ import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import io.github.darkkronicle.darkkore.util.search.FindType;
 import io.github.darkkronicle.darkkore.util.search.SearchUtil;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 public class ExtendColorOptionComponent extends TextOptionComponent<ExtendedColor, ExtendedColorOption> {
@@ -34,9 +32,9 @@ public class ExtendColorOptionComponent extends TextOptionComponent<ExtendedColo
             }
 
             @Override
-            public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+            public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
                 RenderUtil.drawRectangle(
-                        matrices, x, y, 14, 14, getOption().getValue()
+                        context, x, y, 14, 14, getOption().getValue()
                 );
             }
         };

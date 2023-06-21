@@ -6,6 +6,7 @@ import io.github.darkkronicle.darkkore.util.*;
 import io.github.darkkronicle.darkkore.util.render.ScissorsStack;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Util;
@@ -63,14 +64,14 @@ public class ScrollComponent extends OffsetComponent {
      * <p> We override this here because we need to scissor the bounds
      * */
     @Override
-    public void render(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void render(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         // We have to override this to scissor properly
         renderBounds = new PositionedRectangle(x, y, width, height);
         updateScroll();
         // This makes it so we don't get weird overlays
         ScissorsStack.getInstance().push(renderBounds);
         ScissorsStack.getInstance().applyStack();
-        super.render(matrices, renderBounds, x, y, mouseX, mouseY);
+        super.render(context, renderBounds, x, y, mouseX, mouseY);
         // Allow for nested scissoring
         ScissorsStack.getInstance().pop();
         ScissorsStack.getInstance().applyStack();

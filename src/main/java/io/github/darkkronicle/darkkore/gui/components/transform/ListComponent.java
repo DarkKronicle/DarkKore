@@ -5,8 +5,8 @@ import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * A {@link MultiComponent} that automatically lists {@link Component}s with specified spacing and can handle
@@ -109,7 +109,7 @@ public class ListComponent extends MultiComponent {
 
     /** {@inheritDoc} */
     @Override
-    public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         // Setup left margin
         int offsetRenderX = leftPad;
         // Setup top margin
@@ -128,7 +128,7 @@ public class ListComponent extends MultiComponent {
             }
             if (renderBounds == null || new PositionedRectangle(x + offsetRenderX, renderY, bounds.width(), bounds.height()).intersects(renderBounds)) {
                 // Check if we are within the render bounds. Makes it so we don't render things off-screen.
-                component.render(matrices, renderBounds, x + offsetRenderX, renderY, mouseX, mouseY);
+                component.render(context, renderBounds, x + offsetRenderX, renderY, mouseX, mouseY);
             }
             // Move to the right
             offsetRenderX += bounds.width() + componentXPad;
@@ -147,7 +147,7 @@ public class ListComponent extends MultiComponent {
 
     /** {@inheritDoc} */
     @Override
-    public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void postRender(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         // We do the same thing as normal render again
         int offsetRenderX = leftPad;
         int renderY = y + topPad;
@@ -161,7 +161,7 @@ public class ListComponent extends MultiComponent {
                 maxHeight = 0;
             }
             if (component.shouldPostRender() && (renderBounds == null || new PositionedRectangle(x + offsetRenderX, renderY, bounds.width(), bounds.height()).intersects(renderBounds))) {
-                component.postRender(matrices, renderBounds, x + offsetRenderX, renderY, mouseX, mouseY);
+                component.postRender(context, renderBounds, x + offsetRenderX, renderY, mouseX, mouseY);
             }
             offsetRenderX += bounds.width() + componentXPad;
             maxHeight = Math.max(maxHeight, bounds.height());

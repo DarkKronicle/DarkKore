@@ -8,8 +8,8 @@ import io.github.darkkronicle.darkkore.util.text.StyleFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -118,19 +118,19 @@ public class TextComponent extends BasicComponent {
 
     /** {@inheritDoc} */
     @Override
-    public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         int renderY = y + topPadding;
         for (Text line : lines) {
             if (center) {
                 // To center we get the middle value then subtract half the width
                 int width = MinecraftClient.getInstance().textRenderer.getWidth(line);
-                MinecraftClient.getInstance().textRenderer.drawWithShadow(
-                        matrices, line,
-                        x + leftPadding + (int) ((this.width - rightPadding) / 2) - (int) (width / 2),
+                context.drawTextWithShadow(MinecraftClient.getInstance().textRenderer, line,
+                        x + leftPadding + ((this.width - rightPadding) / 2) - (width / 2),
                         renderY + topPadding, -1
                 );
             } else {
-                MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, line, x + leftPadding, renderY + topPadding, -1);
+                context.drawTextWithShadow(MinecraftClient.getInstance().textRenderer,
+                        line, x + leftPadding, renderY + topPadding, -1);
             }
             renderY += MinecraftClient.getInstance().textRenderer.fontHeight + linePadding;
         }

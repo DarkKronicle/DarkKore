@@ -7,8 +7,8 @@ import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -171,12 +171,12 @@ public abstract class BasicComponent implements Component {
     }
 
     /**
-     * An implementation of {@link Component#render(MatrixStack, PositionedRectangle, int, int, int, int)}. 
+     * An implementation of {@link Component#render(DrawContext, PositionedRectangle, int, int, int, int)}.
      * This render method automatically handles {@link #backgroundColor}, {@link #outlineColor}, {@link #selected},
      * {@link #hovered}, and other various utilities. 
      * 
-     * <p>You shouldn't override this. Instead override {@link #renderComponent(MatrixStack, PositionedRectangle, int, int, int, int)}
-     * @param matrices {@link MatrixStack} to invoke other render methods
+     * <p>You shouldn't override this. Instead override {@link #renderComponent(DrawContext, PositionedRectangle, int, int, int, int)}
+     * @param context {@link DrawContext} to invoke other render methods
      * @param renderBounds {@link PositionedRectangle} an object that contains the boundaries of the object being rendered
      * @param x The x value where the component should render
      * @param y The y value where the component should render
@@ -184,18 +184,18 @@ public abstract class BasicComponent implements Component {
      * @param mouseY The y value of the mouse
      */
     @Override
-    public void render(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
-        matrices.push();
+    public void render(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        context.getMatrices().push();
         if (zOffset != 0) {
-            matrices.translate(0, 0, zOffset);
+            context.getMatrices().translate(0, 0, zOffset);
         }
         if (backgroundColor != null) {
             Rectangle bounds = getBoundingBox();
-            RenderUtil.drawRectangle(matrices, x, y, bounds.width(), bounds.height(), backgroundColor);
+            RenderUtil.drawRectangle(context, x, y, bounds.width(), bounds.height(), backgroundColor);
         }
         if (outlineColor != null) {
             Rectangle bounds = getBoundingBox();
-            RenderUtil.drawOutline(matrices, x, y, bounds.width(), bounds.height(), outlineColor);
+            RenderUtil.drawOutline(context, x, y, bounds.width(), bounds.height(), outlineColor);
         }
         if (checkIfHovered(renderBounds, x, y, mouseX, mouseY)) {
             hovered = true;
@@ -210,20 +210,20 @@ public abstract class BasicComponent implements Component {
             }
             previouslyHovered = false;
         }
-        renderComponent(matrices, renderBounds, x, y, mouseX, mouseY);
-        matrices.pop();
+        renderComponent(context, renderBounds, x, y, mouseX, mouseY);
+        context.getMatrices().pop();
     }
 
     /**
      * A method to render the component. This should be used in almost all cases.
-     * @param matrices {@link MatrixStack} to invoke other render methods
+     * @param context {@link DrawContext} to invoke other render methods
      * @param renderBounds {@link PositionedRectangle} an object that contains the boundaries of the object being rendered
      * @param x The x value where the component should render
      * @param y The y value where the component should render
      * @param mouseX The x value of the mouse
      * @param mouseY The y value of the mouse
      */
-    public abstract void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY);
+    public abstract void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY);
 
     /**
      * Checks to see if the current component is hovered by the mouse given values
