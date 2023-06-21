@@ -3,7 +3,6 @@ package io.github.darkkronicle.darkkore.gui.components;
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * An interface for handling GUI components within DarkKore.
@@ -35,7 +34,7 @@ public interface Component {
     /**
      * Renders the component after everything has already been rendered. This should be used if overlapping is needed.
      * This is used for hover descriptions.
-     * @param context {@link MatrixStack} to invoke other render methods
+     * @param context {@link DrawContext} to invoke other render methods
      * @param renderBounds {@link PositionedRectangle} an object that contains the boundaries of the object being rendered
      * @param x The x value where the component should render
      * @param y The y value where the component should render

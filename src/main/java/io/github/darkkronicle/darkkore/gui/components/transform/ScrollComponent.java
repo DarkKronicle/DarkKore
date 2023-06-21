@@ -2,13 +2,14 @@ package io.github.darkkronicle.darkkore.gui.components.transform;
 
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
-import io.github.darkkronicle.darkkore.util.*;
+import io.github.darkkronicle.darkkore.util.EasingMethod;
+import io.github.darkkronicle.darkkore.util.PositionedRectangle;
+import io.github.darkkronicle.darkkore.util.Rectangle;
 import io.github.darkkronicle.darkkore.util.render.ScissorsStack;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Util;
 
 /**
