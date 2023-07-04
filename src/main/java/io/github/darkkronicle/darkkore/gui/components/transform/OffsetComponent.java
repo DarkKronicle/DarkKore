@@ -3,8 +3,8 @@ package io.github.darkkronicle.darkkore.gui.components.transform;
 import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * A {@link WrapperComponent} that offsets a {@link Component} by a certain x/y value. This class is abstract
@@ -36,10 +36,10 @@ public abstract class OffsetComponent extends WrapperComponent {
 
     /** {@inheritDoc} */
     @Override
-    public void render(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void render(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         int offX = this.getXOffset();
         int offY = this.getYOffset();
-        super.render(matrices, getRenderBounds(x, y), x + offX, y + offY, mouseX, mouseY);
+        super.render(context, getRenderBounds(x, y), x + offX, y + offY, mouseX, mouseY);
     }
 
     /**
@@ -57,11 +57,11 @@ public abstract class OffsetComponent extends WrapperComponent {
 
     /** {@inheritDoc} */
     @Override
-    public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void postRender(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         if (component.shouldPostRender()) {
             int offX = this.getXOffset();
             int offY = this.getYOffset();
-            component.postRender(matrices, renderBounds, x + offX, y + offY, mouseX, mouseY);
+            component.postRender(context, renderBounds, x + offX, y + offY, mouseX, mouseY);
         }
     }
 

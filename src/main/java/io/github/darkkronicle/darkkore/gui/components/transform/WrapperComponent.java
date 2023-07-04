@@ -6,8 +6,8 @@ import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * A {@link Component} meant to contain one {@link Component} and change its location. All methods here
@@ -83,15 +83,15 @@ public abstract class WrapperComponent extends BasicComponent {
     }
     /** {@inheritDoc} */
     @Override
-    public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
-        component.render(matrices, renderBounds, x, y, mouseX, mouseY);
+    public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        component.render(context, renderBounds, x, y, mouseX, mouseY);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void postRender(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         if (component.shouldPostRender()) {
-            component.postRender(matrices, renderBounds, x, y, mouseX, mouseY);
+            component.postRender(context, renderBounds, x, y, mouseX, mouseY);
         }
     }
 

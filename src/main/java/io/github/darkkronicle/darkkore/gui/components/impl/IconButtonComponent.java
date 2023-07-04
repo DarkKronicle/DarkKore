@@ -6,9 +6,8 @@ import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Consumer;
@@ -35,10 +34,9 @@ public class IconButtonComponent extends ButtonComponent {
     }
 
     @Override
-    public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(shaderColor.red() / 255f, shaderColor.green() / 255f, shaderColor.blue() / 255f, shaderColor.alpha() / 255f);
-        RenderSystem.setShaderTexture(0, icon);
-        DrawableHelper.drawTexture(matrices, x + leftPadding, y + topPadding, width - (leftPadding + rightPadding), height - (topPadding - rightPadding), 0, 0, iconWidth, iconHeight, iconWidth, iconHeight);
+        context.drawTexture(icon, x + leftPadding, y + topPadding, width - (leftPadding + rightPadding), height - (topPadding - rightPadding), 0, 0, iconWidth, iconHeight, iconWidth, iconHeight);
         RenderSystem.setShaderColor(1, 1, 1,1);
     }
 }

@@ -6,8 +6,8 @@ import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,10 +59,10 @@ public class MultiComponent extends BasicComponent {
 
     /** {@inheritDoc} */
     @Override
-    public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         hoveredComponent = null;
         for (Component component : components) {
-            component.render(matrices, renderBounds, x, y, mouseX, mouseY);
+            component.render(context, renderBounds, x, y, mouseX, mouseY);
             if (component.isHovered()) {
                 hoveredComponent = component;
             }
@@ -207,10 +207,10 @@ public class MultiComponent extends BasicComponent {
     }
 
     @Override
-    public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+    public void postRender(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         for (Component component : components) {
             if (component.shouldPostRender()) {
-                component.postRender(matrices, renderBounds, x, y, mouseX, mouseY);
+                component.postRender(context, renderBounds, x, y, mouseX, mouseY);
             }
         }
     }

@@ -2,7 +2,7 @@ package io.github.darkkronicle.darkkore.gui.components;
 
 import io.github.darkkronicle.darkkore.util.PositionedRectangle;
 import io.github.darkkronicle.darkkore.util.Rectangle;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 
 /**
  * An interface for handling GUI components within DarkKore.
@@ -16,14 +16,14 @@ public interface Component {
      * Renders the component. Components should not have a position assigned to them. They should take in whatever
      * x/y value is assigned and then render based off that position.
      * If position is needed use {@link io.github.darkkronicle.darkkore.gui.components.transform.PositionedComponent}
-     * @param matrices {@link MatrixStack} to invoke other render methods
+     * @param context {@link DrawContext} to invoke other render methods
      * @param renderBounds {@link PositionedRectangle} an object that contains the boundaries of the object being rendered
      * @param x The x value where the component should render
      * @param y The y value where the component should render
      * @param mouseX The x value of the mouse
      * @param mouseY The y value of the mouse
      */
-    void render(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY);
+    void render(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY);
 
     /**
      * The bounding box (width height) of the component. This does not contain x/y data.
@@ -34,17 +34,17 @@ public interface Component {
     /**
      * Renders the component after everything has already been rendered. This should be used if overlapping is needed.
      * This is used for hover descriptions.
-     * @param matrices {@link MatrixStack} to invoke other render methods
+     * @param context {@link DrawContext} to invoke other render methods
      * @param renderBounds {@link PositionedRectangle} an object that contains the boundaries of the object being rendered
      * @param x The x value where the component should render
      * @param y The y value where the component should render
      * @param mouseX The x value of the mouse
      * @param mouseY The y value of the mouse
      */
-    default void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {}
+    default void postRender(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {}
 
     /**
-     * Whether this component should render post. If false {@link #postRender(MatrixStack, PositionedRectangle, int, int, int, int)}
+     * Whether this component should render post. If false {@link #postRender(DrawContext, PositionedRectangle, int, int, int, int)}
      * won't be called
      * @return True if should post render
      */

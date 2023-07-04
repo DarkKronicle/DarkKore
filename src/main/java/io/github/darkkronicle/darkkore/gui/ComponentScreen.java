@@ -7,8 +7,8 @@ import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +34,13 @@ public abstract class ComponentScreen extends Screen {
         components.add(component);
     }
 
-    public void renderComponents(MatrixStack matrices, int mouseX, int mouseY) {
+    public void renderComponents(DrawContext context, int mouseX, int mouseY) {
         for (Component component : components) {
-            component.render(matrices, null, 0, 0, mouseX, mouseY);
+            component.render(context, null, 0, 0, mouseX, mouseY);
         }
         for (Component component : components) {
             if (component.shouldPostRender()) {
-                component.postRender(matrices, null, 0, 0, mouseX, mouseY);
+                component.postRender(context, null, 0, 0, mouseX, mouseY);
             }
         }
     }
@@ -54,13 +54,13 @@ public abstract class ComponentScreen extends Screen {
     public abstract void initImpl();
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+    public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
         if (client.world != null) {
-            RenderUtil.drawRectangle(matrices, 0, 0, this.width, this.height, backgroundColor);
+            RenderUtil.drawRectangle(context, 0, 0, this.width, this.height, backgroundColor);
         } else {
-            renderBackgroundTexture(matrices);
+            renderBackgroundTexture(context);
         }
-        renderComponents(matrices, mouseX, mouseY);
+        renderComponents(context, mouseX, mouseY);
     }
 
     @Override

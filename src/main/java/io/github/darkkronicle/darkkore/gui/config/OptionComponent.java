@@ -1,15 +1,15 @@
 package io.github.darkkronicle.darkkore.gui.config;
 
 import io.github.darkkronicle.darkkore.config.options.Option;
-import io.github.darkkronicle.darkkore.gui.components.*;
+import io.github.darkkronicle.darkkore.gui.components.Component;
 import io.github.darkkronicle.darkkore.gui.components.impl.TextComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.MultiComponent;
 import io.github.darkkronicle.darkkore.gui.components.transform.PositionedComponent;
 import io.github.darkkronicle.darkkore.settings.DarkKoreConfig;
 import io.github.darkkronicle.darkkore.util.*;
 import lombok.Getter;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 public abstract class OptionComponent<N, T extends Option<N>> extends MultiComponent {
@@ -41,10 +41,10 @@ public abstract class OptionComponent<N, T extends Option<N>> extends MultiCompo
     }
 
     @Override
-    public void postRender(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
-        super.postRender(matrices, renderBounds, x, y, mouseX, mouseY);
+    public void postRender(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        super.postRender(context, renderBounds, x, y, mouseX, mouseY);
         if (hoverComponent != null && isHovered()) {
-            hoverComponent.render(matrices, renderBounds, x + 1, y + height + 2, mouseX, mouseY);
+            hoverComponent.render(context, renderBounds, x + 1, y + height + 2, mouseX, mouseY);
         }
     }
 

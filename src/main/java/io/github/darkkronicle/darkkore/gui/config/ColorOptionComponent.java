@@ -9,8 +9,8 @@ import io.github.darkkronicle.darkkore.util.*;
 import io.github.darkkronicle.darkkore.util.render.RenderUtil;
 import io.github.darkkronicle.darkkore.util.search.FindType;
 import io.github.darkkronicle.darkkore.util.search.SearchUtil;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 public class ColorOptionComponent extends TextOptionComponent<ColorAlias, ColorOption> {
@@ -48,8 +48,8 @@ public class ColorOptionComponent extends TextOptionComponent<ColorAlias, ColorO
             }
 
             @Override
-            public void renderComponent(MatrixStack matrices, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
-                RenderUtil.drawRectangle(matrices, x, y, 14, 14, getOption().getValue().color());
+            public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+                RenderUtil.drawRectangle(context, x, y, 14, 14, getOption().getValue().color());
             }
         };
     }
