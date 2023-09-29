@@ -77,10 +77,10 @@ public abstract class ComponentScreen extends Screen {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         for (Component component : components) {
             if (component.isHovered()) {
-                return component.mouseScrolled(0, 0, (int) mouseX, (int) mouseY, amount);
+                return component.mouseScrolled(0, 0, (int) mouseX, (int) mouseY, verticalAmount);
             }
         }
         return false;
