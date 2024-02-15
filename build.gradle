@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT'
+    id 'fabric-loom' version '1.5-SNAPSHOT'
     id 'maven-publish'
     id "io.freefair.lombok" version "8.0.1"
 }
@@ -16,7 +16,7 @@ repositories {
         name = 'Ladysnake Mods'
         url = 'https://maven.ladysnake.org/releases'
         content {
-            includeGroup 'io.github.ladysnake'
+            includeGroup 'org.ladysnake'
             includeGroupByRegex 'io\\.github\\.onyxstudios.*'
         }
     }
@@ -34,11 +34,11 @@ dependencies {
     implementation "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
     implementation "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
 
-    modImplementation ("io.github.ladysnake:satin:${satin_version}"){
+    modImplementation ("org.ladysnake:satin:${satin_version}"){
         exclude group: "net.fabricmc.fabric-api"
     }
 
-    include "io.github.ladysnake:satin:${satin_version}"
+    include "org.ladysnake:satin:${satin_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
 
