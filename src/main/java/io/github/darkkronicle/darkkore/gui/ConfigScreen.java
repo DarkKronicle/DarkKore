@@ -17,6 +17,7 @@ import io.github.darkkronicle.darkkore.util.Dimensions;
 import io.github.darkkronicle.darkkore.util.FluidText;
 import io.github.darkkronicle.darkkore.util.StringUtil;
 import lombok.Getter;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
@@ -183,6 +184,11 @@ public class ConfigScreen extends ComponentScreen {
             addComponent(tabComp);
         }
         addComponent(optionsPosition);
+    }
+
+    @Override
+    protected void renderBackgroundTexture(DrawContext context) {
+
     }
 
     @Override

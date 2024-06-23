@@ -16,14 +16,14 @@ import java.util.List;
 /**
  * A {@link Screen} to handle rendering components and different elements
  */
+@Getter
 public abstract class ComponentScreen extends Screen {
 
-    @Getter
     private List<Component> components = new ArrayList<>();
 
-    @Getter @Setter private Screen parent;
+    @Setter private Screen parent;
 
-    @Getter @Setter private Color backgroundColor;
+    @Setter private Color backgroundColor;
 
     protected ComponentScreen() {
         super(new FluidText(""));
@@ -57,30 +57,22 @@ public abstract class ComponentScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float partialTicks) {
         if (client.world != null) {
             RenderUtil.drawRectangle(context, 0, 0, this.width, this.height, backgroundColor);
-        } else {
-            renderBackgroundTexture(context);
-        }
+        } else renderBackgroundTexture(context);
         renderComponents(context, mouseX, mouseY);
     }
 
+    protected abstract void renderBackgroundTexture(DrawContext context);
+
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        boolean success = false;
-        for (Component component : components) {
-            if (component.isHovered()) {
-                success = component.mouseClicked(0, 0, (int) mouseX, (int) mouseY, button) || success;
-            } else {
-                component.mouseClickedOutside(0, 0, (int) mouseX, (int) mouseY, button);
-            }
-        }
-        return success;
+        return false;
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         for (Component component : components) {
             if (component.isHovered()) {
-                return component.mouseScrolled(0, 0, (int) mouseX, (int) mouseY, amount);
+                return component.mouseScrolled(0, 0, (int) mouseX, (int) mouseY, verticalAmount);
             }
         }
         return false;

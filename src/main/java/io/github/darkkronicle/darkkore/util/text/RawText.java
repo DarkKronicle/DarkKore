@@ -38,7 +38,7 @@ public class RawText implements Text {
     }
 
     public RawText(String message, Style style) {
-        this.message = new LiteralTextContent(message);
+        this.message = new PlainTextContent.Literal(message);
         this.style = style;
     }
 
@@ -53,7 +53,7 @@ public class RawText implements Text {
     }
 
     public void setMessage(String message) {
-        this.message = new LiteralTextContent(message);
+        this.message = new PlainTextContent.Literal(message);
     }
 
     public void setMessage(TextContent content) {
@@ -197,7 +197,7 @@ public class RawText implements Text {
      * @return MutableText that was added on
      */
     public RawText append(Text text) {
-        this.setMessage(new LiteralTextContent(getString() + text.getString()));
+        this.setMessage(new PlainTextContent.Literal(getString() + text.getString()));
         return this;
     }
 }
