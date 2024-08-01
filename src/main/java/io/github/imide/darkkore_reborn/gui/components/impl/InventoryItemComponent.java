@@ -1,0 +1,34 @@
+package io.github.imide.darkkore_reborn.gui.components.impl;
+
+import lombok.Getter;
+import lombok.Setter;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
+
+/**
+ * An {@link ItemComponent} that is bound to a {@link Inventory}
+ */
+public class InventoryItemComponent extends ItemComponent {
+
+    /** Inventory to get item from */
+    @Getter @Setter protected Inventory inventory;
+
+    /** Slot in the inventory to get from */
+    @Getter @Setter protected int index;
+
+    public InventoryItemComponent(Screen parent, Inventory inventory, int index) {
+        super(parent);
+        this.inventory = inventory;
+        this.index = index;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>This makes sure to get it from the inventory
+     */
+    @Override
+    public ItemStack getStack() {
+        return inventory.getStack(index);
+    }
+}

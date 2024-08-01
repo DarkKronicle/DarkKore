@@ -1,0 +1,144 @@
+package io.github.imide.darkkore_reborn.gui.components.impl;
+
+import io.github.imide.darkkore_reborn.gui.components.BasicComponent;
+import io.github.imide.darkkore_reborn.util.FluidText;
+import io.github.imide.darkkore_reborn.util.PositionedRectangle;
+import io.github.imide.darkkore_reborn.util.Rectangle;
+import io.github.imide.darkkore_reborn.util.text.StyleFormatter;
+import lombok.Getter;
+import lombok.Setter;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.Text;
+
+import java.util.List;
+
+/**
+ * A {@link io.github.imide.darkkore_reborn.gui.components.Component} to display text.
+ *
+ * <p>This automatically sets width/height and supports new line characters
+ */
+public class TextComponent extends BasicComponent {
+
+    /** The lines that will render */
+    @Getter protected List<Text> lines;
+
+    /** The width of the box */
+    @Getter @Setter protected int width;
+
+    /** The height of the box */
+    @Getter @Setter protected int height;
+
+    /** Should the width be set automatically */
+    @Getter @Setter protected boolean autoUpdateWidth = false;
+
+    /** Should the height be set automatically */
+    @Getter @Setter protected boolean autoUpdateHeight = false;
+
+    /** Should this render from the center */
+    @Getter @Setter protected boolean center = false;
+
+    /** Left margin */
+    @Getter @Setter protected int leftPadding = 2;
+    /** Right margin */
+    @Getter @Setter protected int rightPadding = 2;
+    /** Top margin */
+    @Getter @Setter protected int topPadding = 2;
+    /** Bottom margin */
+    @Getter @Setter protected int bottomPadding = 2;
+    /** Line margin */
+    @Getter @Setter protected int linePadding = 2;
+
+
+    /**
+     * Creates a new object and sets the width and height automatically.
+     * @param parent
+     * @param text {@link Text} to display. Supports new lines.
+     */
+    public TextComponent(Screen parent, Text text) {
+        this(parent, -1, -1, text);
+    }
+
+    /**
+     * Creates a new object with a specified width and height. If width/height are less than 0
+     * then {@link #autoUpdateWidth}/{@link #autoUpdateHeight} are set.
+     * @param parent
+     * @param width Width of the object. Can be less than 0.
+     * @param height Height of the object. Can be less than 0.
+     * @param text {@link Text} to display. Supports new lines.
+     */
+    public TextComponent(Screen parent, int width, int height, Text text) {
+        super(parent);
+        this.width = width;
+        this.height = height;
+        if (width < 0) {
+            autoUpdateWidth = true;
+        }
+        if (height < 0) {
+            autoUpdateHeight = true;
+        }
+        setLines(text);
+    }
+
+    /**
+     * Set the lines from a {@link Text} and automatically wrap the text
+     * @param text {@link Text} to set
+     */
+    public void setLines(Text text) {
+        // We format the text fancily
+        text = StyleFormatter.formatText(new FluidText(text));
+        // We wrap the text
+        this.lines = StyleFormatter.wrapText(MinecraftClient.getInstance().textRenderer, autoUpdateWidth ? 10000000 : width, text);
+        if (autoUpdateWidth) {
+            updateWidth();
+        }
+        if (autoUpdateHeight) {
+            updateHeight();
+        }
+    }
+
+    /**
+     * Updates the width to the longest line
+     */
+    protected void updateWidth() {
+        int maxWidth = 0;
+        for (Text text : lines) {
+            maxWidth = Math.max(maxWidth, MinecraftClient.getInstance().textRenderer.getWidth(text) + leftPadding + rightPadding);
+        }
+        width = maxWidth;
+    }
+
+    /**
+     * Updates the height to the amount of lines
+     */
+    protected void updateHeight() {
+        height = topPadding + bottomPadding + lines.size() * (MinecraftClient.getInstance().textRenderer.fontHeight) + ((lines.size() - 1) * linePadding);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
+        int renderY = y + topPadding;
+        for (Text line : lines) {
+            if (center) {
+                // To center we get the middle value then subtract half the width
+                int width = MinecraftClient.getInstance().textRenderer.getWidth(line);
+                context.drawTextWithShadow(MinecraftClient.getInstance().textRenderer, line,
+                        x + leftPadding + ((this.width - rightPadding) / 2) - (width / 2),
+                        renderY + topPadding, -1
+                );
+            } else {
+                context.drawTextWithShadow(MinecraftClient.getInstance().textRenderer,
+                        line, x + leftPadding, renderY + topPadding, -1);
+            }
+            renderY += MinecraftClient.getInstance().textRenderer.fontHeight + linePadding;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Rectangle getBoundingBox() {
+        return new Rectangle(width, height);
+    }
+}

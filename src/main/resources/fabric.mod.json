@@ -1,27 +1,35 @@
 {
   "schemaVersion": 1,
-  "id": "darkkore",
+  "id": "darkkore-reborn",
   "version": "${version}",
-  "name": "DarkKore",
-  "description": "",
-  "authors": [],
-  "contact": {},
+  "name": "DarkKore-reborn",
+  "description": "DarkKore-reborn is a maintained fork of DarkKore, a dependency for KronHUD and other DarkKronicle mods.",
+  "authors": [
+    "DarkKronicle",
+    "imide"
+  ],
+  "contact": {
+    "homepage": "https://github.com/imide/DarkKore-reborn/issues",
+    "sources": "https://github.com/imide/DarkKore-reborn"
+  },
   "license": "MPL-2.0",
-  "icon": "assets/darkkore/icon.png",
+  "icon": "assets/darkkore-reborn/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "io.github.darkkronicle.darkkore.DarkKore"
+      "io.github.imide.darkkore_reborn.DarkKore_reborn"
     ],
     "modmenu": [
-      "io.github.darkkronicle.darkkore.settings.ModMenuImpl"
+      "io.github.imide.darkkore_reborn.settings.ModMenuImpl"
     ]
   },
   "mixins": [
-    "darkkore.mixins.json"
+    "darkkore-reborm.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.12.2",
-    "minecraft": ">=1.19"
+    "fabricloader": ">=0.15.11",
+    "minecraft": "~1.20.6",
+    "java": ">=21",
+    "fabric-api": "*"
   }
 }

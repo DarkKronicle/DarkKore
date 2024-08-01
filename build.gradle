@@ -4,12 +4,19 @@ plugins {
     id "io.freefair.lombok" version "8.6"
 }
 
-apply from: 'https://raw.githubusercontent.com/DarkKronicle/GradleScripts/main/gradle/publish.gradle'
-
 version = "${project.mod_version}-${project.minecraft_version}"
 group = project.maven_group
 
+base {
+    archivesName = project.archives_base_name
+}
+
 repositories {
+    // Add repositories to retrieve artifacts from in here.
+    // You should only use this when depending on other mods because
+    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // for more information about repositories.
     mavenCentral()
     maven { url 'https://jitpack.io' }
     maven {
@@ -20,13 +27,30 @@ repositories {
             includeGroupByRegex 'io\\.github\\.onyxstudios.*'
         }
     }
-    maven { url 'https://maven.terraformersmc.com/releases' }
+
+    maven {
+        url 'https://maven.terraformersmc.com/releases/'
+    }
+}
+
+
+loom {
+    mods {
+        "darkkore-reborn" {
+            sourceSet sourceSets.main
+        }
+    }
+
 }
 
 dependencies {
+    // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     implementation "com.electronwill.night-config:toml:${project.night_config_version}"
     implementation "com.electronwill.night-config:json:${project.night_config_version}"
@@ -34,13 +58,11 @@ dependencies {
     implementation "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
     implementation "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
 
-    modImplementation ("org.ladysnake:satin:${satin_version}"){
-        exclude group: "net.fabricmc.fabric-api"
+    modImplementation("org.ladysnake:satin:${satin_version}") {
+        exclude group: 'net.fabricmc.fabric-api'
     }
 
     include "org.ladysnake:satin:${satin_version}"
-
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
 
     include "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
     include "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
@@ -49,50 +71,50 @@ dependencies {
     include "com.electronwill.night-config:json:${project.night_config_version}"
     include "com.electronwill.night-config:core:${project.night_config_version}"
 
-    modCompileOnly "com.terraformersmc:modmenu:${project.mod_menu_version}"
+    modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+    implementation "org.apiguardian:apiguardian-api:1.1.2"
 }
 
 processResources {
     inputs.property "version", project.version
-    filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version
     }
 }
 
-def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        it.options.release = targetJavaVersion
-    }
+    it.options.annotationProcessorPath = configurations.annotationProcessor
+    it.options.release = 21
 }
 
+
+
 java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-    archivesBaseName = project.archives_base_name
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
     withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
+        rename { "${it}_${project.base.archivesName.get()}" }
     }
 }
 
 // configure the maven publication
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
             from components.java
         }
     }
 
     // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-    }
 }
