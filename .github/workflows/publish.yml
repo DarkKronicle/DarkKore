@@ -43,7 +43,7 @@ jobs:
         if: ${{ matrix.java == '21' }}
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          modrinth-id: 1q2w3e4r
+          modrinth-id: 5SesFmyd
           modrinth-token: "${{env.MODRINTH_TOKEN}}"
 
           github-token: "${{env.GITHUB_TOKEN}}"
