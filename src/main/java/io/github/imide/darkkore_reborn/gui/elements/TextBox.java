@@ -20,6 +20,7 @@ public class TextBox extends TextFieldWidget {
 
     /**
      * Sets the width
+     *
      * @param width Width
      */
     @Override
@@ -29,6 +30,7 @@ public class TextBox extends TextFieldWidget {
 
     /**
      * Sets the height
+     *
      * @param height Height
      */
     public void setHeight(int height) {

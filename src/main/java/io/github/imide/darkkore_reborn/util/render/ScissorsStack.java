@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class ScissorsStack {
 
+    private final static ScissorsStack INSTANCE = new ScissorsStack();
     private final List<PositionedRectangle> scissorsAreas = Lists.newArrayList();
     private final PositionedRectangle empty = new PositionedRectangle(0, 0, 0, 0);
 
-    private final static ScissorsStack INSTANCE = new ScissorsStack();
-
-    private ScissorsStack() {}
+    private ScissorsStack() {
+    }
 
     public static ScissorsStack getInstance() {
         return INSTANCE;

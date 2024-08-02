@@ -11,7 +11,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class NightConfigObject implements ConfigObject {
 
-    @Getter protected Config object;
+    @Getter
+    protected Config object;
 
     @Override
     public <T> void set(String key, T value) {

@@ -40,46 +40,6 @@ public class Color {
         this.alpha = completeColor.alpha();
     }
 
-    public int color() {
-        return rawColor();
-    }
-
-    public int rawColor() {
-        return color;
-    }
-
-    /**
-     * Get the red value as a float
-     * @return Red value 0-1
-     */
-    public float floatRed() {
-        return ((float) red()) / 255;
-    }
-
-    /**
-     * Get the green value as a float
-     * @return Green value 0-1
-     */
-    public float floatGreen() {
-        return ((float) green()) / 255;
-    }
-
-    /**
-     * Get the blue value as a float
-     * @return Blue value 0-1
-     */
-    public float floatBlue() {
-        return ((float) blue()) / 255;
-    }
-
-    /**
-     * Get the alpha value as a float
-     * @return Alpha value 0-1
-     */
-    public float floatAlpha() {
-        return ((float) alpha()) / 255;
-    }
-
     public Color(int red, int green, int blue, int alpha) {
         if (red > 255) {
             red = 255;
@@ -111,8 +71,53 @@ public class Color {
         this.color = ColorUtil.colorToInt4f(this);
     }
 
+    public int color() {
+        return rawColor();
+    }
+
+    public int rawColor() {
+        return color;
+    }
+
+    /**
+     * Get the red value as a float
+     *
+     * @return Red value 0-1
+     */
+    public float floatRed() {
+        return ((float) red()) / 255;
+    }
+
+    /**
+     * Get the green value as a float
+     *
+     * @return Green value 0-1
+     */
+    public float floatGreen() {
+        return ((float) green()) / 255;
+    }
+
+    /**
+     * Get the blue value as a float
+     *
+     * @return Blue value 0-1
+     */
+    public float floatBlue() {
+        return ((float) blue()) / 255;
+    }
+
+    /**
+     * Get the alpha value as a float
+     *
+     * @return Alpha value 0-1
+     */
+    public float floatAlpha() {
+        return ((float) alpha()) / 255;
+    }
+
     /**
      * Creates a string that has the hex representation of a color #AARRGGBB
+     *
      * @return Hex representation of the color
      */
     public String getString() {

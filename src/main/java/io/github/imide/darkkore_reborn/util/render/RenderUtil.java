@@ -5,9 +5,9 @@ import io.github.imide.darkkore_reborn.util.Color;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.ShaderProgram;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import org.joml.Matrix4f;
 
@@ -117,7 +117,7 @@ public class RenderUtil {
     }
 
     public void drawRing(Matrix4f matrix, float x, float y, float width, float height, float innerRadiusPercent, int color) {
-        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+        BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
         RenderSystem.setShaderColor(innerRadiusPercent, 1, 1, 1);
         RenderSystem.enableBlend();
         RenderSystem.setShader(ShaderHandler.CIRCLE::getProgram);
@@ -126,33 +126,32 @@ public class RenderUtil {
 
         float y2 = y + height;
 
-        float a = (float)(color >> 24 & 0xFF) / 255.0f;
-        float r = (float)(color >> 16 & 0xFF) / 255.0f;
-        float g = (float)(color >> 8 & 0xFF) / 255.0f;
-        float b = (float)(color & 0xFF) / 255.0f;
+        float a = (float) (color >> 24 & 0xFF) / 255.0f;
+        float r = (float) (color >> 16 & 0xFF) / 255.0f;
+        float g = (float) (color >> 8 & 0xFF) / 255.0f;
+        float b = (float) (color & 0xFF) / 255.0f;
 
-        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-        bufferBuilder.vertex(matrix, x, y2, 0.0f).texture(0, 1).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, x2, y2, 0.0f).texture(1, 1).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, x2, y, 0.0f).texture(1, 0).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, x, y, 0.0f).texture(0, 0).color(r, g, b, a).next();
+        bufferBuilder.vertex(matrix, x, y2, 0.0f).texture(0, 1).color(r, g, b, a);
+        bufferBuilder.vertex(matrix, x2, y2, 0.0f).texture(1, 1).color(r, g, b, a);
+        bufferBuilder.vertex(matrix, x2, y, 0.0f).texture(1, 0).color(r, g, b, a);
+        bufferBuilder.vertex(matrix, x, y, 0.0f).texture(0, 0).color(r, g, b, a);
         BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
         RenderSystem.disableBlend();
         RenderSystem.setShaderColor(1, 1, 1, 1);
     }
 
     public void fill(Matrix4f matrix, int x1, int y1, int x2, int y2, Color color) {
-        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+        BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         int colorInt = color.preRender();
-        float a = (float)(colorInt >> 24 & 0xFF) / 255.0f;
-        float r = (float)(colorInt >> 16 & 0xFF) / 255.0f;
-        float g = (float)(colorInt >> 8 & 0xFF) / 255.0f;
-        float b = (float)(colorInt & 0xFF) / 255.0f;
-        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        bufferBuilder.vertex(matrix, x1, y2, 0.0f).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a).next();
+        float a = (float) (colorInt >> 24 & 0xFF) / 255.0f;
+        float r = (float) (colorInt >> 16 & 0xFF) / 255.0f;
+        float g = (float) (colorInt >> 8 & 0xFF) / 255.0f;
+        float b = (float) (colorInt & 0xFF) / 255.0f;
+
+        bufferBuilder.vertex(matrix, x1, y2, 0.0f).color(r, g, b, a);
+        bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(r, g, b, a);
+        bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(r, g, b, a);
+        bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a);
         BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
         color.postRender();
 
@@ -170,36 +169,36 @@ public class RenderUtil {
             y1 = y2;
             y2 = i;
         }
-        float a = (float)(color >> 24 & 0xFF) / 255.0f;
-        float r = (float)(color >> 16 & 0xFF) / 255.0f;
-        float g = (float)(color >> 8 & 0xFF) / 255.0f;
-        float b = (float)(color & 0xFF) / 255.0f;
-        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+        float a = (float) (color >> 24 & 0xFF) / 255.0f;
+        float r = (float) (color >> 16 & 0xFF) / 255.0f;
+        float g = (float) (color >> 8 & 0xFF) / 255.0f;
+        float b = (float) (color & 0xFF) / 255.0f;
+        BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         RenderSystem.enableBlend();
         RenderSystem.setShader(shaderSupplier);
-        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        bufferBuilder.vertex(matrix, x1, y2, 0.0f).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(r, g, b, a).next();
-        bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a).next();
+
+        bufferBuilder.vertex(matrix, x1, y2, 0.0f).color(r, g, b, a);
+        bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(r, g, b, a);
+        bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(r, g, b, a);
+        bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(r, g, b, a);
         BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
         RenderSystem.disableBlend();
     }
 
 
     public void fillGradient(Matrix4f matrix, BufferBuilder builder, int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
-        float a = (float)(colorStart >> 24 & 0xFF) / 255.0f;
-        float r = (float)(colorStart >> 16 & 0xFF) / 255.0f;
-        float g = (float)(colorStart >> 8 & 0xFF) / 255.0f;
-        float b = (float)(colorStart & 0xFF) / 255.0f;
-        float a2 = (float)(colorEnd >> 24 & 0xFF) / 255.0f;
-        float r2 = (float)(colorEnd >> 16 & 0xFF) / 255.0f;
-        float g2 = (float)(colorEnd >> 8 & 0xFF) / 255.0f;
-        float b2 = (float)(colorEnd & 0xFF) / 255.0f;
-        builder.vertex(matrix, endX, startY, 0).color(r, g, b, a).next();
-        builder.vertex(matrix, startX, startY, 0).color(r, g, b, a).next();
-        builder.vertex(matrix, startX, endY, 0).color(r2, g2, b2, a2).next();
-        builder.vertex(matrix, endX, endY, 0).color(r2, g2, b2, a2).next();
+        float a = (float) (colorStart >> 24 & 0xFF) / 255.0f;
+        float r = (float) (colorStart >> 16 & 0xFF) / 255.0f;
+        float g = (float) (colorStart >> 8 & 0xFF) / 255.0f;
+        float b = (float) (colorStart & 0xFF) / 255.0f;
+        float a2 = (float) (colorEnd >> 24 & 0xFF) / 255.0f;
+        float r2 = (float) (colorEnd >> 16 & 0xFF) / 255.0f;
+        float g2 = (float) (colorEnd >> 8 & 0xFF) / 255.0f;
+        float b2 = (float) (colorEnd & 0xFF) / 255.0f;
+        builder.vertex(matrix, endX, startY, 0).color(r, g, b, a);
+        builder.vertex(matrix, startX, startY, 0).color(r, g, b, a);
+        builder.vertex(matrix, startX, endY, 0).color(r2, g2, b2, a2);
+        builder.vertex(matrix, endX, endY, 0).color(r2, g2, b2, a2);
     }
 
     public void fillGradient(DrawContext context, int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
@@ -209,10 +208,9 @@ public class RenderUtil {
     public void fillGradient(DrawContext context, int startX, int startY, int endX, int endY, int colorStart, int colorEnd, Supplier<ShaderProgram> shaderSupplier) {
         RenderSystem.enableBlend();
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBuffer();
-        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+        BufferBuilder bufferBuilder = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         fillGradient(context.getMatrices().peek().getPositionMatrix(), bufferBuilder, startX, startY, endX, endY, colorStart, colorEnd);
-        tessellator.draw();
+        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
         RenderSystem.disableBlend();
     }
 
@@ -225,10 +223,11 @@ public class RenderUtil {
 
     /**
      * Draws an item
-     * @param context context
-     * @param stack {@link ItemStack} to render
-     * @param x x
-     * @param y y
+     *
+     * @param context   context
+     * @param stack     {@link ItemStack} to render
+     * @param x         x
+     * @param y         y
      * @param showCount Whether item count should show
      */
     public void drawItem(DrawContext context, ItemStack stack, int x, int y, boolean showCount) {
@@ -237,12 +236,13 @@ public class RenderUtil {
 
     /**
      * Draws an item with a specified z-offset
-     * @param context context
-     * @param stack {@link ItemStack} to render
-     * @param x x
-     * @param y y
+     *
+     * @param context   context
+     * @param stack     {@link ItemStack} to render
+     * @param x         x
+     * @param y         y
      * @param showCount Whether item count should show
-     * @param zOffset The Z value that should be used. It adds 50 to whatever.
+     * @param zOffset   The Z value that should be used. It adds 50 to whatever.
      */
     public void drawItem(DrawContext context, ItemStack stack, int x, int y, boolean showCount, int zOffset) {
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();

@@ -8,6 +8,7 @@ public class PlayerUtil {
 
     /**
      * Returns the server address that the client is currently connected to.
+     *
      * @return The server address if connected, 'singleplayer' if singleplayer, 'none' if none.
      */
     public static String getServer() {

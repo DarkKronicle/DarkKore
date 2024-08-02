@@ -18,25 +18,41 @@ import java.util.function.Consumer;
  */
 public class ButtonComponent extends TextComponent {
 
-    /** The {@link Color} to set when this component is hovered */
-    @Getter @Setter private Color hover;
+    /**
+     * The {@link Color} to set when this component is hovered
+     */
+    @Getter
+    @Setter
+    private Color hover;
 
-    /** The {@link Color} of the background */
-    @Getter @Setter private Color background;
+    /**
+     * The {@link Color} of the background
+     */
+    @Getter
+    @Setter
+    private Color background;
 
-    /** Event to trigger on click */
-    @Getter @Setter private Consumer<ButtonComponent> onClick;
+    /**
+     * Event to trigger on click
+     */
+    @Getter
+    @Setter
+    private Consumer<ButtonComponent> onClick;
 
-    /** Is this button able to be clicked */
-    @Getter private boolean disabled = false;
+    /**
+     * Is this button able to be clicked
+     */
+    @Getter
+    private boolean disabled = false;
 
     /**
      * Creates a new button with automatic width/height
+     *
      * @param parent
-     * @param text {@link Text} to display
+     * @param text       {@link Text} to display
      * @param background {@link Color} for the background
-     * @param hover {@link Color} for hovering
-     * @param onClick {@link Consumer} to trigger on click
+     * @param hover      {@link Color} for hovering
+     * @param onClick    {@link Consumer} to trigger on click
      */
     public ButtonComponent(Screen parent, Text text, Color background, Color hover, Consumer<ButtonComponent> onClick) {
         super(parent, text);
@@ -49,13 +65,14 @@ public class ButtonComponent extends TextComponent {
 
     /**
      * Creates a new button with automatic width/height
+     *
      * @param parent
-     * @param width Width of the button. If less than 0 it automatically is set.
-     * @param height Height of the button. If less than 0 it automatically is set.
-     * @param text {@link Text} to display
+     * @param width      Width of the button. If less than 0 it automatically is set.
+     * @param height     Height of the button. If less than 0 it automatically is set.
+     * @param text       {@link Text} to display
      * @param background {@link Color} for the background
-     * @param hover {@link Color} for hovering
-     * @param onClick {@link Consumer} to trigger on click
+     * @param hover      {@link Color} for hovering
+     * @param onClick    {@link Consumer} to trigger on click
      */
     public ButtonComponent(Screen parent, int width, int height, Text text, Color background, Color hover, Consumer<ButtonComponent> onClick) {
         super(parent, width, height, text);
@@ -68,7 +85,9 @@ public class ButtonComponent extends TextComponent {
         center = true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         if (disabled) {
@@ -88,7 +107,9 @@ public class ButtonComponent extends TextComponent {
         SoundUtil.playInterfaceSound();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onHoveredImpl(int x, int y, int mouseX, int mouseY, boolean hovered) {
         if (!disabled) {

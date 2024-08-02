@@ -9,11 +9,12 @@ public class ConfigurationManager implements ConfigHolder {
 
     private final List<ConfigHolder> configs = new ArrayList<>();
 
+    private ConfigurationManager() {
+    }
+
     public static ConfigurationManager getInstance() {
         return INSTANCE;
     }
-
-    private ConfigurationManager() {}
 
     public void add(ConfigHolder config) {
         configs.add(config);

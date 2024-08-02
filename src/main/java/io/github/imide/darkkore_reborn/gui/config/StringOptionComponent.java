@@ -46,7 +46,7 @@ public class StringOptionComponent extends TextOptionComponent<String, StringOpt
 
     @Override
     public Component getMainComponent() {
-        textBox = new TextBoxComponent(parent, option.getValue(),150, 14, this::onChanged);
+        textBox = new TextBoxComponent(parent, option.getValue(), 150, 14, this::onChanged);
         textBox.setBackgroundColor(new Color(50, 50, 50, 150));
         return textBox;
     }

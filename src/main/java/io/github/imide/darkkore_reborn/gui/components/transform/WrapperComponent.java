@@ -17,29 +17,45 @@ import net.minecraft.client.gui.screen.Screen;
  */
 public abstract class WrapperComponent extends BasicComponent {
 
-    /** The width the component should be */
+    /**
+     * The width the component should be
+     */
     @Setter
     protected int width;
-    /** The height the component should be */
+    /**
+     * The height the component should be
+     */
     @Setter
     protected int height;
 
-    /** The component that is being handled */
-    @Getter protected Component component;
+    /**
+     * The component that is being handled
+     */
+    @Getter
+    protected Component component;
 
-    /** If the component's width should be used instead of {@link #width} */
-    @Setter @Getter protected boolean useComponentWidth;
+    /**
+     * If the component's width should be used instead of {@link #width}
+     */
+    @Setter
+    @Getter
+    protected boolean useComponentWidth;
 
-    /** If the component's height should be used instead of {@link #height} */
-    @Setter @Getter protected boolean useComponentHeight;
+    /**
+     * If the component's height should be used instead of {@link #height}
+     */
+    @Setter
+    @Getter
+    protected boolean useComponentHeight;
 
     /**
      * Creates a {@link WrapperComponent} with specified width height. If width/height are less than 0,
      * then {@link #useComponentWidth}/{@link #useComponentHeight} are set respectively.
+     *
      * @param parent
      * @param component The {@link Component} to wrap
-     * @param width Width to use. If less than 0 the width of the {@link #component} is used
-     * @param height Height to use. If less than 0 the height of the {@link #component} is used
+     * @param width     Width to use. If less than 0 the width of the {@link #component} is used
+     * @param height    Height to use. If less than 0 the height of the {@link #component} is used
      */
     public WrapperComponent(Screen parent, Component component, int width, int height) {
         super(parent);
@@ -51,7 +67,9 @@ public abstract class WrapperComponent extends BasicComponent {
         this.selectable = true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         if (isHovered()) {
@@ -60,13 +78,17 @@ public abstract class WrapperComponent extends BasicComponent {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void mouseClickedOutsideImpl(int x, int y, int mouseX, int mouseY, int button) {
         component.mouseClickedOutside(x, y, mouseX, mouseY, button);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseScrolled(int x, int y, int mouseX, int mouseY, double amount) {
         if (isHovered()) {
@@ -75,19 +97,26 @@ public abstract class WrapperComponent extends BasicComponent {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBoundingBox() {
         Rectangle bound = component.getBoundingBox();
         return new Rectangle(useComponentWidth ? bound.width() : width, useComponentHeight ? bound.height() : height);
     }
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         component.render(context, renderBounds, x, y, mouseX, mouseY);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void postRender(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         if (component.shouldPostRender()) {
@@ -95,14 +124,18 @@ public abstract class WrapperComponent extends BasicComponent {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean shouldPostRender() {
         // We then check to see if the component should post render, so just always call this
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean charTyped(char key, int modifiers) {
         if (component.isSelected()) {
@@ -111,7 +144,9 @@ public abstract class WrapperComponent extends BasicComponent {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (component.isSelected()) {
@@ -120,7 +155,9 @@ public abstract class WrapperComponent extends BasicComponent {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDestroy() {
         component.onDestroy();

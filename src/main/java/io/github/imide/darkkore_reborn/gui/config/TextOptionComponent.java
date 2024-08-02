@@ -1,6 +1,5 @@
 package io.github.imide.darkkore_reborn.gui.config;
 
-import io.github.imide.darkkore_reborn.colors.CommonColors;
 import io.github.imide.darkkore_reborn.config.options.Option;
 import io.github.imide.darkkore_reborn.gui.components.Component;
 import io.github.imide.darkkore_reborn.gui.components.impl.TextBoxComponent;
@@ -10,9 +9,8 @@ import net.minecraft.client.gui.screen.Screen;
 
 public abstract class TextOptionComponent<N, T extends Option<N>> extends OptionComponent<N, T> {
 
-    private TextBoxComponent textBox;
-
     protected boolean failure = false;
+    private TextBoxComponent textBox;
 
     public TextOptionComponent(Screen parent, T option, int width) {
         super(parent, option, width, 20);
@@ -51,7 +49,7 @@ public abstract class TextOptionComponent<N, T extends Option<N>> extends Option
 
     @Override
     public Component getMainComponent() {
-        textBox = new TextBoxComponent(parent, getStringValue(),150, 14, this::onChanged);
+        textBox = new TextBoxComponent(parent, getStringValue(), 150, 14, this::onChanged);
         textBox.setBackgroundColor(new Color(50, 50, 50, 150));
         return textBox;
     }

@@ -14,20 +14,25 @@ import java.util.function.Consumer;
 
 /**
  * A {@link ButtonComponent} that cycles between an {@link OptionListEntry}s options
+ *
  * @param <T> {@link OptionListEntry} to use
  */
 public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponent {
 
-    /** The current selected {@link T} */
-    @Getter protected T entry;
+    /**
+     * The current selected {@link T}
+     */
+    @Getter
+    protected T entry;
 
     /**
      * Creates a {@link CycleComponent}
+     *
      * @param parent
-     * @param entry {@link T} current entry
+     * @param entry      {@link T} current entry
      * @param background {@link Color} for the background
-     * @param hover {@link Color} for on hover
-     * @param onClick {@link Consumer} for when the current selection changes
+     * @param hover      {@link Color} for on hover
+     * @param onClick    {@link Consumer} for when the current selection changes
      */
     public CycleComponent(Screen parent, T entry, Color background, Color hover, Consumer<T> onClick) {
         this(parent, entry, -1, -1, background, hover, onClick);
@@ -35,13 +40,14 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
 
     /**
      * Creates a {@link CycleComponent} with a specified width and height. If width/height are less than 0 it will automatically set them
+     *
      * @param parent
-     * @param entry {@link T} current entry
-     * @param width Width
-     * @param height Height
+     * @param entry      {@link T} current entry
+     * @param width      Width
+     * @param height     Height
      * @param background {@link Color} for the background
-     * @param hover {@link Color} for on hover
-     * @param onClick {@link Consumer} for when the current selection changes
+     * @param hover      {@link Color} for on hover
+     * @param onClick    {@link Consumer} for when the current selection changes
      */
     public CycleComponent(Screen parent, T entry, int width, int height, Color background, Color hover, Consumer<T> onClick) {
         super(parent, width, height, StringUtil.translateToText(entry.getDisplayKey()), background, hover, null);
@@ -56,6 +62,7 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
 
     /**
      * Sets the entry that this button holds
+     *
      * @param entry {@link T} new entry value
      */
     public void setEntry(T entry) {
@@ -63,14 +70,18 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
         setLines(StringUtil.translateToText(entry.getDisplayKey()));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         setEntry(entry.next(true));
         return super.mouseClickedImpl(x, y, mouseX, mouseY, button);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLines(Text text) {
         text = StyleFormatter.formatText(new FluidText(text));
@@ -80,7 +91,9 @@ public class CycleComponent<T extends OptionListEntry<T>> extends ButtonComponen
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void updateWidth() {
         int maxWidth = 0;

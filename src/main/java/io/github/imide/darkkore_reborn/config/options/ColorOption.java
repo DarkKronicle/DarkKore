@@ -17,6 +17,13 @@ public class ColorOption extends BasicOption<ColorAlias> {
         super(key, displayName, hoverName, defaultValue);
     }
 
+    public static ColorAlias parseString(String option) {
+        if (option.startsWith("#")) {
+            return new ColorAlias(ColorUtil.getColorFromString(option));
+        }
+        return new ColorAlias(option);
+    }
+
     @Override
     public void save(ConfigObject config) {
         String color = getValue().isAlias() ? getValue().getAliasName() : getValue().getString();
@@ -35,13 +42,6 @@ public class ColorOption extends BasicOption<ColorAlias> {
             return;
         }
         setValue(parseString(option.get()));
-    }
-
-    public static ColorAlias parseString(String option) {
-        if (option.startsWith("#")) {
-            return new ColorAlias(ColorUtil.getColorFromString(option));
-        }
-        return new ColorAlias(option);
     }
 
 }

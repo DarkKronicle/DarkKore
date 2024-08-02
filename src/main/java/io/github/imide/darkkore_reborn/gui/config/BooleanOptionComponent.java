@@ -4,7 +4,6 @@ import io.github.imide.darkkore_reborn.colors.CommonColors;
 import io.github.imide.darkkore_reborn.config.options.BooleanOption;
 import io.github.imide.darkkore_reborn.gui.components.Component;
 import io.github.imide.darkkore_reborn.gui.components.impl.ToggleComponent;
-import io.github.imide.darkkore_reborn.util.Color;
 import io.github.imide.darkkore_reborn.util.FluidText;
 import io.github.imide.darkkore_reborn.util.StringUtil;
 import net.minecraft.client.gui.screen.Screen;

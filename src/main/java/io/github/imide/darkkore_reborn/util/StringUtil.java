@@ -13,7 +13,8 @@ public class StringUtil {
 
     /**
      * Retrieves the translation for a string and converts & to §
-     * @param key Key to translate
+     *
+     * @param key       Key to translate
      * @param arguments Arguments for String.format
      * @return String with formatting
      */
@@ -23,7 +24,8 @@ public class StringUtil {
 
     /**
      * Retrieves the translation for a string key
-     * @param key Key that should be within a language file
+     *
+     * @param key       Key that should be within a language file
      * @param arguments Arguments that are used for String.format
      * @return The direct string translated
      */
@@ -33,6 +35,7 @@ public class StringUtil {
 
     /**
      * Retrieves the translation for a string key and formats it through {@link StyleFormatter} and converts & to §
+     *
      * @param key Key to translate
      * @return A {@link StyleFormatter} text
      */
@@ -42,6 +45,7 @@ public class StringUtil {
 
     /**
      * Retrieves the translation for a string key and formats it through {@link StyleFormatter} without converting & to §
+     *
      * @param key Key to translate
      * @return A {@link StyleFormatter} text
      */

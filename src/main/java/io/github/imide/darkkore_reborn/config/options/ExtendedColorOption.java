@@ -19,13 +19,13 @@ public class ExtendedColorOption extends BasicOption<ExtendedColor> {
     private boolean showChromaOptions = true;
     // Incase I ever want to add more options
 
+    public ExtendedColorOption(String key, String displayName, String hoverName, ExtendedColor defaultValue) {
+        super(key, displayName, hoverName, defaultValue);
+    }
+
     public boolean anyExtended() {
         // When adding more use ||
         return showChromaOptions;
-    }
-
-    public ExtendedColorOption(String key, String displayName, String hoverName, ExtendedColor defaultValue) {
-        super(key, displayName, hoverName, defaultValue);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ExtendedColorOption extends BasicOption<ExtendedColor> {
         activeOption.setValue(currentValue.isActive());
         chroma.addOption(activeOption);
 
-        DoubleOption opacityOption =  new DoubleOption(
+        DoubleOption opacityOption = new DoubleOption(
                 "opacity",
                 "darkkore-reborn.option.color.chroma.opacity",
                 "darkkore-reborn.option.color.chroma.info.opacity",

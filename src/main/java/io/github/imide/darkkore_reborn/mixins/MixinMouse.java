@@ -11,9 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Mouse.class)
 public class MixinMouse {
 
-    @Shadow private boolean cursorLocked;
+    @Shadow
+    private boolean cursorLocked;
 
-    @Inject(method = "onMouseButton", at = @At(value="INVOKE", target="Lnet/minecraft/client/MinecraftClient;getOverlay()Lnet/minecraft/client/gui/screen/Overlay;", ordinal = 0), cancellable = true)
+    @Inject(method = "onMouseButton", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getOverlay()Lnet/minecraft/client/gui/screen/Overlay;", ordinal = 0), cancellable = true)
     private void onMouseButton(long window, int button, int action, int mods, CallbackInfo ci) {
         if (InputHandler.getInstance().onMouse(button, action, mods)) {
             ci.cancel();

@@ -12,7 +12,28 @@ public class Dimensions {
     private final int height;
 
     /**
+     * Creates an object with a specified {@link Rectangle}
+     *
+     * @param rectangle Rectangle to use
+     */
+    public Dimensions(Rectangle rectangle) {
+        this(rectangle.width(), rectangle.height());
+    }
+
+    /**
+     * Creates an object with a specified width/height
+     *
+     * @param width  Width of rectangle
+     * @param height Height of rectangle
+     */
+    public Dimensions(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    /**
      * Generates a {@link Dimensions} from Minecraft's {@link Window}
+     *
      * @return New object
      */
     public static Dimensions getScreen() {
@@ -22,6 +43,7 @@ public class Dimensions {
 
     /**
      * Generates a {@link Dimensions} from Minecraft's {@link Window} that is unscaled
+     *
      * @return New object
      */
     public static Dimensions getUnscaledScreen() {
@@ -30,25 +52,8 @@ public class Dimensions {
     }
 
     /**
-     * Creates an object with a specified {@link Rectangle}
-     * @param rectangle Rectangle to use
-     */
-    public Dimensions(Rectangle rectangle) {
-        this(rectangle.width(), rectangle.height());
-    }
-
-    /**
-     * Creates an object with a specified width/height
-     * @param width Width of rectangle
-     * @param height Height of rectangle
-     */
-    public Dimensions(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
-
-    /**
      * Width of the dimensions
+     *
      * @return Width
      */
     public int getWidth() {
@@ -57,6 +62,7 @@ public class Dimensions {
 
     /**
      * Height of the dimensions
+     *
      * @return Height
      */
     public int getHeight() {
@@ -67,6 +73,7 @@ public class Dimensions {
      * Get a percentage of the width.
      *
      * <p>.5 is center
+     *
      * @param percent Percentage 0-1 of width to get
      * @return The percentage of the width
      */
@@ -78,6 +85,7 @@ public class Dimensions {
      * Get a percentage of the height.
      *
      * <p>.5 is center
+     *
      * @param percent Percentage 0-1 of height to get
      * @return The percentage of the height
      */
@@ -87,6 +95,7 @@ public class Dimensions {
 
     /**
      * Gets the top left of the Dimension with an optional padding in both axis
+     *
      * @param xMargin x padding from the top left
      * @param yMargin y padding from the top left
      * @return Position with specified coordinates
@@ -97,6 +106,7 @@ public class Dimensions {
 
     /**
      * Gets the top right of the Dimension with an optional padding in both axis
+     *
      * @param xMargin x padding from the top right
      * @param yMargin y padding from the top right
      * @return Position with specified coordinates
@@ -107,6 +117,7 @@ public class Dimensions {
 
     /**
      * Gets the bottom left of the Dimension with an optional padding in both axis
+     *
      * @param xMargin x padding from the bottom left
      * @param yMargin y padding from the bottom left
      * @return Position with specified coordinates
@@ -117,6 +128,7 @@ public class Dimensions {
 
     /**
      * Gets the bottom right of the Dimension with an optional padding in both axis
+     *
      * @param xMargin x padding from the bottom right
      * @param yMargin y padding from the bottom right
      * @return Position with specified coordinates
@@ -127,6 +139,7 @@ public class Dimensions {
 
     /**
      * Gets the top left of the Dimension with an optional padding of the percentage of width/height
+     *
      * @param xMargin x padding in percentage of width
      * @param yMargin y padding in percentage of height
      * @return Position with specified coordinates
@@ -137,6 +150,7 @@ public class Dimensions {
 
     /**
      * Gets the top right of the Dimension with an optional padding of the percentage of width/height
+     *
      * @param xMargin x padding in percentage of width
      * @param yMargin y padding in percentage of height
      * @return Position with specified coordinates
@@ -147,6 +161,7 @@ public class Dimensions {
 
     /**
      * Gets the bottom left of the Dimension with an optional padding of the percentage of width/height
+     *
      * @param xMargin x padding in percentage of width
      * @param yMargin y padding in percentage of height
      * @return Position with specified coordinates
@@ -157,6 +172,7 @@ public class Dimensions {
 
     /**
      * Gets the bottom right of the Dimension with an optional padding of the percentage of width/height
+     *
      * @param xMargin x padding in percentage of width
      * @param yMargin y padding in percentage of height
      * @return Position with specified coordinates
@@ -167,6 +183,7 @@ public class Dimensions {
 
     /**
      * Gets the center in X value
+     *
      * @return The center X
      */
     public int getCenterX() {
@@ -175,6 +192,7 @@ public class Dimensions {
 
     /**
      * Gets the center in Y value
+     *
      * @return The center Y
      */
     public int getCenterY() {
@@ -183,6 +201,7 @@ public class Dimensions {
 
     /**
      * Gets the center of the rectangle
+     *
      * @return {@link Position} of the center
      */
     public Position getCenter() {

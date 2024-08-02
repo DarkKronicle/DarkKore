@@ -13,27 +13,24 @@ import java.util.function.Supplier;
 public class HotkeyHandler implements InputEvent {
 
     private final static HotkeyHandler INSTANCE = new HotkeyHandler();
+    // String should be mod id or some unique smth
+    private final Map<Identifier, Supplier<List<Hotkey>>> hotkeys = new HashMap<>();
+    private final List<Integer> keysPressed = new ArrayList<>();
+    @Nullable
+    @Getter
+    @Setter
+    private HotkeyComponent activeComponent = null;
+    private List<Hotkey> allHotkeys = new ArrayList<>();
+
+    private HotkeyHandler() {
+    }
 
     public static HotkeyHandler getInstance() {
         return INSTANCE;
     }
 
-    private HotkeyHandler() {}
-
-    @Nullable
-    @Getter
-    @Setter
-    private HotkeyComponent activeComponent = null;
-
-    // String should be mod id or some unique smth
-    private final Map<Identifier, Supplier<List<Hotkey>>> hotkeys = new HashMap<>();
-
-    private List<Hotkey> allHotkeys = new ArrayList<>();
-
-    private final List<Integer> keysPressed = new ArrayList<>();
-
     public boolean contains(String modId, String name) {
-        return hotkeys.containsKey(new Identifier(modId, name));
+        return hotkeys.containsKey(Identifier.of(modId, name));
     }
 
     /**
@@ -47,7 +44,7 @@ public class HotkeyHandler implements InputEvent {
     }
 
     public Supplier<List<Hotkey>> get(String modId, String name) {
-        return hotkeys.get(new Identifier(modId, name));
+        return hotkeys.get(Identifier.of(modId, name));
     }
 
     /**
@@ -58,12 +55,12 @@ public class HotkeyHandler implements InputEvent {
      * @param hotkeySupplier A supplier
      */
     public void add(String modId, String name, Supplier<List<Hotkey>> hotkeySupplier) {
-        hotkeys.put(new Identifier(modId, name), hotkeySupplier);
+        hotkeys.put(Identifier.of(modId, name), hotkeySupplier);
         rebuildHotkeys();
     }
 
     public void remove(String modId, String name) {
-        hotkeys.remove(new Identifier(modId, name));
+        hotkeys.remove(Identifier.of(modId, name));
         rebuildHotkeys();
     }
 

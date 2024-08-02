@@ -75,7 +75,7 @@ public abstract class ModConfig implements OptionHolder, ConfigHolder {
     public abstract List<Option<?>> getOptions();
 
     public Screen getScreen() {
-        return  ConfigScreen.of(getOptions());
+        return ConfigScreen.of(getOptions());
     }
 
 }

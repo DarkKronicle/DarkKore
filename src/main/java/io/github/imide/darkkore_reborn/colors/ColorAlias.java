@@ -62,7 +62,7 @@ public class ColorAlias extends Color {
         return getAlias().alpha();
     }
 
-    public Color getAlias()  {
+    public Color getAlias() {
         return Colors.getInstance().getColorOrWhite(alias);
     }
 

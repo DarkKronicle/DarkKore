@@ -18,9 +18,9 @@ public class SearchUtil {
      * {@link #findMatches(String, String, FindType)} just less expensive since it doesn't need to
      * find every match.
      *
-     * @param input String to search.
+     * @param input   String to search.
      * @param toMatch Expression to find.
-     * @param type How toMatch should be interpreted.
+     * @param type    How toMatch should be interpreted.
      * @return If a match is found.
      */
     public boolean isMatch(String input, String toMatch, FindType type) {
@@ -36,9 +36,9 @@ public class SearchUtil {
      * {@link #findMatches(String, String, FindType)} just less expensive since it doesn't need to
      * find every match.
      *
-     * @param input String to search.
+     * @param input   String to search.
      * @param toMatch Expression to find.
-     * @param type How toMatch should be interpreted.
+     * @param type    How toMatch should be interpreted.
      * @return If a match is found.
      */
     public boolean isMatch(Text input, String toMatch, FindType type) {
@@ -53,7 +53,7 @@ public class SearchUtil {
      * Get's replacements for a string and matches following the format $\<number\>
      *
      * @param groups Matches that are found, will replace
-     * @param input Input with group replacements
+     * @param input  Input with group replacements
      * @return String with replaced groups
      */
     public String replaceGroups(List<StringMatch> groups, String input) {
@@ -87,9 +87,9 @@ public class SearchUtil {
      * Method to find all matches within a string. Is similar to {@link #isMatch(String, String,
      * FindType)}}. This method just finds every match and returns it.
      *
-     * @param input String to search.
+     * @param input   String to search.
      * @param toMatch Expression to find.
-     * @param type How toMatch should be interpreted.
+     * @param type    How toMatch should be interpreted.
      * @return An Optional containing a list of {@link StringMatch}
      */
     public Optional<List<StringMatch>> findMatches(String input, String toMatch, FindType type) {
@@ -108,9 +108,9 @@ public class SearchUtil {
      * Method to find all matches within a text. Is similar to {@link #isMatch(Text, String,
      * FindType)}}. This method just finds every match and returns it.
      *
-     * @param input Text to search.
+     * @param input   Text to search.
      * @param toMatch Expression to find.
-     * @param type How toMatch should be interpreted.
+     * @param type    How toMatch should be interpreted.
      * @return An Optional containing a list of {@link StringMatch}
      */
     public Optional<List<StringMatch>> findMatches(Text input, String toMatch, FindType type) {
@@ -128,9 +128,9 @@ public class SearchUtil {
     /**
      * Gets first match found based off of conditions
      *
-     * @param input String to search
+     * @param input   String to search
      * @param toMatch Search content
-     * @param type {@link FindType} way to search
+     * @param type    {@link FindType} way to search
      * @return Optional of a {@link StringMatch} if found
      */
     public Optional<StringMatch> getMatch(String input, String toMatch, FindType type) {
@@ -150,9 +150,9 @@ public class SearchUtil {
     /**
      * Gets first match found based off of conditions
      *
-     * @param input String to search
+     * @param input   String to search
      * @param toMatch Search content
-     * @param type {@link FindType} way to search
+     * @param type    {@link FindType} way to search
      * @return Optional of a {@link StringMatch} if found
      */
     public Optional<StringMatch> getMatch(Text input, String toMatch, FindType type) {

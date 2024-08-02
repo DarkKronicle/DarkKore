@@ -21,40 +21,84 @@ import java.util.List;
  */
 public class TextComponent extends BasicComponent {
 
-    /** The lines that will render */
-    @Getter protected List<Text> lines;
+    /**
+     * The lines that will render
+     */
+    @Getter
+    protected List<Text> lines;
 
-    /** The width of the box */
-    @Getter @Setter protected int width;
+    /**
+     * The width of the box
+     */
+    @Getter
+    @Setter
+    protected int width;
 
-    /** The height of the box */
-    @Getter @Setter protected int height;
+    /**
+     * The height of the box
+     */
+    @Getter
+    @Setter
+    protected int height;
 
-    /** Should the width be set automatically */
-    @Getter @Setter protected boolean autoUpdateWidth = false;
+    /**
+     * Should the width be set automatically
+     */
+    @Getter
+    @Setter
+    protected boolean autoUpdateWidth = false;
 
-    /** Should the height be set automatically */
-    @Getter @Setter protected boolean autoUpdateHeight = false;
+    /**
+     * Should the height be set automatically
+     */
+    @Getter
+    @Setter
+    protected boolean autoUpdateHeight = false;
 
-    /** Should this render from the center */
-    @Getter @Setter protected boolean center = false;
+    /**
+     * Should this render from the center
+     */
+    @Getter
+    @Setter
+    protected boolean center = false;
 
-    /** Left margin */
-    @Getter @Setter protected int leftPadding = 2;
-    /** Right margin */
-    @Getter @Setter protected int rightPadding = 2;
-    /** Top margin */
-    @Getter @Setter protected int topPadding = 2;
-    /** Bottom margin */
-    @Getter @Setter protected int bottomPadding = 2;
-    /** Line margin */
-    @Getter @Setter protected int linePadding = 2;
+    /**
+     * Left margin
+     */
+    @Getter
+    @Setter
+    protected int leftPadding = 2;
+    /**
+     * Right margin
+     */
+    @Getter
+    @Setter
+    protected int rightPadding = 2;
+    /**
+     * Top margin
+     */
+    @Getter
+    @Setter
+    protected int topPadding = 2;
+    /**
+     * Bottom margin
+     */
+    @Getter
+    @Setter
+    protected int bottomPadding = 2;
+    /**
+     * Line margin
+     */
+    @Getter
+    @Setter
+    protected int linePadding = 2;
 
 
     /**
      * Creates a new object and sets the width and height automatically.
+     *
      * @param parent
-     * @param text {@link Text} to display. Supports new lines.
+     * @param text   {@link Text} to display. Supports new lines.
      */
     public TextComponent(Screen parent, Text text) {
         this(parent, -1, -1, text);
@@ -63,10 +107,11 @@ public class TextComponent extends BasicComponent {
     /**
      * Creates a new object with a specified width and height. If width/height are less than 0
      * then {@link #autoUpdateWidth}/{@link #autoUpdateHeight} are set.
+     *
      * @param parent
-     * @param width Width of the object. Can be less than 0.
+     * @param width  Width of the object. Can be less than 0.
      * @param height Height of the object. Can be less than 0.
-     * @param text {@link Text} to display. Supports new lines.
+     * @param text   {@link Text} to display. Supports new lines.
      */
     public TextComponent(Screen parent, int width, int height, Text text) {
         super(parent);
@@ -83,6 +128,7 @@ public class TextComponent extends BasicComponent {
 
     /**
      * Set the lines from a {@link Text} and automatically wrap the text
+     *
      * @param text {@link Text} to set
      */
     public void setLines(Text text) {
@@ -116,7 +162,9 @@ public class TextComponent extends BasicComponent {
         height = topPadding + bottomPadding + lines.size() * (MinecraftClient.getInstance().textRenderer.fontHeight) + ((lines.size() - 1) * linePadding);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         int renderY = y + topPadding;
@@ -136,7 +184,9 @@ public class TextComponent extends BasicComponent {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBoundingBox() {
         return new Rectangle(width, height);

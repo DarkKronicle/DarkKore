@@ -12,7 +12,8 @@ import java.util.*;
 @AllArgsConstructor
 public class JsonConfigObject implements ConfigObject {
 
-    @Getter private JsonObject object;
+    @Getter
+    private JsonObject object;
 
     public JsonConfigObject() {
         this(new JsonObject());

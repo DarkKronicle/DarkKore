@@ -3,7 +3,6 @@ package io.github.imide.darkkore_reborn.util;
 import lombok.experimental.UtilityClass;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 

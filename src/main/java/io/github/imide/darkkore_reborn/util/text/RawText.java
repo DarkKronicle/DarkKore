@@ -1,9 +1,5 @@
 package io.github.imide.darkkore_reborn.util.text;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import io.github.imide.darkkore_reborn.util.Color;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +10,10 @@ import net.fabricmc.api.Environment;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Class that allows for easy mutable objects that are like minecraft Text.
  *
@@ -23,19 +23,19 @@ import net.minecraft.util.Formatting;
 @Environment(EnvType.CLIENT)
 public class RawText implements Text {
 
-    /** The message of the {@link RawText} */
-    @Getter private TextContent message;
+    /**
+     * The message of the {@link RawText}
+     */
+    @Getter
+    private TextContent message;
 
-    /** The style of the {@link RawText} */
-    @Getter @Setter @With private Style style;
-
-    public RawText withMessage(TextContent content) {
-        return new RawText(content, style);
-    }
-
-    public RawText withMessage(String content) {
-        return new RawText(content, style);
-    }
+    /**
+     * The style of the {@link RawText}
+     */
+    @Getter
+    @Setter
+    @With
+    private Style style;
 
     public RawText(String message, Style style) {
         this.message = new PlainTextContent.Literal(message);
@@ -52,19 +52,11 @@ public class RawText implements Text {
         this.message = text.getMessage();
     }
 
-    public void setMessage(String message) {
-        this.message = new PlainTextContent.Literal(message);
-    }
-
-    public void setMessage(TextContent content) {
-        this.message = content;
-    }
-
     /**
      * Apply a color to the RawText
      *
      * @param string Content
-     * @param color Color that will get transfered over
+     * @param color  Color that will get transfered over
      * @return New RawText
      */
     public static RawText withColor(String string, Color color) {
@@ -79,7 +71,7 @@ public class RawText implements Text {
     /**
      * Constructs a RawText based off of {@link Formatting}
      *
-     * @param string Content
+     * @param string     Content
      * @param formatting {@link Formatting} values
      * @return New RawText
      */
@@ -92,11 +84,27 @@ public class RawText implements Text {
      * Constructs a new RawText with a string and style.
      *
      * @param string Message
-     * @param base {@link Style} of the message
+     * @param base   {@link Style} of the message
      * @return Constructed RawText
      */
     public static RawText withStyle(String string, Style base) {
         return new RawText(string, base);
+    }
+
+    public RawText withMessage(TextContent content) {
+        return new RawText(content, style);
+    }
+
+    public RawText withMessage(String content) {
+        return new RawText(content, style);
+    }
+
+    public void setMessage(String message) {
+        this.message = new PlainTextContent.Literal(message);
+    }
+
+    public void setMessage(TextContent content) {
+        this.message = content;
     }
 
     @Override
@@ -144,9 +152,9 @@ public class RawText implements Text {
      * Applies the content and style to a visitor
      *
      * @param styledVisitor {@link net.minecraft.text.StringVisitable.StyledVisitor} to accept style
-     *     and string
-     * @param style Default {@link Style} to apply blank values to
-     * @param <T> Type returned from the visitor
+     *                      and string
+     * @param style         Default {@link Style} to apply blank values to
+     * @param <T>           Type returned from the visitor
      * @return The value returned from the visitor
      */
     @Override
@@ -158,7 +166,7 @@ public class RawText implements Text {
      * Applies the content to a visitor
      *
      * @param visitor {@link net.minecraft.text.StringVisitable.Visitor} to accept the string
-     * @param <T> Type returned from the visitor
+     * @param <T>     Type returned from the visitor
      * @return Value returned from the visitor
      */
     @Override
@@ -170,9 +178,9 @@ public class RawText implements Text {
      * Applies the content and style to a visitor
      *
      * @param visitor {@link net.minecraft.text.StringVisitable.StyledVisitor} to accept style and
-     *     string
-     * @param style Default {@link Style} to apply blank values to
-     * @param <T> Type returned from the visitor
+     *                string
+     * @param style   Default {@link Style} to apply blank values to
+     * @param <T>     Type returned from the visitor
      * @return The value returned from the visitor
      */
     public <T> Optional<T> visitSelf(StyledVisitor<T> visitor, Style style) {
@@ -183,7 +191,7 @@ public class RawText implements Text {
      * Applies the content to a visitor
      *
      * @param visitor {@link net.minecraft.text.StringVisitable.Visitor} to accept the string
-     * @param <T> Type returned from the visitor
+     * @param <T>     Type returned from the visitor
      * @return Value returned from the visitor
      */
     public <T> Optional<T> visitSelf(Visitor<T> visitor) {

@@ -5,7 +5,6 @@ import io.github.imide.darkkore_reborn.config.options.BasicOption;
 import io.github.imide.darkkore_reborn.intialization.profiles.PlayerContextCheck;
 import io.github.imide.darkkore_reborn.intialization.profiles.PlayerContextOption;
 import io.github.imide.darkkore_reborn.util.InputUtil;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;

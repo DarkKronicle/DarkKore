@@ -5,7 +5,9 @@ package io.github.imide.darkkore_reborn.intialization;
  */
 public interface Initializer {
 
-    /** Called when it should be setup */
+    /**
+     * Called when it should be setup
+     */
     void init();
 
 }

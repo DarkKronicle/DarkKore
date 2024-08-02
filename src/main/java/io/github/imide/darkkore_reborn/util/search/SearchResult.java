@@ -10,27 +10,41 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 
-/** An object that holds information about a search. */
+/**
+ * An object that holds information about a search.
+ */
 public class SearchResult {
 
-    /** All the {@link StringMatch} that were found in the input */
-    @Getter private final List<StringMatch> matches;
+    /**
+     * All the {@link StringMatch} that were found in the input
+     */
+    @Getter
+    private final List<StringMatch> matches;
 
-    /** The finder used to find matches */
-    @Getter private final Finder finder;
+    /**
+     * The finder used to find matches
+     */
+    @Getter
+    private final Finder finder;
 
-    /** The input string */
-    @Getter private final String input;
+    /**
+     * The input string
+     */
+    @Getter
+    private final String input;
 
-    /** The condition search */
-    @Getter private final String search;
+    /**
+     * The condition search
+     */
+    @Getter
+    private final String search;
 
     /**
      * Constructs a search result based off of found information.
      *
-     * @param input Input to search
-     * @param search Search value
-     * @param finder {@link Finder} used to search
+     * @param input   Input to search
+     * @param search  Search value
+     * @param finder  {@link Finder} used to search
      * @param matches {@link List} of {@link StringMatch} that were found
      */
     public SearchResult(String input, String search, Finder finder, List<StringMatch> matches) {
@@ -39,6 +53,34 @@ public class SearchResult {
         this.finder = finder;
         this.matches = new ArrayList<>(matches);
         Collections.sort(this.matches);
+    }
+
+    /**
+     * A method to construct a SearchResult based off of an input, condition, and {@link FindType}
+     *
+     * @param input Input string to match from
+     * @param match Search string
+     * @param type  {@link FindType} way to search
+     * @return SearchResult with compiled searches
+     */
+    public static SearchResult searchOf(String input, String match, FindType type) {
+        Finder finder = type.getFinder();
+        List<StringMatch> matches = finder.getMatches(input, match);
+        return new SearchResult(input, match, finder, matches);
+    }
+
+    /**
+     * A method to construct a SearchResult based off of an input, condition, and {@link FindType}
+     *
+     * @param input Input string to match from
+     * @param match Search text
+     * @param type  {@link FindType} way to search
+     * @return SearchResult with compiled searches
+     */
+    public static SearchResult searchOf(Text input, String match, FindType type) {
+        Finder finder = type.getFinder();
+        List<StringMatch> matches = finder.getMatches(input, match);
+        return new SearchResult(input.getString(), match, finder, matches);
     }
 
     public int size() {
@@ -75,11 +117,11 @@ public class SearchResult {
     /**
      * Replaces the groups with a specified match
      *
-     * @param string Contents to replace to
+     * @param string     Contents to replace to
      * @param matchIndex If it will replace/return only the first group. -1 will return the full
-     *     string.
+     *                   string.
      * @return The replaced values in context. If onlyFirst it will only do the context of the first
-     *     group.
+     * group.
      */
     public String getGroupReplacements(String string, int matchIndex) {
         if (matchIndex >= 0) {
@@ -103,33 +145,5 @@ public class SearchResult {
             }
         }
         return SearchUtil.replaceGroups(matches, string);
-    }
-
-    /**
-     * A method to construct a SearchResult based off of an input, condition, and {@link FindType}
-     *
-     * @param input Input string to match from
-     * @param match Search string
-     * @param type {@link FindType} way to search
-     * @return SearchResult with compiled searches
-     */
-    public static SearchResult searchOf(String input, String match, FindType type) {
-        Finder finder = type.getFinder();
-        List<StringMatch> matches = finder.getMatches(input, match);
-        return new SearchResult(input, match, finder, matches);
-    }
-
-    /**
-     * A method to construct a SearchResult based off of an input, condition, and {@link FindType}
-     *
-     * @param input Input string to match from
-     * @param match Search text
-     * @param type {@link FindType} way to search
-     * @return SearchResult with compiled searches
-     */
-    public static SearchResult searchOf(Text input, String match, FindType type) {
-        Finder finder = type.getFinder();
-        List<StringMatch> matches = finder.getMatches(input, match);
-        return new SearchResult(input.getString(), match, finder, matches);
     }
 }

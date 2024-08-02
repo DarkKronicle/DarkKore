@@ -15,17 +15,23 @@ public class Tab {
 
     @Getter
     private final Identifier identifier;
-
-    private Tab selected = null;
-
     @Getter
     private final String displayKey;
+    private Tab selected = null;
 
     protected Tab(Identifier identifier, String displayKey, List<Option<?>> options, List<Tab> tabs) {
         this.options = options;
         this.tabs = tabs;
         this.identifier = identifier;
         this.displayKey = displayKey;
+    }
+
+    public static Tab ofOptions(Identifier identifier, String displayKey, List<Option<?>> options) {
+        return new Tab(identifier, displayKey, options, null);
+    }
+
+    public static Tab ofTabs(Identifier identifier, String displayKey, List<Tab> tabs) {
+        return new Tab(identifier, displayKey, null, tabs);
     }
 
     public Tab getSelected() {
@@ -57,14 +63,6 @@ public class Tab {
             selected = tabs.get(0);
         }
         return selected.getNestedOptions();
-    }
-
-    public static Tab ofOptions(Identifier identifier, String displayKey, List<Option<?>> options) {
-        return new Tab(identifier, displayKey, options, null);
-    }
-
-    public static Tab ofTabs(Identifier identifier, String displayKey, List<Tab> tabs) {
-        return new Tab(identifier, displayKey, null, tabs);
     }
 
 }

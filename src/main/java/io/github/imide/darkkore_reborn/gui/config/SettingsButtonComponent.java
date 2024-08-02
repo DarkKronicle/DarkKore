@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 public class SettingsButtonComponent extends IconButtonComponent {
 
-    private static final Identifier ADD_ICON = new Identifier(DarkKore_reborn.MOD_ID, "textures/gui/icons/settings.png");
+    private static final Identifier ADD_ICON = Identifier.of(DarkKore_reborn.MOD_ID, "textures/gui/icons/settings.png");
 
     public SettingsButtonComponent(Screen parent, int size, Color background, Color hover, Consumer<ButtonComponent> onClick) {
         super(parent, null, size, size, 48, 48, background, hover, onClick);

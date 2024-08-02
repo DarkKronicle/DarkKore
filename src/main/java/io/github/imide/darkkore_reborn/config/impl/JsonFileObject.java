@@ -13,9 +13,13 @@ import java.io.IOException;
 
 public class JsonFileObject implements FileObject {
 
-    @Getter @Setter private JsonConfigObject object;
+    @Getter
+    @Setter
+    private JsonConfigObject object;
 
-    @Getter @Setter private File file;
+    @Getter
+    @Setter
+    private File file;
 
     public JsonFileObject(File file) {
         this(file, new JsonConfigObject());

@@ -19,29 +19,43 @@ import java.util.function.Consumer;
  */
 public class MultiComponent extends BasicComponent {
 
-    /** Whether the width should update with each new component added */
+    /**
+     * The width of the full component. This should encapsulate everything (that should be accessible)
+     */
+    @Getter
+    @Setter
+    protected int width;
+    /**
+     * The height of the full component. This should encapsulate everything (that should be accessible)
+     */
+    @Getter
+    @Setter
+    protected int height;
+    /**
+     * The current child component that is hovered
+     */
+    @Getter
+    protected Component hoveredComponent = null;
+    /**
+     * All the children this class holds
+     */
+    @Getter
+    protected List<Component> components = new ArrayList<>();
+    /**
+     * Whether the width should update with each new component added
+     */
     private boolean autoUpdateWidth;
-
-    /** Whether the height should update with each new component added */
+    /**
+     * Whether the height should update with each new component added
+     */
     private boolean autoUpdateHeight;
-
-    /** The width of the full component. This should encapsulate everything (that should be accessible) */
-    @Getter @Setter protected int width;
-
-    /** The height of the full component. This should encapsulate everything (that should be accessible) */
-    @Getter @Setter protected int height;
-
-    /** The current child component that is hovered */
-    @Getter protected Component hoveredComponent = null;
-
-    /** All the children this class holds */
-    @Getter protected List<Component> components = new ArrayList<>();
 
     /**
      * Constructs a {@link MultiComponent} with specified width and height. If width/height are below 0
      * their respective {@link #autoUpdateWidth}/{@link #autoUpdateHeight} are set to true.
+     *
      * @param parent
-     * @param width Width (if below 0 width is auto updated)
+     * @param width  Width (if below 0 width is auto updated)
      * @param height Height (if below 1 height is auto updated)
      */
     public MultiComponent(Screen parent, int width, int height) {
@@ -57,7 +71,9 @@ public class MultiComponent extends BasicComponent {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         hoveredComponent = null;
@@ -71,6 +87,7 @@ public class MultiComponent extends BasicComponent {
 
     /**
      * Apply something to each child
+     *
      * @param componentConsumer {@link Consumer} to accept children
      */
     public void forEach(Consumer<Component> componentConsumer) {
@@ -89,7 +106,8 @@ public class MultiComponent extends BasicComponent {
 
     /**
      * Add a {@link Component} at a specific index
-     * @param index Index to add into (normal list rules)
+     *
+     * @param index     Index to add into (normal list rules)
      * @param component {@link Component} component to insert
      */
     public void addComponent(int index, Component component) {
@@ -104,7 +122,8 @@ public class MultiComponent extends BasicComponent {
 
     /**
      * Sets a {@link Component} at a certain index
-     * @param index Index to set into (normal list rules)
+     *
+     * @param index     Index to set into (normal list rules)
      * @param component {@link Component} to override
      */
     public void setComponent(int index, Component component) {
@@ -119,6 +138,7 @@ public class MultiComponent extends BasicComponent {
 
     /**
      * Retrieves a {@link Component} at a specific index
+     *
      * @param index Index of the component
      * @return The component
      */
@@ -128,6 +148,7 @@ public class MultiComponent extends BasicComponent {
 
     /**
      * Removes a {@link Component} at a specific index
+     *
      * @param index Index to remove at
      */
     public void removeComponent(int index) {
@@ -153,7 +174,9 @@ public class MultiComponent extends BasicComponent {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         boolean success = false;
@@ -169,7 +192,9 @@ public class MultiComponent extends BasicComponent {
         return success;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseScrolled(int x, int y, int mouseX, int mouseY, double amount) {
         if (hoveredComponent != null) {
@@ -178,7 +203,9 @@ public class MultiComponent extends BasicComponent {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBoundingBox() {
         return new Rectangle(width, height);
@@ -253,7 +280,9 @@ public class MultiComponent extends BasicComponent {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDestroy() {
         List<Component> componentCopy = new ArrayList<>(components);

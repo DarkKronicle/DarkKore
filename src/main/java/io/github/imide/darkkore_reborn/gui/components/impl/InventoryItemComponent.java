@@ -11,11 +11,19 @@ import net.minecraft.item.ItemStack;
  */
 public class InventoryItemComponent extends ItemComponent {
 
-    /** Inventory to get item from */
-    @Getter @Setter protected Inventory inventory;
+    /**
+     * Inventory to get item from
+     */
+    @Getter
+    @Setter
+    protected Inventory inventory;
 
-    /** Slot in the inventory to get from */
-    @Getter @Setter protected int index;
+    /**
+     * Slot in the inventory to get from
+     */
+    @Getter
+    @Setter
+    protected int index;
 
     public InventoryItemComponent(Screen parent, Inventory inventory, int index) {
         super(parent);

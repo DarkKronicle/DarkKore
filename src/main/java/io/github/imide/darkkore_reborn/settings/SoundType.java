@@ -2,7 +2,7 @@ package io.github.imide.darkkore_reborn.settings;
 
 import io.github.imide.darkkore_reborn.config.options.OptionListEntry;
 import lombok.Getter;
-import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.enums.NoteBlockInstrument;
 
 import java.util.List;
 
@@ -11,25 +11,32 @@ import java.util.List;
  */
 public enum SoundType implements OptionListEntry<SoundType> {
 
-    /** Normal sounds (just button clicks) */
+    /**
+     * Normal sounds (just button clicks)
+     */
     NORMAL("normal", null),
 
-    /** Chime sounds */
-    CHIME("chime", Instrument.CHIME),
+    /**
+     * Chime sounds
+     */
+    CHIME("chime", NoteBlockInstrument.CHIME),
 
-    /** Bit sounds */
-    BIT("bit", Instrument.BIT),
+    /**
+     * Bit sounds
+     */
+    BIT("bit", NoteBlockInstrument.BIT),
 
-    /** Vibraphone sounds */
-    VIBRAPHONE("vibraphone", Instrument.IRON_XYLOPHONE)
-    ;
+    /**
+     * Vibraphone sounds
+     */
+    VIBRAPHONE("vibraphone", NoteBlockInstrument.IRON_XYLOPHONE);
 
     private final String key;
 
     @Getter
-    private final Instrument instrument;
+    private final NoteBlockInstrument instrument;
 
-    SoundType(String key, Instrument instrument) {
+    SoundType(String key, NoteBlockInstrument instrument) {
         this.key = key;
         this.instrument = instrument;
     }

@@ -6,9 +6,7 @@ import io.github.imide.darkkore_reborn.util.FluidText;
 import io.github.imide.darkkore_reborn.util.InputUtil;
 import io.github.imide.darkkore_reborn.util.text.RawText;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -17,7 +15,8 @@ import java.util.List;
 public class HotkeyComponent extends ButtonComponent implements InputEvent {
 
     private final Color realBackground;
-    @Getter private List<Integer> keys;
+    @Getter
+    private List<Integer> keys;
     private boolean started;
     private boolean focused = false;
 

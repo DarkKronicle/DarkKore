@@ -1,6 +1,8 @@
 package io.github.imide.darkkore_reborn.util;
 
-/** A class to handle an easing method. Examples at https://easings.net/ */
+/**
+ * A class to handle an easing method. Examples at https://easings.net/
+ */
 public interface EasingMethod {
     /**
      * Applies the current percentage of the ease.
@@ -10,9 +12,13 @@ public interface EasingMethod {
      */
     double apply(double x);
 
-    /** Useful easing methods */
+    /**
+     * Useful easing methods
+     */
     enum Method implements EasingMethod {
-        /** Implements the linear easing function. It returns the same value. x = x */
+        /**
+         * Implements the linear easing function. It returns the same value. x = x
+         */
         LINEAR(x -> x),
 
         /**

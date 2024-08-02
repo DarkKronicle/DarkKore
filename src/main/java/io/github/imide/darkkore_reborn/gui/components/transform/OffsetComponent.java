@@ -22,6 +22,7 @@ public abstract class OffsetComponent extends WrapperComponent {
      * Gets the current x position that the component should be at.
      *
      * <p>This isn't the <i>true</i> x position, just relative to the parent component
+     *
      * @return X position
      */
     public abstract int getXOffset();
@@ -30,11 +31,14 @@ public abstract class OffsetComponent extends WrapperComponent {
      * Gets the current y position that the component should be at.
      *
      * <p>This isn't the <i>true</i> y position, just relative to the parent component
+     *
      * @return Y position
      */
     public abstract int getYOffset();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void render(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         int offX = this.getXOffset();
@@ -44,6 +48,7 @@ public abstract class OffsetComponent extends WrapperComponent {
 
     /**
      * Get the boundaries for rendering. This is its own method since some cases may want to change this
+     *
      * @param x X value for rendering
      * @param y Y value for rendering
      * @return A {@link PositionedRectangle} with necessary data
@@ -55,7 +60,9 @@ public abstract class OffsetComponent extends WrapperComponent {
         return new PositionedRectangle(x + offX, y + offY, bound.width(), bound.height());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void postRender(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         if (component.shouldPostRender()) {
@@ -65,14 +72,18 @@ public abstract class OffsetComponent extends WrapperComponent {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBoundingBox() {
         Rectangle bound = component.getBoundingBox();
         return new Rectangle(useComponentWidth ? bound.width() : width, useComponentHeight ? bound.height() : height);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseScrolled(int x, int y, int mouseX, int mouseY, double amount) {
         if (isHovered()) {
@@ -83,7 +94,9 @@ public abstract class OffsetComponent extends WrapperComponent {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void mouseClickedOutsideImpl(int x, int y, int mouseX, int mouseY, int button) {
         int offX = this.getXOffset();

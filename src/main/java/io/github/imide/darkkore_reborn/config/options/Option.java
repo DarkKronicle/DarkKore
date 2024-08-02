@@ -6,9 +6,9 @@ public interface Option<T> extends Saveable {
 
     T getValue();
 
-    T getDefaultValue();
-
     void setValue(T value);
+
+    T getDefaultValue();
 
     String getNameKey();
 

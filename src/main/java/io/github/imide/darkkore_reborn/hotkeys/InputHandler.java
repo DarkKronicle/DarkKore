@@ -6,14 +6,14 @@ import java.util.List;
 public class InputHandler implements InputEvent {
 
     private final static InputHandler INSTANCE = new InputHandler();
+    private final List<InputEvent> hooks = new ArrayList<>();
+
+    private InputHandler() {
+    }
 
     public static InputHandler getInstance() {
         return INSTANCE;
     }
-
-    private final List<InputEvent> hooks = new ArrayList<>();
-
-    private InputHandler() {}
 
     public void addHook(InputEvent event) {
         hooks.add(event);

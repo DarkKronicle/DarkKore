@@ -29,17 +29,6 @@ public class PlayerContextOption extends BasicOption<PlayerContextCheck> {
         config.set(key, nest);
     }
 
-    @Override
-    public void save(ConfigObject config) {
-        save(key, getValue(), config);
-    }
-
-    @Override
-    public void load(ConfigObject config) {
-        // Doesn't matter if null since it will go to default
-        setValue(load(key, config));
-    }
-
     public static PlayerContextCheck load(String key, ConfigObject config) {
         ConfigObject nest = config.get(key);
         if (nest == null) {
@@ -68,6 +57,59 @@ public class PlayerContextOption extends BasicOption<PlayerContextCheck> {
             inGui = nest.get("inGui");
         }
         return new PlayerContextCheck(inGame, server, mode, inGui);
+    }
+
+    private static Boolean convertInGame(String value) {
+        return switch (value) {
+            case "outgame" -> false;
+            case "both" -> null;
+            default -> true;
+        };
+    }
+
+    private static String convertInGame(Boolean value) {
+        if (value == null) {
+            return "both";
+        }
+        if (value) {
+            return "ingame";
+        }
+        return "outgame";
+    }
+
+    private static Boolean convertInGui(String value) {
+        return switch (value) {
+            case "notgui" -> false;
+            case "both" -> null;
+            default -> true;
+        };
+    }
+
+    private static String convertInGui(Boolean value) {
+        if (value == null) {
+            return "both";
+        }
+        if (value) {
+            return "ingui";
+        }
+        return "notgui";
+    }
+
+    public static List<Option<?>> getOptions(PlayerContextCheck defaultValue, PlayerContextCheck currentValue) {
+        PlayerContextOption def = new PlayerContextOption("default", "default", "defalut", defaultValue);
+        def.setValue(currentValue);
+        return def.getOptions();
+    }
+
+    @Override
+    public void save(ConfigObject config) {
+        save(key, getValue(), config);
+    }
+
+    @Override
+    public void load(ConfigObject config) {
+        // Doesn't matter if null since it will go to default
+        setValue(load(key, config));
     }
 
     @Override
@@ -157,49 +199,6 @@ public class PlayerContextOption extends BasicOption<PlayerContextCheck> {
             gameMode.setValue(getValue().getGameMode().getId());
         }
         return List.of(inGame, inGui, server, gameMode);
-    }
-
-
-    private static Boolean convertInGame(String value) {
-        return switch (value) {
-            case "outgame" -> false;
-            case "both" -> null;
-            default -> true;
-        };
-    }
-
-    private static String convertInGame(Boolean value) {
-        if (value == null) {
-            return "both";
-        }
-        if (value) {
-            return "ingame";
-        }
-        return "outgame";
-    }
-
-    private static Boolean convertInGui(String value) {
-        return switch (value) {
-            case "notgui" -> false;
-            case "both" -> null;
-            default -> true;
-        };
-    }
-
-    private static String convertInGui(Boolean value) {
-        if (value == null) {
-            return "both";
-        }
-        if (value) {
-            return "ingui";
-        }
-        return "notgui";
-    }
-
-    public static List<Option<?>> getOptions(PlayerContextCheck defaultValue, PlayerContextCheck currentValue) {
-        PlayerContextOption def = new PlayerContextOption("default", "default", "defalut", defaultValue);
-        def.setValue(currentValue);
-        return def.getOptions();
     }
 
 }

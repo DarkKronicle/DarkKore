@@ -3,7 +3,9 @@ package io.github.imide.darkkore_reborn.intialization;
 import com.electronwill.nightconfig.core.Config;
 import io.github.imide.darkkore_reborn.config.impl.ConfigObject;
 
-/** A saveable object into a {@link Config} */
+/**
+ * A saveable object into a {@link Config}
+ */
 public interface Saveable {
 
     /**

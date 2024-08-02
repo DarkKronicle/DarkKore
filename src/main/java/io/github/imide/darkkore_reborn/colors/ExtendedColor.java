@@ -18,77 +18,9 @@ import java.util.function.Supplier;
 
 public class ExtendedColor extends ColorAlias {
 
+    private static float LAST_GAME_TIME = 0;
     @Getter
     private final ChromaOptions chroma;
-
-
-    private static float LAST_GAME_TIME = 0;
-
-    @Data
-    @AllArgsConstructor
-    public static class ChromaOptions {
-
-        public static String DISPLAY_KEY = "darkkore-reborn.optiontype.chroma";
-        public static String INFO_KEY = "darkkore-reborn.optiontype.info.chroma";
-
-        @With
-        private final boolean active;
-        @With
-        private final float opacity;
-        @With
-        private final float size;
-        @With
-        private final float speed;
-        @With
-        private final float saturation;
-
-        public static ChromaOptions getDefault() {
-            return new ChromaOptions(false, 1, 0.5f, 0.5f, 1);
-        }
-
-        public ChromaOptions copy() {
-            return new ChromaOptions(active, opacity, size, speed, saturation);
-        }
-
-        public void save(ConfigObject object) {
-            object.set("active", active);
-            object.set("opacity", opacity);
-            object.set("size", size);
-            object.set("speed", speed);
-            object.set("saturation", saturation);
-        }
-
-        public static ChromaOptions load(ConfigObject object, ChromaOptions defaultValue) {
-            AtomicBoolean active = new AtomicBoolean(defaultValue.isActive());
-            AtomicReference<Float> opacity = new AtomicReference<>(defaultValue.getOpacity());
-            AtomicReference<Float> size = new AtomicReference<>(defaultValue.getSize());
-            AtomicReference<Float> speed = new AtomicReference<>(defaultValue.getSpeed());
-            AtomicReference<Float> saturation = new AtomicReference<>(defaultValue.getSaturation());
-            // ~~Could techincally caste to Double then use .floatValue, but I think this works fine~~
-            // IT DID NOT WORK FINE
-            object.getOptional("active").ifPresent((opt) -> active.set((boolean) opt));
-            object.getOptional("opacity").ifPresent((opt) -> opacity.set(((Number) opt).floatValue()));
-            object.getOptional("size").ifPresent((opt) -> size.set(((Number) opt).floatValue()));
-            object.getOptional("speed").ifPresent((opt) -> speed.set(((Number) opt).floatValue()));
-            object.getOptional("saturation").ifPresent((opt) -> saturation.set(((Number) opt).floatValue()));
-            return new ChromaOptions(active.get(), opacity.get(), size.get(), speed.get(), saturation.get());
-        }
-
-        /**
-         * Sets the color modulation in {@link RenderSystem}. This tells the shaders what values to use for size/speed/saturation/opacity
-         */
-        public void setColorModulation() {
-            RenderSystem.setShaderColor(size, speed, saturation, opacity);
-        }
-
-    }
-
-    public ExtendedColor withChroma(ChromaOptions options) {
-        if (this.isAlias()) {
-            return new ExtendedColor(getAliasName(), options);
-        }
-        return new ExtendedColor(rawColor(), options);
-    }
 
     public ExtendedColor(String alias, ChromaOptions chroma) {
         super(alias);
@@ -113,6 +45,13 @@ public class ExtendedColor extends ColorAlias {
     public ExtendedColor(int red, int green, int blue, int alpha, int color, ChromaOptions chroma) {
         super(red, green, blue, alpha, color);
         this.chroma = chroma;
+    }
+
+    public ExtendedColor withChroma(ChromaOptions options) {
+        if (this.isAlias()) {
+            return new ExtendedColor(getAliasName(), options);
+        }
+        return new ExtendedColor(rawColor(), options);
     }
 
     @Override
@@ -215,5 +154,64 @@ public class ExtendedColor extends ColorAlias {
         int ticks = (int) time;
         RenderSystem.setShaderGameTime(ticks, tickDelta);
         RenderSystem.disableBlend();
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class ChromaOptions {
+
+        public static String DISPLAY_KEY = "darkkore-reborn.optiontype.chroma";
+        public static String INFO_KEY = "darkkore-reborn.optiontype.info.chroma";
+
+        @With
+        private final boolean active;
+        @With
+        private final float opacity;
+        @With
+        private final float size;
+        @With
+        private final float speed;
+        @With
+        private final float saturation;
+
+        public static ChromaOptions getDefault() {
+            return new ChromaOptions(false, 1, 0.5f, 0.5f, 1);
+        }
+
+        public static ChromaOptions load(ConfigObject object, ChromaOptions defaultValue) {
+            AtomicBoolean active = new AtomicBoolean(defaultValue.isActive());
+            AtomicReference<Float> opacity = new AtomicReference<>(defaultValue.getOpacity());
+            AtomicReference<Float> size = new AtomicReference<>(defaultValue.getSize());
+            AtomicReference<Float> speed = new AtomicReference<>(defaultValue.getSpeed());
+            AtomicReference<Float> saturation = new AtomicReference<>(defaultValue.getSaturation());
+            // ~~Could techincally caste to Double then use .floatValue, but I think this works fine~~
+            // IT DID NOT WORK FINE
+            object.getOptional("active").ifPresent((opt) -> active.set((boolean) opt));
+            object.getOptional("opacity").ifPresent((opt) -> opacity.set(((Number) opt).floatValue()));
+            object.getOptional("size").ifPresent((opt) -> size.set(((Number) opt).floatValue()));
+            object.getOptional("speed").ifPresent((opt) -> speed.set(((Number) opt).floatValue()));
+            object.getOptional("saturation").ifPresent((opt) -> saturation.set(((Number) opt).floatValue()));
+            return new ChromaOptions(active.get(), opacity.get(), size.get(), speed.get(), saturation.get());
+        }
+
+        public ChromaOptions copy() {
+            return new ChromaOptions(active, opacity, size, speed, saturation);
+        }
+
+        public void save(ConfigObject object) {
+            object.set("active", active);
+            object.set("opacity", opacity);
+            object.set("size", size);
+            object.set("speed", speed);
+            object.set("saturation", saturation);
+        }
+
+        /**
+         * Sets the color modulation in {@link RenderSystem}. This tells the shaders what values to use for size/speed/saturation/opacity
+         */
+        public void setColorModulation() {
+            RenderSystem.setShaderColor(size, speed, saturation, opacity);
+        }
+
     }
 }

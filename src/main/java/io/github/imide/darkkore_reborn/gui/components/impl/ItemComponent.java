@@ -14,14 +14,19 @@ import org.jetbrains.annotations.Nullable;
 
 public class ItemComponent extends BasicComponent {
 
-    /** The {@link ItemStack} to render */
+    /**
+     * The {@link ItemStack} to render
+     */
     @Nullable
-    @Getter @Setter private ItemStack stack;
+    @Getter
+    @Setter
+    private ItemStack stack;
 
     /**
      * Creates an item component with an {@link Item} instead of {@link ItemStack}
+     *
      * @param parent
-     * @param item Item to use
+     * @param item   Item to use
      */
     public ItemComponent(Screen parent, Item item) {
         this(parent, new ItemStack(item));
@@ -29,8 +34,9 @@ public class ItemComponent extends BasicComponent {
 
     /**
      * Creates an item component with an {@link ItemStack}
+     *
      * @param parent
-     * @param stack Stack to use
+     * @param stack  Stack to use
      */
     public ItemComponent(Screen parent, ItemStack stack) {
         super(parent);
@@ -39,13 +45,16 @@ public class ItemComponent extends BasicComponent {
 
     /**
      * Creates an item component without a stack. This just renders the stack portion as blank.
+     *
      * @param parent
      */
     public ItemComponent(Screen parent) {
         this(parent, (ItemStack) null);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         ItemStack stack = getStack();
@@ -54,7 +63,9 @@ public class ItemComponent extends BasicComponent {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBoundingBox() {
         return new Rectangle(18, 18);

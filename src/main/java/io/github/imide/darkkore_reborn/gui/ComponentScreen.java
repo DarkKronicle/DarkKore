@@ -21,9 +21,11 @@ public abstract class ComponentScreen extends Screen {
 
     private final List<Component> components = new ArrayList<>();
 
-    @Setter private Screen parent;
+    @Setter
+    private Screen parent;
 
-    @Setter private Color backgroundColor;
+    @Setter
+    private Color backgroundColor;
 
     protected ComponentScreen() {
         super(new FluidText(""));

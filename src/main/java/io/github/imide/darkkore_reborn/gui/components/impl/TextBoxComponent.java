@@ -20,32 +20,60 @@ import java.util.function.Consumer;
  */
 public class TextBoxComponent extends BasicComponent {
 
-    /** {@link TextBox} that handles text and typing */
-    @Getter protected final TextBox textField;
+    /**
+     * {@link TextBox} that handles text and typing
+     */
+    @Getter
+    protected final TextBox textField;
 
-    /** Width of the full component */
+    /**
+     * Width of the full component
+     */
     protected int width;
-    /** Height of the full component */
+    /**
+     * Height of the full component
+     */
     protected int height;
 
-    /** {@link Color} for when the text box is selected */
-    @Getter @Setter protected Color selectedColor = new Color(255, 255, 255, 255);
+    /**
+     * {@link Color} for when the text box is selected
+     */
+    @Getter
+    @Setter
+    protected Color selectedColor = new Color(255, 255, 255, 255);
 
-    /** Right margin before the text box starts */
-    @Getter @Setter protected int rightPadding = 2;
-    /** Left margin before the text box starts */
-    @Getter @Setter protected int leftPadding = 2;
-    /** Top margin before the text box starts */
-    @Getter @Setter protected int topPadding = 2;
-    /** Bottom margin before the text box starts */
-    @Getter @Setter protected int bottomPadding = 2;
+    /**
+     * Right margin before the text box starts
+     */
+    @Getter
+    @Setter
+    protected int rightPadding = 2;
+    /**
+     * Left margin before the text box starts
+     */
+    @Getter
+    @Setter
+    protected int leftPadding = 2;
+    /**
+     * Top margin before the text box starts
+     */
+    @Getter
+    @Setter
+    protected int topPadding = 2;
+    /**
+     * Bottom margin before the text box starts
+     */
+    @Getter
+    @Setter
+    protected int bottomPadding = 2;
 
     /**
      * Creates a new text box component
+     *
      * @param parent
-     * @param message The starting message in the text box.
-     * @param width Width of the box
-     * @param height Height of the box
+     * @param message         The starting message in the text box.
+     * @param width           Width of the box
+     * @param height          Height of the box
      * @param changedListener {@link Consumer} for when the text is changed
      */
     public TextBoxComponent(Screen parent, @Nullable String message, int width, int height, Consumer<String> changedListener) {
@@ -72,13 +100,16 @@ public class TextBoxComponent extends BasicComponent {
         textField.setHeight(height - topPadding - bottomPadding);
     }
 
-    /** Sets the {@link Consumer} for when the text box's contents are modified */
+    /**
+     * Sets the {@link Consumer} for when the text box's contents are modified
+     */
     public void setChangedListener(Consumer<String> changedListener) {
         textField.setChangedListener(changedListener);
     }
 
     /**
      * Gets the text box's current text
+     *
      * @return Text box's current text
      */
     public String getText() {
@@ -87,13 +118,16 @@ public class TextBoxComponent extends BasicComponent {
 
     /**
      * Sets the text box's text
+     *
      * @param text New text that can be set
      */
     public void setText(String text) {
         textField.setText(text);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         textField.setX(x + 3);
@@ -101,25 +135,33 @@ public class TextBoxComponent extends BasicComponent {
         textField.render(context, mouseX, mouseY, 0);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean charTyped(char key, int modifiers) {
         return textField.charTyped(key, modifiers);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         return textField.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void mouseClickedOutsideImpl(int x, int y, int mouseX, int mouseY, int button) {
         textField.setFocused(false);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseClickedImpl(int x, int y, int mouseX, int mouseY, int button) {
         textField.setFocused(true);
@@ -140,13 +182,17 @@ public class TextBoxComponent extends BasicComponent {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBoundingBox() {
         return new Rectangle(width, height);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSelected(boolean value) {
         super.setSelected(value);

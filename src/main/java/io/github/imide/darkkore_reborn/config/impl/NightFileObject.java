@@ -30,7 +30,7 @@ public class NightFileObject extends NightConfigObject implements FileObject {
                 config.getFile().createNewFile();
                 config.load();
             } catch (IOException s) {
-                DarkKore_reborn.LOGGER.error("Couldn't set up file" + config.getFile()) ;
+                DarkKore_reborn.LOGGER.error("Couldn't set up file" + config.getFile());
             }
         }
     }

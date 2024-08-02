@@ -1,14 +1,14 @@
 package io.github.imide.darkkore_reborn;
 
 import io.github.imide.darkkore_reborn.config.options.*;
+import io.github.imide.darkkore_reborn.gui.OptionComponentHolder;
 import io.github.imide.darkkore_reborn.gui.config.*;
 import io.github.imide.darkkore_reborn.hotkeys.BasicHotkey;
 import io.github.imide.darkkore_reborn.hotkeys.HotkeyHandler;
 import io.github.imide.darkkore_reborn.hotkeys.HotkeySettingsComponent;
 import io.github.imide.darkkore_reborn.hotkeys.HotkeySettingsOption;
-import io.github.imide.darkkore_reborn.settings.DarkKoreConfig;
-import io.github.imide.darkkore_reborn.gui.OptionComponentHolder;
 import io.github.imide.darkkore_reborn.intialization.Initializer;
+import io.github.imide.darkkore_reborn.settings.DarkKoreConfig;
 import io.github.imide.darkkore_reborn.util.render.ShaderHandler;
 import net.minecraft.client.MinecraftClient;
 

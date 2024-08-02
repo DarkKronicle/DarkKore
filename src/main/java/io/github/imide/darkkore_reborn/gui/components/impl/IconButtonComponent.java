@@ -14,13 +14,21 @@ import java.util.function.Consumer;
 
 public class IconButtonComponent extends ButtonComponent {
 
-    @Setter @Getter private int iconWidth;
+    @Setter
+    @Getter
+    private int iconWidth;
 
-    @Setter @Getter private int iconHeight;
+    @Setter
+    @Getter
+    private int iconHeight;
 
-    @Setter @Getter private Identifier icon;
+    @Setter
+    @Getter
+    private Identifier icon;
 
-    @Setter @Getter private Color shaderColor = new Color(255, 255, 255, 255);
+    @Setter
+    @Getter
+    private Color shaderColor = new Color(255, 255, 255, 255);
 
     public IconButtonComponent(Screen parent, Identifier icon, int iconSize, Color background, Color hover, Consumer<ButtonComponent> onClick) {
         this(parent, icon, iconSize + 4, iconSize + 4, iconSize, iconSize, background, hover, onClick);
@@ -37,6 +45,6 @@ public class IconButtonComponent extends ButtonComponent {
     public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(shaderColor.red() / 255f, shaderColor.green() / 255f, shaderColor.blue() / 255f, shaderColor.alpha() / 255f);
         context.drawTexture(icon, x + leftPadding, y + topPadding, width - (leftPadding + rightPadding), height - (topPadding - rightPadding), 0, 0, iconWidth, iconHeight, iconWidth, iconHeight);
-        RenderSystem.setShaderColor(1, 1, 1,1);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
     }
 }

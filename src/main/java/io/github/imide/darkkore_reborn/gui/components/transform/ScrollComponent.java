@@ -17,24 +17,33 @@ import net.minecraft.util.Util;
  */
 public class ScrollComponent extends OffsetComponent {
 
-    /** The position where scroll animation starts */
+    /**
+     * If the scroll should apply vertically or horizontally
+     */
+    @Getter
+    private final boolean vertical;
+    /**
+     * The position where scroll animation starts
+     */
     private double scrollStart = 0;
-    /** The position where scroll animation ends */
+    /**
+     * The position where scroll animation ends
+     */
     private double scrollEnd = 0;
-
     @Setter
     @Getter
     /** The actual scroll value */
     private int scrollVal = 0;
-
-    /** Last time scroll happened. Uses {@link Util#getMeasuringTimeMs()} */
+    /**
+     * Last time scroll happened. Uses {@link Util#getMeasuringTimeMs()}
+     */
     private long lastScroll = 0;
-
-    /** Scroll animation time */
-    @Setter @Getter private int scrollDuration = 300;
-
-    /** If the scroll should apply vertically or horizontally */
-    @Getter private final boolean vertical;
+    /**
+     * Scroll animation time
+     */
+    @Setter
+    @Getter
+    private int scrollDuration = 300;
 
     public ScrollComponent(Screen parent, Component component, int width, int height, boolean vertical) {
         super(parent, component, width, height);
@@ -42,7 +51,9 @@ public class ScrollComponent extends OffsetComponent {
         this.selectable = true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getXOffset() {
         if (!vertical) {
@@ -51,7 +62,9 @@ public class ScrollComponent extends OffsetComponent {
         return 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getYOffset() {
         if (vertical) {
@@ -63,7 +76,7 @@ public class ScrollComponent extends OffsetComponent {
     /**
      * {@inheritDoc}
      * <p> We override this here because we need to scissor the bounds
-     * */
+     */
     @Override
     public void render(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         // We have to override this to scissor properly
@@ -78,7 +91,9 @@ public class ScrollComponent extends OffsetComponent {
         ScissorsStack.getInstance().applyStack();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkIfHovered(PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         return renderBounds.isPointIn(mouseX, mouseY);
@@ -94,7 +109,9 @@ public class ScrollComponent extends OffsetComponent {
         return new PositionedRectangle(x, y, bound.width(), bound.height());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean mouseScrolled(int x, int y, int mouseX, int mouseY, double amount) {
         if (super.mouseScrolled(x, y, mouseX, mouseY, amount)) {
@@ -113,7 +130,7 @@ public class ScrollComponent extends OffsetComponent {
                 (scrollEnd - scrollStart) * (1 - (EasingMethod.Method.QUART.apply(
                         1 - ((float) (time - lastScroll)) / scrollDuration
                 ))
-        )));
+                )));
 
         int total = vertical ? component.getBoundingBox().height() - height : component.getBoundingBox().width() - width;
 
@@ -133,7 +150,9 @@ public class ScrollComponent extends OffsetComponent {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void scroll(double amount) {
         scrollStart = scrollVal;
         scrollEnd = (-1 * amount * DarkKoreConfig.getInstance().scrollScale.getValue()) + scrollEnd;

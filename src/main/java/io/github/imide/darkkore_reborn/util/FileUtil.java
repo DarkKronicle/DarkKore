@@ -24,6 +24,7 @@ public class FileUtil {
 
     /**
      * Gets the configuration directory of Minecraft
+     *
      * @return Configuration directory
      */
     public File getConfigDirectory() {
@@ -32,6 +33,7 @@ public class FileUtil {
 
     /**
      * Get files with a specified extension
+     *
      * @param directory Directory to check
      * @param extension Extension to check. Used in a `endsWith` call
      * @return A {@link List} that contains files within a directory with the same name
@@ -56,6 +58,7 @@ public class FileUtil {
 
     /**
      * Get files with a specified extension
+     *
      * @param directory Directory to check
      * @param extension Extension to check. Used in a `endsWith` call
      * @return An {@link Optional} empty if something went wrong, or contains the files
@@ -74,7 +77,7 @@ public class FileUtil {
      * @param path Path from the resources to get
      * @return Stream of the resource
      * @throws URISyntaxException If the resource doesn't exist
-     * @throws IOException Can't be opened
+     * @throws IOException        Can't be opened
      */
     public static InputStream getResource(String path) throws URISyntaxException, IOException {
         URI uri = Thread.currentThread().getContextClassLoader().getResource(path).toURI();

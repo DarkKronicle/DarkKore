@@ -14,7 +14,7 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class OptionSectionComponent extends OptionComponent<List<Option<?>>, OptionSection>{
+public class OptionSectionComponent extends OptionComponent<List<Option<?>>, OptionSection> {
 
     public OptionSectionComponent(Screen parent, OptionSection option, int width) {
         super(parent, option, width, 18);

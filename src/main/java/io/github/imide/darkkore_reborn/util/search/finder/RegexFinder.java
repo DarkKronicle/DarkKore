@@ -16,56 +16,6 @@ import java.util.regex.Pattern;
 
 public class RegexFinder extends PatternFinder {
 
-    @Override
-    public Pattern getPattern(String toMatch) {
-        return Pattern.compile(toMatch);
-    }
-
-    @Override
-    public List<StringMatch> getMatches(Text input, String toMatch) {
-        // Find named groups
-        Optional<List<StringMatch>> optionalGroups = SearchUtil.findMatches(toMatch, "\\(\\?<([a-zA-Z][a-zA-Z0-9]*)>", FindType.REGEX);
-        if (optionalGroups.isEmpty()) {
-            // No named groups, go back to just text
-            return getMatches(input.getString(), toMatch);
-        }
-        FluidText text = new FluidText(input);
-        String string = text.getString();
-
-        Pattern pattern = getPattern(toMatch);
-        Matcher matcher = pattern.matcher(string);
-
-        List<String> groups = optionalGroups.get().stream().map((match) -> match.match.substring(3, match.end - match.start - 1)).filter((match) -> match.startsWith("adv")).toList();
-        List<StringMatch> matches = new ArrayList<>();
-
-        while (matcher.find()) {
-            String total = matcher.group();
-            int start = matcher.start();
-            int stop = matcher.end();
-            if (groups.isEmpty()) {
-                matches.add(new StringMatch(total, start, stop));
-                continue;
-            }
-            boolean stillMatches = true;
-            for (String group : groups) {
-                try {
-                    if (!isAllowed(text, group, matcher)) {
-                        stillMatches = false;
-                        break;
-                    }
-                } catch (IllegalArgumentException e) {
-                    // Group does not exist
-                }
-            }
-            if (stillMatches) {
-                matches.add(new StringMatch(total, start, stop));
-            }
-        }
-
-        matcher.reset();
-        return matches;
-    }
-
     public static boolean isAllowed(FluidText input, String group, Matcher matcher) {
         group = group.toLowerCase(Locale.ROOT);
         String groupText = matcher.group(group);
@@ -187,5 +137,55 @@ public class RegexFinder extends PatternFinder {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Pattern getPattern(String toMatch) {
+        return Pattern.compile(toMatch);
+    }
+
+    @Override
+    public List<StringMatch> getMatches(Text input, String toMatch) {
+        // Find named groups
+        Optional<List<StringMatch>> optionalGroups = SearchUtil.findMatches(toMatch, "\\(\\?<([a-zA-Z][a-zA-Z0-9]*)>", FindType.REGEX);
+        if (optionalGroups.isEmpty()) {
+            // No named groups, go back to just text
+            return getMatches(input.getString(), toMatch);
+        }
+        FluidText text = new FluidText(input);
+        String string = text.getString();
+
+        Pattern pattern = getPattern(toMatch);
+        Matcher matcher = pattern.matcher(string);
+
+        List<String> groups = optionalGroups.get().stream().map((match) -> match.match.substring(3, match.end - match.start - 1)).filter((match) -> match.startsWith("adv")).toList();
+        List<StringMatch> matches = new ArrayList<>();
+
+        while (matcher.find()) {
+            String total = matcher.group();
+            int start = matcher.start();
+            int stop = matcher.end();
+            if (groups.isEmpty()) {
+                matches.add(new StringMatch(total, start, stop));
+                continue;
+            }
+            boolean stillMatches = true;
+            for (String group : groups) {
+                try {
+                    if (!isAllowed(text, group, matcher)) {
+                        stillMatches = false;
+                        break;
+                    }
+                } catch (IllegalArgumentException e) {
+                    // Group does not exist
+                }
+            }
+            if (stillMatches) {
+                matches.add(new StringMatch(total, start, stop));
+            }
+        }
+
+        matcher.reset();
+        return matches;
     }
 }

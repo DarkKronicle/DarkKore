@@ -3,7 +3,7 @@ package io.github.imide.darkkore_reborn.util;
 import io.github.imide.darkkore_reborn.DarkKore_reborn;
 import io.github.imide.darkkore_reborn.settings.DarkKoreConfig;
 import lombok.experimental.UtilityClass;
-import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.sound.SoundEvent;
@@ -27,10 +27,11 @@ public class SoundUtil {
     }
 
     /**
-     * Plays an interface sound with a specific {@link Instrument} (can be null). If null it will play the generic button click sound
-     * @param instrument {@link Instrument} to play the sound
+     * Plays an interface sound with a specific {@link NoteBlockInstrument} (can be null). If null it will play the generic button click sound
+     *
+     * @param instrument {@link NoteBlockInstrument} to play the sound
      */
-    public void playInterfaceSound(@Nullable Instrument instrument) {
+    public void playInterfaceSound(@Nullable NoteBlockInstrument instrument) {
         if (instrument == null) {
             playSound(SoundEvents.UI_BUTTON_CLICK.value(), 1, 3f);
         } else {
@@ -39,39 +40,43 @@ public class SoundUtil {
     }
 
     /**
-     * Plays a specific note from an {@link Instrument}. Note 0 is F#, goes to 24
-     * @param instrument {@link Instrument} to play the note
-     * @param note The note to play
-     * @param volume Volume that should be played at
+     * Plays a specific note from an {@link NoteBlockInstrument}. Note 0 is F#, goes to 24
+     *
+     * @param instrument {@link NoteBlockInstrument} to play the note
+     * @param note       The note to play
+     * @param volume     Volume that should be played at
      */
-    public void playNote(Instrument instrument, int note, float volume) {
-        float pitch = (float)Math.pow(2.0, (double)(note - 12) / 12.0);
+    public void playNote(NoteBlockInstrument instrument, int note, float volume) {
+        float pitch = (float) Math.pow(2.0, (double) (note - 12) / 12.0);
         playSound(instrument.getSound().value(), pitch, volume);
     }
 
     /**
      * Plays a random note from the pentatonic scale
-     * @param instrument {@link Instrument} to play it
-     * @param volume Volume that should be played at
+     *
+     * @param instrument {@link NoteBlockInstrument} to play it
+     * @param volume     Volume that should be played at
      */
-    public void playPentatonic(Instrument instrument, float volume) {
+    public void playPentatonic(NoteBlockInstrument instrument, float volume) {
         playPentatonic(instrument, volume, 0);
     }
 
     /**
      * Plays a random note from the pentatonic scale with a specified shift
-     * @param instrument {@link Instrument} to play it
-     * @param offset The amount of notes (chromatic) it should be shifted by
-     * @param volume Volume that should be played at
+     *
+     * @param instrument {@link NoteBlockInstrument} to play it
+     * @param offset     The amount of notes (chromatic) it should be shifted by
+     * @param volume     Volume that should be played at
      */
-    public void playPentatonic(Instrument instrument, float volume, int offset) {
+    public void playPentatonic(NoteBlockInstrument instrument, float volume, int offset) {
         playNote(instrument, PENTATONIC[(DarkKore_reborn.RANDOM.nextInt(PENTATONIC.length) + offset) % 24], volume);
     }
 
     /**
      * Plays a sound
-     * @param sound {@link SoundEvent} to play
-     * @param pitch Pitch to play
+     *
+     * @param sound  {@link SoundEvent} to play
+     * @param pitch  Pitch to play
      * @param volume Volume to play
      */
     public void playSound(SoundEvent sound, float pitch, float volume) {

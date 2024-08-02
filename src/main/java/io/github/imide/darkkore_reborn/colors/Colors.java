@@ -21,23 +21,45 @@ import java.util.*;
 public class Colors implements ConfigHolder {
 
     private static final Colors INSTANCE = new Colors();
+    @Getter
+    private final Map<String, Color> colors = new HashMap<>();
+    @Getter
+    private final Map<String, Color> defaultColors = new HashMap<>();
+    @Getter
+    private final Map<String, Palette> palettes = new HashMap<>();
+    private String defaultPalette = "";
+
+    private Colors() {
+    }
 
     public static Colors getInstance() {
         return INSTANCE;
     }
 
-    @Getter
-    private final Map<String, Color> colors = new HashMap<>();
-
-    @Getter
-    private final Map<String, Color> defaultColors = new HashMap<>();
-
-    @Getter
-    private final Map<String, Palette> palettes = new HashMap<>();
-
-    private String defaultPalette = "";
-
-    private Colors() {}
+    private static Color hexToSimple(String string) {
+        if (string.length() != 7 && string.length() != 9 && string.length() != 4) {
+            // Not #ffffff (so invalid!)
+            DarkKore_reborn.LOGGER.log(Level.WARN, "Color " + string + " isn't formatted correctly! (#ffffff) (#ffffffff)");
+            return new Color(255, 255, 255, 255);
+        }
+        string = string.substring(1).toLowerCase(Locale.ROOT);
+        if (string.length() == 3) {
+            string = string.substring(0, 1).repeat(2) + string.substring(1, 2).repeat(2) + string.substring(2, 3).repeat(2);
+        }
+        try {
+            int red = Integer.parseInt(string.substring(0, 2), 16);
+            int green = Integer.parseInt(string.substring(2, 4), 16);
+            int blue = Integer.parseInt(string.substring(4, 6), 16);
+            int alpha = 255;
+            if (string.length() == 8) {
+                alpha = Integer.parseInt(string.substring(6), 16);
+            }
+            return new Color(red, green, blue, alpha);
+        } catch (Exception e) {
+            DarkKore_reborn.LOGGER.log(Level.WARN, "Couldn't convert " + string + " into a color!", e);
+        }
+        return new Color(255, 255, 255, 255);
+    }
 
     public File getFile() {
         return FileUtil.getConfigDirectory().toPath().resolve("colors.toml").toFile();
@@ -140,31 +162,6 @@ public class Colors implements ConfigHolder {
         return Optional.empty();
     }
 
-    private static Color hexToSimple(String string) {
-        if (string.length() != 7 && string.length() != 9 && string.length() != 4) {
-            // Not #ffffff (so invalid!)
-            DarkKore_reborn.LOGGER.log(Level.WARN, "Color " + string + " isn't formatted correctly! (#ffffff) (#ffffffff)");
-            return new Color(255, 255, 255, 255);
-        }
-        string = string.substring(1).toLowerCase(Locale.ROOT);
-        if (string.length() == 3) {
-            string = string.substring(0, 1).repeat(2) + string.substring(1, 2).repeat(2) + string.substring(2, 3).repeat(2);
-        }
-        try {
-            int red = Integer.parseInt(string.substring(0, 2), 16);
-            int green = Integer.parseInt(string.substring(2, 4), 16);
-            int blue = Integer.parseInt(string.substring(4, 6), 16);
-            int alpha = 255;
-            if (string.length() == 8) {
-                alpha = Integer.parseInt(string.substring(6), 16);
-            }
-            return new Color(red, green, blue, alpha);
-        } catch (Exception e) {
-            DarkKore_reborn.LOGGER.log(Level.WARN, "Couldn't convert " + string + " into a color!", e);
-        }
-        return new Color(255, 255, 255, 255);
-    }
-
     public Optional<Color> getColor(String key) {
         key = key.toLowerCase(Locale.ROOT).replaceAll(" ", "_");
         if (colors.containsKey(key)) {
@@ -182,7 +179,8 @@ public class Colors implements ConfigHolder {
 
     public static class Palette {
 
-        @Getter private final List<Color> colors;
+        @Getter
+        private final List<Color> colors;
 
         public Palette(List<Color> colors) {
             this.colors = colors;

@@ -18,26 +18,29 @@ public class InitializationHandler {
     private final static InitializationHandler INSTANCE = new InitializationHandler();
 
     private boolean initialized = false;
+    private List<LoadOrder> toLoad = new ArrayList<>();
+
+    private InitializationHandler() {
+    }
 
     public static InitializationHandler getInstance() {
         return INSTANCE;
     }
 
-    private List<LoadOrder> toLoad = new ArrayList<>();
-
-    private InitializationHandler() {}
-
     /**
      * Adds an initializer to be called when client has been loaded
-     * @param name Name of initializer. Typically the mod id
+     *
+     * @param name     Name of initializer. Typically the mod id
      * @param priority Priority of the initializer. Sorts from least to greatest
-     * @param handler {@link Initializer} to call
+     * @param handler  {@link Initializer} to call
      */
     public void registerInitializer(String name, int priority, Initializer handler) {
         toLoad.add(new LoadOrder(name, priority, handler));
     }
 
-    /** Do not call */
+    /**
+     * Do not call
+     */
     public void load() {
         if (initialized) {
             // We only ever want this once
@@ -62,10 +65,14 @@ public class InitializationHandler {
         /*** Name of the loader */
         String name;
 
-        /** Order value */
+        /**
+         * Order value
+         */
         Integer order;
 
-        /** The initializer */
+        /**
+         * The initializer
+         */
         Initializer handler;
 
         @Override

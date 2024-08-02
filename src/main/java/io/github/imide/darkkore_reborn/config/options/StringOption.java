@@ -9,8 +9,12 @@ import java.util.regex.Pattern;
 
 public class StringOption extends BasicOption<String> {
 
-    @Getter @Setter Predicate<String> check;
-    @Getter @Setter private String typeKey;
+    @Getter
+    @Setter
+    Predicate<String> check;
+    @Getter
+    @Setter
+    private String typeKey;
 
     public StringOption(String key, String displayName, String hoverName, String defaultValue) {
         this(key, displayName, hoverName, defaultValue, null, null);

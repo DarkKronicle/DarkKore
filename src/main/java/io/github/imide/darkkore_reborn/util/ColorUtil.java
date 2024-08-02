@@ -68,6 +68,7 @@ public class ColorUtil {
 
     /**
      * Grabs the color from a {@link Formatting} formatting.
+     *
      * @param formatting The formatting to grab the color from
      * @return The color from formatting as a {@link Color} object, null if there is none
      */

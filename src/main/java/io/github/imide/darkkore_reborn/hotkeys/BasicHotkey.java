@@ -10,6 +10,8 @@ public class BasicHotkey implements Hotkey {
     private final HotkeySettings settings;
     private final Runnable onPress;
     private final Runnable onRelease;
+    @Getter
+    private boolean active;
 
     public BasicHotkey(HotkeySettings settings, Runnable onPress) {
         this(settings, onPress, null);
@@ -20,9 +22,6 @@ public class BasicHotkey implements Hotkey {
         this.onPress = onPress;
         this.onRelease = onRelease;
     }
-
-    @Getter
-    private boolean active;
 
     @Override
     public List<Integer> getKeys() {

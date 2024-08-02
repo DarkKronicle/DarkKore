@@ -20,7 +20,9 @@ import lombok.Getter;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class ConfigScreen extends ComponentScreen {
 
@@ -57,7 +59,7 @@ public class ConfigScreen extends ComponentScreen {
             }
             return new ConfigScreen(tabs);
         }
-        return new ConfigScreen(List.of(Tab.ofOptions(new Identifier(DarkKore_reborn.MOD_ID, "main"), "main", sections)));
+        return new ConfigScreen(List.of(Tab.ofOptions(Identifier.of(DarkKore_reborn.MOD_ID, "main"), "main", sections)));
     }
 
     public static ConfigScreen ofSections(List<OptionSection> sections) {
@@ -82,14 +84,14 @@ public class ConfigScreen extends ComponentScreen {
                 OptionSection sect = (OptionSection) opt;
                 nest.add(populate(sect));
             }
-            return Tab.ofTabs(new Identifier(DarkKore_reborn.MOD_ID, section.getKey().toLowerCase(Locale.ROOT)), section.getNameKey(), nest);
+            return Tab.ofTabs(Identifier.of(DarkKore_reborn.MOD_ID, section.getKey().toLowerCase(Locale.ROOT)), section.getNameKey(), nest);
         }
-        return Tab.ofOptions(new Identifier(DarkKore_reborn.MOD_ID, section.getKey().toLowerCase(Locale.ROOT)), section.getNameKey(), section.getOptions());
+        return Tab.ofOptions(Identifier.of(DarkKore_reborn.MOD_ID, section.getKey().toLowerCase(Locale.ROOT)), section.getNameKey(), section.getOptions());
     }
 
     public static ConfigScreen ofOptions(List<Option<?>> options) {
         List<Tab> tabs = new ArrayList<>();
-        tabs.add(Tab.ofOptions(new Identifier(DarkKore_reborn.MOD_ID, "main"), "main", options));
+        tabs.add(Tab.ofOptions(Identifier.of(DarkKore_reborn.MOD_ID, "main"), "main", options));
         return new ConfigScreen(tabs);
     }
 
@@ -121,7 +123,7 @@ public class ConfigScreen extends ComponentScreen {
     }
 
     public void addTabButtons(int depth, int width, List<Tab> parent, List<Tab> tabs, ListComponent mainList) {
-        ListComponent list = new ListComponent(getParent(), -1 ,-1, false);
+        ListComponent list = new ListComponent(getParent(), -1, -1, false);
         list.setWidth(0);
         if (depth > 0) {
             list.addComponent(new TextComponent(getParent(), new FluidText(">".repeat(depth))));

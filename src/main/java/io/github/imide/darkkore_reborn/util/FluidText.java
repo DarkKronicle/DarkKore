@@ -1,14 +1,5 @@
 package io.github.imide.darkkore_reborn.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.TreeMap;
-import java.util.function.BiFunction;
-
 import io.github.imide.darkkore_reborn.util.search.SearchUtil;
 import io.github.imide.darkkore_reborn.util.search.StringMatch;
 import io.github.imide.darkkore_reborn.util.text.RawText;
@@ -17,6 +8,9 @@ import lombok.Setter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.text.*;
+
+import java.util.*;
+import java.util.function.BiFunction;
 
 /**
  * A helper class that can take a Text, break it up, and put it back together. This breaks up the
@@ -27,7 +21,9 @@ public class FluidText implements Text {
 
     private ArrayList<RawText> rawTexts = new ArrayList<>();
 
-    @Setter @Getter private Color background = null;
+    @Setter
+    @Getter
+    private Color background = null;
 
     /**
      * Takes a Text and splits it into a list of {@link RawText}.
@@ -72,8 +68,11 @@ public class FluidText implements Text {
                 });
     }
 
-    /** Constructs a blank object */
-    public FluidText() {}
+    /**
+     * Constructs a blank object
+     */
+    public FluidText() {
+    }
 
     /**
      * Constructs FluidText from a single {@link RawText}'s
@@ -91,6 +90,52 @@ public class FluidText implements Text {
      */
     public FluidText(Collection<RawText> rawTexts) {
         this.rawTexts.addAll(rawTexts);
+    }
+
+    /**
+     * See's if style changes for specified fluid text
+     *
+     * @param text Text to test
+     * @return If style changes
+     */
+    public static boolean styleChanges(FluidText text) {
+        Style style = null;
+        if (text.getRawTexts().size() == 1) {
+            return false;
+        }
+        for (RawText raw : text.getRawTexts()) {
+            if (style == null) {
+                style = raw.getStyle();
+            } else if (!style.equals(raw.getStyle())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * See's if style changes for specified fluid text
+     *
+     * @param text      Text to test
+     * @param predicate Predicate to see if style has changed enough. Previous, current, different
+     * @return If style changes
+     */
+    public static boolean styleChanges(FluidText text, BiFunction<Style, Style, Boolean> predicate) {
+        Style previous = null;
+        if (text.getRawTexts().size() == 1) {
+            return !predicate.apply(text.getRawTexts().get(0).getStyle(), text.getRawTexts().get(0).getStyle());
+        }
+        for (RawText raw : text.getRawTexts()) {
+            if (previous == null) {
+                previous = raw.getStyle();
+            } else if (!previous.equals(raw.getStyle())) {
+                if (!predicate.apply(previous, raw.getStyle())) {
+                    return true;
+                }
+                previous = raw.getStyle();
+            }
+        }
+        return false;
     }
 
     /**
@@ -124,6 +169,19 @@ public class FluidText implements Text {
             return null;
         }
         return rawTexts.get(0).getStyle();
+    }
+
+    /**
+     * Set's the {@link Style} of all the text
+     *
+     * @param style {@link Style} to set
+     * @return this
+     */
+    public FluidText setStyle(Style style) {
+        for (RawText t : rawTexts) {
+            t.setStyle(style);
+        }
+        return this;
     }
 
     @Override
@@ -161,8 +219,8 @@ public class FluidText implements Text {
      * net.minecraft.text.StringVisitable.StyledVisitor}
      *
      * @param styledVisitor Visitor that will take in {@link Style} and {@link String}
-     * @param style The default {@link Style} which attributes will replace blank ones.
-     * @param <T> Type of variable to be used in the visitor.
+     * @param style         The default {@link Style} which attributes will replace blank ones.
+     * @param <T>           Type of variable to be used in the visitor.
      * @return Value the visitor returns, or an empty optional.
      */
     @Override
@@ -185,8 +243,8 @@ public class FluidText implements Text {
      * net.minecraft.text.StringVisitable.Visitor}
      *
      * @param visitor {@link net.minecraft.text.StringVisitable.Visitor} to accept the {@link
-     *     String}
-     * @param <T> Type of variable to be used in the visitor
+     *                String}
+     * @param <T>     Type of variable to be used in the visitor
      * @return What the visitor returns, or an empty optional.
      */
     @Override
@@ -277,19 +335,6 @@ public class FluidText implements Text {
         return this;
     }
 
-    /**
-     * Set's the {@link Style} of all the text
-     *
-     * @param style {@link Style} to set
-     * @return this
-     */
-    public FluidText setStyle(Style style) {
-        for (RawText t : rawTexts) {
-            t.setStyle(style);
-        }
-        return this;
-    }
-
     public FluidText append(String string) {
         append(new RawText(string, Style.EMPTY), true);
         return this;
@@ -308,8 +353,9 @@ public class FluidText implements Text {
 
     /**
      * Checks to see if the style changes from the starting index to the end index
+     *
      * @param start Index to start check
-     * @param end Ending to stop
+     * @param end   Ending to stop
      * @return If style changes
      */
     public boolean styleChanges(int start, int end) {
@@ -317,65 +363,6 @@ public class FluidText implements Text {
             return false;
         }
         return FluidText.styleChanges(truncate(new StringMatch("", start, end)));
-    }
-
-    /**
-     * See's if style changes for specified fluid text
-     * @param text Text to test
-     * @return If style changes
-     */
-    public static boolean styleChanges(FluidText text) {
-        Style style = null;
-        if (text.getRawTexts().size() == 1) {
-            return false;
-        }
-        for (RawText raw : text.getRawTexts()) {
-            if (style == null) {
-                style = raw.getStyle();
-            } else if (!style.equals(raw.getStyle())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * See's if style changes for specified fluid text
-     * @param text Text to test
-     * @param predicate Predicate to see if style has changed enough. Previous, current, different
-     * @return If style changes
-     */
-    public static boolean styleChanges(FluidText text, BiFunction<Style, Style, Boolean> predicate) {
-        Style previous = null;
-        if (text.getRawTexts().size() == 1) {
-            return !predicate.apply(text.getRawTexts().get(0).getStyle(), text.getRawTexts().get(0).getStyle());
-        }
-        for (RawText raw : text.getRawTexts()) {
-            if (previous == null) {
-                previous = raw.getStyle();
-            } else if (!previous.equals(raw.getStyle())) {
-                if (!predicate.apply(previous, raw.getStyle())) {
-                    return true;
-                }
-                previous = raw.getStyle();
-            }
-        }
-        return false;
-    }
-
-    /**
-     * An interface to provide a way to get the text that should be replaced based off of the
-     * current {@link RawText} and the current {@link StringMatch}
-     */
-    public interface StringInsert {
-        /**
-         * Return's the {@link FluidText} that should be inserted.
-         *
-         * @param current The current {@link RawText}
-         * @param match The current {@link StringMatch}
-         * @return
-         */
-        FluidText getText(RawText current, StringMatch match);
     }
 
     private TreeMap<StringMatch, StringInsert> filterMatches(
@@ -509,9 +496,9 @@ public class FluidText implements Text {
     /**
      * Appends a new {@link RawText} to the {@link FluidText}
      *
-     * @param text {@link RawText} to add
+     * @param text        {@link RawText} to add
      * @param copyIfEmpty If the text's style is empty, have it inherit the style of the last {@link
-     *     RawText}
+     *                    RawText}
      */
     public void append(RawText text, boolean copyIfEmpty) {
         if (rawTexts.size() > 0) {
@@ -526,5 +513,20 @@ public class FluidText implements Text {
         } else {
             rawTexts.add(text);
         }
+    }
+
+    /**
+     * An interface to provide a way to get the text that should be replaced based off of the
+     * current {@link RawText} and the current {@link StringMatch}
+     */
+    public interface StringInsert {
+        /**
+         * Return's the {@link FluidText} that should be inserted.
+         *
+         * @param current The current {@link RawText}
+         * @param match   The current {@link StringMatch}
+         * @return
+         */
+        FluidText getText(RawText current, StringMatch match);
     }
 }

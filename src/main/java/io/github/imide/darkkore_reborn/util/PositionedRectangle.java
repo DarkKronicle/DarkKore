@@ -17,41 +17,6 @@ public class PositionedRectangle {
     public final int height;
 
     /**
-     * Checks to see if this rectangle intersects with another
-     * @param other Other rectangle
-     * @return If they intersect
-     */
-    public boolean intersects(PositionedRectangle other) {
-        return intersects(this, other);
-    }
-
-    /**
-     * Checks to see if the rectangle has any width/height
-     * @return If rectangle is empty
-     */
-    public boolean isEmpty() {
-        return width <= 0 && height <= 0;
-    }
-
-    /**
-     * Creates a copy of this object
-     * @return The copy
-     */
-    public PositionedRectangle copy() {
-        return new PositionedRectangle(x, y, width, height);
-    }
-
-    /**
-     * Checks to see if a point is within this rectangle
-     * @param otherX X value
-     * @param otherY Y value
-     * @return If the point is within this rectangle
-     */
-    public boolean isPointIn(int otherX, int otherY) {
-        return otherX >= x && otherX <= x + width && otherY >= y && otherY <= y + height;
-    }
-
-    /**
      * Check to see if two {@link PositionedRectangle} intersect each other at any point
      */
     public static boolean intersects(PositionedRectangle one, PositionedRectangle two) {
@@ -78,7 +43,47 @@ public class PositionedRectangle {
     }
 
     /**
+     * Checks to see if this rectangle intersects with another
+     *
+     * @param other Other rectangle
+     * @return If they intersect
+     */
+    public boolean intersects(PositionedRectangle other) {
+        return intersects(this, other);
+    }
+
+    /**
+     * Checks to see if the rectangle has any width/height
+     *
+     * @return If rectangle is empty
+     */
+    public boolean isEmpty() {
+        return width <= 0 && height <= 0;
+    }
+
+    /**
+     * Creates a copy of this object
+     *
+     * @return The copy
+     */
+    public PositionedRectangle copy() {
+        return new PositionedRectangle(x, y, width, height);
+    }
+
+    /**
+     * Checks to see if a point is within this rectangle
+     *
+     * @param otherX X value
+     * @param otherY Y value
+     * @return If the point is within this rectangle
+     */
+    public boolean isPointIn(int otherX, int otherY) {
+        return otherX >= x && otherX <= x + width && otherY >= y && otherY <= y + height;
+    }
+
+    /**
      * Generates a new {@link PositionedRectangle} that overlays the current one
+     *
      * @param other Rectangle that should intersect
      * @return The intersection
      */

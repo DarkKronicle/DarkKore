@@ -1,10 +1,5 @@
 package io.github.imide.darkkore_reborn.util.text;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.regex.Pattern;
-
 import io.github.imide.darkkore_reborn.util.Color;
 import io.github.imide.darkkore_reborn.util.FluidText;
 import net.fabricmc.api.EnvType;
@@ -15,56 +10,31 @@ import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Unit;
 
-/** Class to format text without losing data. It adds all color and colors with §#RRGGBB are converted to RGB color. */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
+
+/**
+ * Class to format text without losing data. It adds all color and colors with §#RRGGBB are converted to RGB color.
+ */
 @Environment(EnvType.CLIENT)
 public class StyleFormatter {
 
-    /**
-     * An interface to take multiple inputs from a string that has the Section Symbol formatting
-     * combined with standard {@link Text} formatting.
-     */
-    public interface FormattingVisitable {
-        /**
-         * Accepts a character with information about current formatting
-         *
-         * @param c Current character
-         * @param currentIndex The current index of the raw string
-         * @param realIndex The current index without formatting symbols
-         * @param textStyle The style that the text currently has
-         * @param formattingStyle The style that combines text formatting and formatting symbols
-         * @return Whether to continue
-         */
-        boolean accept(
-                char c, int currentIndex, int realIndex, Style textStyle, Style formattingStyle);
-    }
-
+    private final FormattingVisitable visitor;
+    private final int length;
     private int currentIndex;
     private int realIndex;
     private int skipBy = 0;
     private Style currentStyle;
     private Style lastTextStyle = null;
-    private final FormattingVisitable visitor;
-    private final int length;
-
-    /** Results of different parts of formatting */
-    private enum Result {
-        /** Go up a character */
-        INCREMENT,
-
-        /** Go to the next {@link StringVisitable} */
-        SKIP,
-
-        /** STOP */
-        TERMINATE,
-    }
-
     /**
      * Creates a StyleFormatter for a given length and a {@link FormattingVisitable}
      *
      * <p>This class is meant to be updated with a {@link StringVisitable.StyledVisitor}
      *
      * @param visitor {@link FormattingVisitable} to get updated with each visible character
-     * @param length Length of the string
+     * @param length  Length of the string
      */
     public StyleFormatter(FormattingVisitable visitor, int length) {
         this.visitor = visitor;
@@ -74,12 +44,55 @@ public class StyleFormatter {
         this.length = length;
     }
 
-    /** Sends the current character with the current information to the visitor. */
+    /**
+     * Formats text that contains styling data as well as formatting symbols
+     *
+     * <p>This method is used to remove section symbols while maintaining previous formatting as
+     * well as new formatting.
+     *
+     * @param text Text to reformat
+     * @return Formatted text
+     */
+    public static FluidText formatText(FluidText text) {
+        FluidText t = new FluidText();
+        int length = text.getString().length();
+        StyleFormatter formatter =
+                new StyleFormatter(
+                        (c, index, formattedIndex, style, formattedStyle) -> {
+                            t.append(new RawText(String.valueOf(c), formattedStyle), false);
+                            return true;
+                        },
+                        length);
+        text.visit(formatter::updateStyle, Style.EMPTY);
+        return t;
+    }
+
+    /**
+     * Wraps text into multiple lines
+     *
+     * @param textRenderer TextRenderer to handle text
+     * @param scaledWidth  Maximum width before the line breaks
+     * @param text         Text to break up
+     * @return List of MutableText of the new lines
+     */
+    public static List<Text> wrapText(TextRenderer textRenderer, int scaledWidth, Text text) {
+        ArrayList<Text> lines = new ArrayList<>();
+        for (OrderedText breakRenderedChatMessageLine : ChatMessages.breakRenderedChatMessageLines(text, scaledWidth, textRenderer)) {
+            lines.add(new FluidText(breakRenderedChatMessageLine));
+        }
+        return lines;
+    }
+
+    /**
+     * Sends the current character with the current information to the visitor.
+     */
     private boolean sendToVisitor(char c, Style textStyle) {
         return visitor.accept(c, currentIndex, realIndex, textStyle, currentStyle);
     }
 
-    /** Handles how section symbols get processed */
+    /**
+     * Handles how section symbols get processed
+     */
     private Result updateSection(Style textStyle, Character nextChar, String rest) {
         if (nextChar == null) {
             return Result.SKIP;
@@ -87,7 +100,7 @@ public class StyleFormatter {
         if (nextChar == '#') {
             if (rest.length() > 6) {
                 String format = rest.substring(1, 7);
-                if ( Pattern.compile("^[0-9a-fA-F]{6}").matcher(format).find()) {
+                if (Pattern.compile("^[0-9a-fA-F]{6}").matcher(format).find()) {
                     currentIndex++;
                     return Result.INCREMENT;
                 }
@@ -142,7 +155,7 @@ public class StyleFormatter {
      * FormattingVisitable}
      *
      * @param textStyle Style of the current string
-     * @param string The current string
+     * @param string    The current string
      * @return Value to terminate. Follows {@link StringVisitable.StyledVisitor} return values.
      */
     public Optional<Optional<Unit>> updateStyle(Style textStyle, String string) {
@@ -180,41 +193,41 @@ public class StyleFormatter {
     }
 
     /**
-     * Formats text that contains styling data as well as formatting symbols
-     *
-     * <p>This method is used to remove section symbols while maintaining previous formatting as
-     * well as new formatting.
-     *
-     * @param text Text to reformat
-     * @return Formatted text
+     * Results of different parts of formatting
      */
-    public static FluidText formatText(FluidText text) {
-        FluidText t = new FluidText();
-        int length = text.getString().length();
-        StyleFormatter formatter =
-                new StyleFormatter(
-                        (c, index, formattedIndex, style, formattedStyle) -> {
-                            t.append(new RawText(String.valueOf(c), formattedStyle), false);
-                            return true;
-                        },
-                        length);
-        text.visit(formatter::updateStyle, Style.EMPTY);
-        return t;
+    private enum Result {
+        /**
+         * Go up a character
+         */
+        INCREMENT,
+
+        /**
+         * Go to the next {@link StringVisitable}
+         */
+        SKIP,
+
+        /**
+         * STOP
+         */
+        TERMINATE,
     }
 
     /**
-     * Wraps text into multiple lines
-     *
-     * @param textRenderer TextRenderer to handle text
-     * @param scaledWidth Maximum width before the line breaks
-     * @param text Text to break up
-     * @return List of MutableText of the new lines
+     * An interface to take multiple inputs from a string that has the Section Symbol formatting
+     * combined with standard {@link Text} formatting.
      */
-    public static List<Text> wrapText(TextRenderer textRenderer, int scaledWidth, Text text) {
-        ArrayList<Text> lines = new ArrayList<>();
-        for (OrderedText breakRenderedChatMessageLine : ChatMessages.breakRenderedChatMessageLines(text, scaledWidth, textRenderer)) {
-            lines.add(new FluidText(breakRenderedChatMessageLine));
-        }
-        return lines;
+    public interface FormattingVisitable {
+        /**
+         * Accepts a character with information about current formatting
+         *
+         * @param c               Current character
+         * @param currentIndex    The current index of the raw string
+         * @param realIndex       The current index without formatting symbols
+         * @param textStyle       The style that the text currently has
+         * @param formattingStyle The style that combines text formatting and formatting symbols
+         * @return Whether to continue
+         */
+        boolean accept(
+                char c, int currentIndex, int realIndex, Style textStyle, Style formattingStyle);
     }
 }

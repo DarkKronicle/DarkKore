@@ -1,7 +1,8 @@
 package io.github.imide.darkkore_reborn.hotkeys;
 
 import io.github.imide.darkkore_reborn.colors.CommonColors;
-import io.github.imide.darkkore_reborn.config.options.*;
+import io.github.imide.darkkore_reborn.config.options.BooleanOption;
+import io.github.imide.darkkore_reborn.config.options.Option;
 import io.github.imide.darkkore_reborn.gui.ConfigScreen;
 import io.github.imide.darkkore_reborn.gui.components.Component;
 import io.github.imide.darkkore_reborn.gui.components.impl.ButtonComponent;

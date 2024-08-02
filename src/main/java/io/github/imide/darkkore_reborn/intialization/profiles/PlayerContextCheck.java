@@ -13,6 +13,10 @@ public class PlayerContextCheck {
     private GameMode gameMode;
     private Boolean inGui;
 
+    public static PlayerContextCheck getDefault() {
+        return new PlayerContextCheck(true, null, null, false);
+    }
+
     public boolean check(PlayerContext context) {
         if (inGame != null && context.isInGame() != inGame) {
             return false;
@@ -36,10 +40,6 @@ public class PlayerContextCheck {
 
     public PlayerContextCheck copy() {
         return new PlayerContextCheck(inGame, server, gameMode, inGui);
-    }
-
-    public static PlayerContextCheck getDefault() {
-        return new PlayerContextCheck(true, null, null, false);
     }
 
 }

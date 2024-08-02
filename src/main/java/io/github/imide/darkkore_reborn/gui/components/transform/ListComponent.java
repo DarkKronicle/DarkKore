@@ -16,25 +16,55 @@ import net.minecraft.client.gui.screen.Screen;
  */
 public class ListComponent extends MultiComponent {
 
-    /** Should this list be forced up and down, or should components be added left/right until it breaks into a new line */
+    /**
+     * Should this list be forced up and down, or should components be added left/right until it breaks into a new line
+     */
     private final boolean vertical;
 
-    /** The padding from the left where elements shouldn't go. Essentially a left margin. */
-    @Getter @Setter protected int leftPad = 2;
-    /** The padding from the right where elements shouldn't go. Essentially a right margin. */
-    @Getter @Setter protected int rightPad = 2;
-    /** The padding from the top where elements shouldn't go. Essentially a top margin. */
-    @Getter @Setter protected int topPad = 2;
-    /** The padding from the bottom where elements shouldn't go. Essentially a bottom margin. */
-    @Getter @Setter protected int bottomPad = 2;
+    /**
+     * The padding from the left where elements shouldn't go. Essentially a left margin.
+     */
+    @Getter
+    @Setter
+    protected int leftPad = 2;
+    /**
+     * The padding from the right where elements shouldn't go. Essentially a right margin.
+     */
+    @Getter
+    @Setter
+    protected int rightPad = 2;
+    /**
+     * The padding from the top where elements shouldn't go. Essentially a top margin.
+     */
+    @Getter
+    @Setter
+    protected int topPad = 2;
+    /**
+     * The padding from the bottom where elements shouldn't go. Essentially a bottom margin.
+     */
+    @Getter
+    @Setter
+    protected int bottomPad = 2;
 
-    /** Padding between components left/right */
-    @Getter @Setter protected int componentXPad = 2;
-    /** Padding between components up/down */
-    @Getter @Setter protected int componentYPad = 2;
+    /**
+     * Padding between components left/right
+     */
+    @Getter
+    @Setter
+    protected int componentXPad = 2;
+    /**
+     * Padding between components up/down
+     */
+    @Getter
+    @Setter
+    protected int componentYPad = 2;
 
-    /** If this component should render post. If this is set to false then children won't be rendered post. */
-    @Getter @Setter private boolean renderPost = true;
+    /**
+     * If this component should render post. If this is set to false then children won't be rendered post.
+     */
+    @Getter
+    @Setter
+    private boolean renderPost = true;
 
     /**
      * Creates a new {@link ListComponent}
@@ -47,9 +77,10 @@ public class ListComponent extends MultiComponent {
      *
      * <p> If vertical is set to false and width is auto update, no new lines will be added. If vertical is true and height is not auto update,
      * only the first few elements will render. It is recommended to have height be auto update.
+     *
      * @param parent
-     * @param width Width
-     * @param height Height
+     * @param width    Width
+     * @param height   Height
      * @param vertical Vertical
      */
     public ListComponent(Screen parent, int width, int height, boolean vertical) {
@@ -57,7 +88,9 @@ public class ListComponent extends MultiComponent {
         this.vertical = vertical;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateWidth() {
         if (vertical) {
@@ -77,7 +110,9 @@ public class ListComponent extends MultiComponent {
         width = totalWidth + leftPad + rightPad;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void updateHeight() {
         if (vertical) {
             // If vertical it should be the combination of everything.
@@ -107,7 +142,9 @@ public class ListComponent extends MultiComponent {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void renderComponent(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         // Setup left margin
@@ -139,13 +176,17 @@ public class ListComponent extends MultiComponent {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean shouldPostRender() {
         return renderPost;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void postRender(DrawContext context, PositionedRectangle renderBounds, int x, int y, int mouseX, int mouseY) {
         // We do the same thing as normal render again
